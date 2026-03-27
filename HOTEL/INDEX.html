@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Royal Crest</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="init()">
+
+  <header>
+    <h1>The Royal Crest</h1>
+    <p>Experience Unparalleled Luxury</p>
+  </header>
+
+  <section id="hero">
+    <video autoplay muted loop src="hero-video.mp4" style="width:100%; height: 400px;"></video>
+    <div class="overlay">
+      <h2>Discover Your Stay</h2>
+      <p>Indulge in unparalleled comfort and exquisite service.</p>
+      <button class="cta-button" onclick="goToSection('accommodation')">View Suites</button>
+    </div>
+  </section>
+
+  <section id="accommodation" style="padding: 50px;">
+    <h2>Featured Suites</h2>
+    <div class="suite-container">
+      <div class="suite" data-suite-id="1">
+        <img src="suite1.jpg" alt="Royal Suite" class="suite-image">
+        <h3>Royal Suite</h3>
+        <p>Spacious, opulent, panoramic views. Includes a private balcony and fireplace.</p>
+        <button class="cta-button" onclick="addToWishlist('Royal Suite')">Add to Wishlist</button>
+      </div>
+      <div class="suite" data-suite-id="2">
+        <img src="suite2.jpg" alt="Grand Suite" class="suite-image">
+        <h3>Grand Suite</h3>
+        <p>Luxurious and elegantly designed, perfect for families. Includes a dedicated kids' area.</p>
+        <button class="cta-button" onclick="addToWishlist('Grand Suite')">Add to Wishlist</button>
+      </div>
+      <div class="suite" data-suite-id="3">
+        <img src="suite3.jpg" alt="Deluxe Suite" class="suite-image">
+        <h3>Deluxe Suite</h3>
+        <p>A sophisticated retreat with stunning city views. Offers a fully stocked minibar.</p>
+        <button class="cta-button" onclick="addToWishlist('Deluxe Suite')">Add to Wishlist</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="dining" style="padding: 50px;">
+    <h2>Dining Experiences</h2>
+    <div class="restaurant">
+      <h3>The Grand Ballroom</h3>
+      <p>Elegant dining for special occasions. Reservations required.</p>
+    </div>
+    <div class="restaurant">
+      <h3>The Bistro</h3>
+      <p>Casual dining with a diverse menu. Perfect for a relaxed lunch.</p>
+    </div>
+  </section>
+
+  <section id="spa" style="padding: 50px;">
+    <h2>The Serenity Spa</h2>
+    <p>Indulge in a range of rejuvenating treatments. Book your appointment today!</p>
+  </section>
+
+  <footer style="text-align: center; padding: 20px;">
+    <p>&copy; 2024 The Royal Crest</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
