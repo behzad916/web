@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HNFart — Luxury Original Art</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #d4a843;
+  --gold2: #f0c060;
+  --crimson: #c0392b;
+  --violet: #7c3aed;
+  --teal: #0d9488;
+  --rose: #e91e8c;
+  --navy: #0f172a;
+  --dark: #1a1025;
+  --surface: #fff;
+  --bg: #fdf8f3;
+  --border: #e8e0f0;
+  --muted: #6b7280;
+  --light: #f8f4ff;
+  --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #d4a843 100%);
+  --gradient2: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #fda085 100%);
+  --gradient3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);overflow-x:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#f1f1f1}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+
+/* ══ COOKIE ══ */
+#cookie{position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  background:linear-gradient(135deg,#1a1025,#2d1b69);
+  border-top:2px solid var(--gold);
+  padding:16px 40px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  transform:translateY(100%);animation:slideUp .7s 1.8s forwards ease}
+@keyframes slideUp{to{transform:translateY(0)}}
+#cookie p{color:#e0d0ff;font-size:13px;flex:1;min-width:200px}
+#cookie a{color:var(--gold2);text-decoration:underline}
+.ck-btns{display:flex;gap:10px}
+.ck-acc{background:var(--gradient);color:#fff;border:none;padding:10px 24px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;border-radius:2px}
+.ck-dec{background:transparent;color:#aaa;border:1px solid #444;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;border-radius:2px}
+
+/* ══ TOPBAR ══ */
+.topbar{background:linear-gradient(90deg,#1a1025,#2d1b69,#1a1025);
+  padding:8px 40px;display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;color:#c0b0e0}
+.topbar-links a{color:#d4a843;text-decoration:none;margin-left:20px;font-size:11px;letter-spacing:.5px}
+.topbar-links a:hover{color:#f0c060}
+
+/* ══ NAV ══ */
+nav{background:#fff;border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:1000;
+  box-shadow:0 2px 20px rgba(124,58,237,.08)}
+.nav-main{display:flex;align-items:center;gap:16px;padding:12px 40px}
+.logo{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;
+  background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;cursor:pointer;text-decoration:none;flex-shrink:0;letter-spacing:2px}
+.search-bar{flex:1;display:flex;max-width:600px;margin:0 auto}
+.search-bar input{flex:1;padding:11px 18px;border:2px solid var(--violet);border-right:none;
+  font-family:'DM Sans',sans-serif;font-size:14px;outline:none;border-radius:3px 0 0 3px;background:var(--light)}
+.search-bar button{background:var(--gradient);color:#fff;border:none;padding:11px 22px;
+  cursor:pointer;font-size:16px;border-radius:0 3px 3px 0;transition:opacity .2s}
+.search-bar button:hover{opacity:.9}
+.nav-icons{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav-btn{display:flex;flex-direction:column;align-items:center;
+  background:none;border:none;cursor:pointer;padding:6px 10px;
+  color:var(--dark);transition:color .2s;font-family:'DM Sans',sans-serif;border-radius:4px}
+.nav-btn:hover{background:var(--light);color:var(--violet)}
+.nav-btn .icon{font-size:20px}
+.nav-btn .lbl{font-size:10px;font-weight:500;letter-spacing:.5px;margin-top:1px}
+.nav-btn.active{color:var(--violet)}
+.cart-badge,.wish-badge{position:relative}
+.badge{position:absolute;top:-4px;right:-4px;background:var(--crimson);color:#fff;
+  font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;
+  display:none;align-items:center;justify-content:center}
+
+/* NAV CATS */
+.nav-cats{background:var(--gradient);display:flex;gap:0;overflow-x:auto;padding:0 40px}
+.cat-btn{color:rgba(255,255,255,.85);background:none;border:none;
+  padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
+  letter-spacing:.8px;cursor:pointer;white-space:nowrap;text-transform:uppercase;
+  transition:all .2s;border-bottom:3px solid transparent}
+.cat-btn:hover,.cat-btn.active{color:#fff;border-bottom-color:var(--gold2);background:rgba(255,255,255,.1)}
+
+/* ══ HERO ══ */
+.hero{min-height:88vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0f0520 0%,#1a1040 40%,#2d0a3a 70%,#0f1a40 100%);z-index:0}
+.hero-orbs{position:absolute;inset:0;z-index:1;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5}
+.orb1{width:500px;height:500px;background:radial-gradient(circle,#7c3aed,transparent);top:-100px;left:-100px}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,#d4a843,transparent);top:50%;right:-50px;opacity:.3}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,#e91e8c,transparent);bottom:-50px;left:40%}
+.hero-left{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;
+  padding:80px 60px 80px 80px}
+.hero-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.hero-eyebrow::before{content:'';width:40px;height:2px;background:var(--gradient2);display:block}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(44px,5.5vw,80px);
+  font-weight:900;line-height:1.05;color:#fff;margin-bottom:24px;letter-spacing:-1px}
+.hero h1 em{font-style:italic;background:var(--gradient2);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:rgba(255,255,255,.65);font-size:16px;line-height:1.8;max-width:420px;margin-bottom:40px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn-hero{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;padding:15px 36px;
+  cursor:pointer;border:none;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+  transition:all .3s;border-radius:3px}
+.btn-hero-primary{background:var(--gradient);color:#fff;box-shadow:0 4px 24px rgba(124,58,237,.4)}
+.btn-hero-primary:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(124,58,237,.5)}
+.btn-hero-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.3)}
+.btn-hero-outline:hover{border-color:var(--gold2);color:var(--gold2)}
+.hero-stats{display:flex;gap:32px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,.1)}
+.hstat-num{font-family:'Playfair Display',serif;font-size:36px;color:var(--gold2);line-height:1}
+.hstat-lbl{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:40px}
+.hero-showcase{width:100%;max-width:500px;position:relative}
+.showcase-main{aspect-ratio:4/5;border-radius:4px;overflow:hidden;position:relative;
+  box-shadow:0 32px 80px rgba(0,0,0,.6)}
+.showcase-img{width:100%;height:100%;object-fit:cover}
+.showcase-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#2d1b69,#4c1d95,#6d28d9);font-size:80px}
+.showcase-badge{position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
+  padding:32px 24px 20px;color:#fff}
+.showcase-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700}
+.showcase-price{font-size:28px;color:var(--gold2);font-family:'Playfair Display',serif;margin-top:4px}
+.showcase-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.thumb{aspect-ratio:1;border-radius:2px;overflow:hidden;cursor:pointer;
+  border:2px solid transparent;transition:border-color .2s}
+.thumb:hover,.thumb.active{border-color:var(--gold2)}
+.thumb-img{width:100%;height:100%;object-fit:cover}
+.thumb-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px}
+
+/* ══ FEATURED STRIP ══ */
+.strip{background:linear-gradient(135deg,#1a1025,#2d1b69);
+  padding:24px 40px;display:flex;align-items:center;gap:40px;overflow-x:auto}
+.strip-item{display:flex;align-items:center;gap:12px;flex-shrink:0;color:#c0b0e0;font-size:13px}
+.strip-item .si{font-size:22px}
+.strip-item strong{color:var(--gold2)}
+
+/* ══ SECTIONS ══ */
+.section{padding:80px 40px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:16px}
+.sec-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:12px}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.15}
+.sec-title em{font-style:italic}
+.sec-title span{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.see-all{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;
+  color:var(--violet);cursor:pointer;display:flex;align-items:center;gap:8px;
+  background:none;border:none;font-family:'DM Sans',sans-serif}
+.see-all:hover{color:var(--rose)}
+
+/* ══ PAINTING CARDS ══ */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.p-card{background:#fff;border-radius:6px;overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,.06);
+  transition:transform .3s,box-shadow .3s;position:relative}
+.p-card:hover{transform:translateY(-8px);box-shadow:0 16px 48px rgba(0,0,0,.14)}
+.p-card-img{aspect-ratio:4/5;position:relative;overflow:hidden;cursor:pointer}
+.p-card-img img,.p-card-img .p-ph{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .5s}
+.p-card:hover .p-card-img img,.p-card:hover .p-card-img .p-ph{transform:scale(1.06)}
+.p-ph{display:flex;align-items:center;justify-content:center;font-size:56px}
+.p-card-overlay{position:absolute;inset:0;background:rgba(15,5,32,.6);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  opacity:0;transition:opacity .3s}
+.p-card:hover .p-card-overlay{opacity:1}
+.card-act{background:#fff;color:var(--dark);border:none;padding:10px 18px;
+  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all .2s}
+.card-act:hover{background:var(--gold);color:#fff}
+.card-act.wish{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4)}
+.card-act.wish.active,.card-act.wish:hover{background:var(--rose);border-color:var(--rose)}
+.p-card-badge{position:absolute;top:12px;left:12px;
+  padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;border-radius:2px;color:#fff}
+.badge-new{background:var(--teal)}
+.badge-hot{background:var(--crimson)}
+.badge-sale{background:var(--violet)}
+.p-card-body{padding:18px}
+.p-card-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:4px;cursor:pointer}
+.p-card-title:hover{color:var(--violet)}
+.p-card-meta{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.p-card-footer{display:flex;align-items:center;justify-content:space-between}
+.p-price{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark)}
+.p-price-orig{font-size:13px;color:var(--muted);text-decoration:line-through;margin-left:8px}
+.stars{color:var(--gold);font-size:12px}
+.btn-addcart{background:var(--gradient);color:#fff;border:none;padding:9px 18px;
+  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;
+  border-radius:3px;transition:all .2s;letter-spacing:.5px}
+.btn-addcart:hover{opacity:.88;transform:scale(1.03)}
+
+/* ══ FILTERS ══ */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.flt{padding:8px 20px;border:2px solid var(--border);border-radius:20px;
+  background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
+  cursor:pointer;transition:all .2s;color:var(--muted)}
+.flt:hover{border-color:var(--violet);color:var(--violet)}
+.flt.active{background:var(--gradient);color:#fff;border-color:transparent}
+
+/* ══ SORT ══ */
+.sort-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.sort-row select{font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 14px;
+  border:2px solid var(--border);border-radius:4px;outline:none;cursor:pointer;color:var(--dark);
+  background:var(--light)}
+.result-count{font-size:13px;color:var(--muted)}
+
+/* ══ UPLOAD SECTION ══ */
+.upload-section{background:linear-gradient(135deg,#1a1025,#2d1b69,#1a3040);
+  border-radius:8px;padding:48px;margin:40px 0;position:relative;overflow:hidden}
+.upload-section::before{content:'';position:absolute;top:-50px;right:-50px;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,168,67,.2),transparent);pointer-events:none}
+.upload-title{font-family:'Playfair Display',serif;font-size:32px;color:#fff;font-weight:700;margin-bottom:8px}
+.upload-sub{color:rgba(255,255,255,.6);font-size:15px;margin-bottom:32px}
+.upload-area{border:2px dashed rgba(212,168,67,.5);border-radius:6px;
+  padding:48px;text-align:center;cursor:pointer;transition:all .3s;
+  background:rgba(255,255,255,.03)}
+.upload-area:hover,.upload-area.drag{border-color:var(--gold2);background:rgba(212,168,67,.05)}
+.upload-icon{font-size:48px;margin-bottom:16px}
+.upload-area p{color:rgba(255,255,255,.7);font-size:14px;line-height:1.8}
+.upload-area strong{color:var(--gold2)}
+#fileInput{display:none}
+.upload-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:20px}
+.preview-card{position:relative;border-radius:6px;overflow:hidden;
+  border:2px solid rgba(212,168,67,.3);background:#1a1025}
+.preview-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.preview-info{padding:10px;color:#fff;font-size:12px}
+.preview-name{font-weight:600;margin-bottom:6px;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preview-price-input{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(212,168,67,.3);
+  color:#fff;padding:6px 10px;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12px;outline:none}
+.preview-price-input::placeholder{color:rgba(255,255,255,.4)}
+.preview-del{position:absolute;top:6px;right:6px;background:var(--crimson);color:#fff;
+  border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center}
+.btn-publish{background:var(--gradient2);color:#fff;border:none;padding:14px 36px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;
+  cursor:pointer;border-radius:3px;margin-top:20px;transition:all .2s}
+.btn-publish:hover{opacity:.9;transform:translateY(-2px)}
+
+/* ══ CART PANEL ══ */
+.cart-panel{position:fixed;top:0;right:0;bottom:0;width:440px;z-index:2000;
+  background:#fff;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:-8px 0 60px rgba(0,0,0,.15)}
+.cart-panel.open{transform:translateX(0)}
+.cart-head{background:var(--gradient);color:#fff;padding:24px 28px;
+  display:flex;align-items:center;justify-content:space-between}
+.cart-head h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700}
+.cart-close{background:rgba(255,255,255,.2);border:none;color:#fff;
+  width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer}
+.cart-body{flex:1;overflow-y:auto;padding:20px 28px}
+.cart-empty-msg{text-align:center;padding:60px 0;color:var(--muted)}
+.cart-empty-msg .ce{font-size:48px;margin-bottom:16px}
+.c-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--border)}
+.c-item-img{width:72px;height:88px;border-radius:4px;overflow:hidden;flex-shrink:0;border:2px solid var(--border)}
+.c-item-img img,.c-item-img .c-ph{width:100%;height:100%;object-fit:cover;display:flex;align-items:center;justify-content:center;font-size:28px}
+.c-item-info{flex:1}
+.c-item-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;margin-bottom:3px}
+.c-item-meta{font-size:11px;color:var(--muted);margin-bottom:8px}
+.c-item-price{font-size:18px;font-weight:700;color:var(--violet)}
+.c-item-qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qty-btn{width:26px;height:26px;border:1px solid var(--border);background:#fff;
+  border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.qty-btn:hover{background:var(--violet);color:#fff;border-color:var(--violet)}
+.qty-num{font-size:14px;font-weight:600;min-width:20px;text-align:center}
+.c-remove{color:var(--crimson);font-size:11px;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:8px}
+.c-remove:hover{text-decoration:underline}
+.cart-foot{padding:20px 28px;border-top:2px solid var(--border);background:var(--bg)}
+.cart-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
+.cart-total-row{display:flex;justify-content:space-between;margin:12px 0;
+  font-family:'Playfair Display',serif;font-size:24px;font-weight:700}
+.btn-checkout{width:100%;background:var(--gradient);color:#fff;border:none;
+  padding:16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;
+  transition:opacity .2s;margin-top:8px}
+.btn-checkout:hover{opacity:.9}
+.btn-continue{width:100%;background:transparent;color:var(--violet);
+  border:2px solid var(--violet);padding:12px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;
+  cursor:pointer;border-radius:3px;margin-top:8px;transition:all .2s}
+.btn-continue:hover{background:var(--light)}
+
+/* ══ MODALS ══ */
+.overlay{position:fixed;inset:0;background:rgba(15,5,32,.75);z-index:1500;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.on{opacity:1;pointer-events:all}
+.modal{background:#fff;border-radius:8px;padding:48px;max-width:500px;width:100%;
+  position:relative;max-height:92vh;overflow-y:auto;
+  transform:scale(.95) translateY(20px);transition:transform .3s}
+.overlay.on .modal{transform:scale(1) translateY(0)}
+.modal.wide{max-width:680px}
+.m-close{position:absolute;top:16px;right:20px;background:var(--light);border:none;
+  width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;color:var(--muted)}
+.m-close:hover{background:var(--violet);color:#fff}
+.modal-logo{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;
+  background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;text-align:center;letter-spacing:2px;margin-bottom:6px}
+.modal-sub{text-align:center;font-size:12px;color:var(--muted);letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:32px}
+.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:28px}
+.t-btn{flex:1;background:none;border:none;font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);padding:12px;cursor:pointer;border-bottom:3px solid transparent;
+  margin-bottom:-2px;transition:all .2s}
+.t-btn.active{color:var(--violet);border-bottom-color:var(--violet)}
+.f-group{margin-bottom:18px}
+.f-group label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:7px;font-weight:600}
+.f-group input,.f-group select,.f-group textarea{width:100%;padding:12px 14px;
+  border:2px solid var(--border);border-radius:4px;font-family:'DM Sans',sans-serif;
+  font-size:14px;color:var(--dark);outline:none;background:var(--light);transition:border-color .2s}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--violet);background:#fff}
+.btn-modal{width:100%;background:var(--gradient);color:#fff;border:none;
+  padding:15px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:4px;
+  margin-top:6px;transition:opacity .2s}
+.btn-modal:hover{opacity:.9}
+.divider{display:flex;align-items:center;gap:14px;margin:20px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.divider span{font-size:11px;color:var(--muted);font-weight:500}
+.soc-btns{display:flex;gap:10px}
+.soc-btn{flex:1;padding:12px;border:2px solid var(--border);background:#fff;
+  font-size:20px;cursor:pointer;border-radius:4px;transition:all .2s;text-align:center}
+.soc-btn:hover{border-color:var(--violet);transform:translateY(-2px)}
+.form-foot{font-size:12px;color:var(--muted);text-align:center;margin-top:18px;line-height:1.8}
+.form-foot a{color:var(--violet)}
+
+/* ══ CHECKOUT MODAL ══ */
+.chk-section{margin-bottom:28px}
+.chk-section h4{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+  margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--border);
+  display:flex;align-items:center;gap:10px}
+.chk-section h4 .n{width:26px;height:26px;background:var(--gradient);color:#fff;
+  border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700}
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.pay-opt{display:flex;align-items:center;gap:10px;padding:14px 12px;
+  border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:all .2s;font-size:13px}
+.pay-opt:hover{border-color:var(--violet)}
+.pay-opt.sel{border-color:var(--violet);background:var(--light)}
+.pay-opt input{accent-color:var(--violet)}
+.sum-line{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:5px 0}
+.sum-total{display:flex;justify-content:space-between;font-family:'Playfair Display',serif;
+  font-size:24px;font-weight:700;padding:14px 0;border-top:2px solid var(--border);margin-top:8px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ══ INVOICE ══ */
+.inv-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px}
+.inv-brand{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;
+  background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px}
+.inv-meta{text-align:right;font-size:12px;color:var(--muted);line-height:2}
+.inv-meta strong{font-size:16px;color:var(--dark)}
+.status-ok{display:inline-block;padding:4px 12px;background:rgba(13,148,136,.1);
+  color:var(--teal);border:1px solid rgba(13,148,136,.3);
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;border-radius:20px;font-weight:700}
+.inv-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px}
+.inv-table th{text-align:left;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);padding:10px 0;border-bottom:2px solid var(--border);font-weight:600}
+.inv-table td{padding:14px 0;border-bottom:1px solid var(--bg);color:var(--muted)}
+.inv-table td:last-child{text-align:right;color:var(--dark);font-weight:600}
+.inv-totals{background:var(--bg);padding:16px 20px;border-radius:6px;margin-top:12px}
+.inv-tr{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:var(--muted)}
+.inv-grand{display:flex;justify-content:space-between;font-family:'Playfair Display',serif;
+  font-size:24px;font-weight:700;color:var(--dark);padding-top:12px;margin-top:8px;
+  border-top:2px solid var(--border)}
+.inv-foot{margin-top:24px;padding-top:20px;border-top:1px solid var(--border);
+  font-size:12px;color:var(--muted);text-align:center;line-height:2}
+.inv-btns{display:flex;gap:12px;margin-top:20px}
+.inv-btns button{flex:1;padding:13px;font-family:'DM Sans',sans-serif;font-size:12px;
+  font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:4px;border:none}
+.inv-print{background:var(--gradient);color:#fff}
+.inv-close{background:var(--light);color:var(--dark)}
+
+/* ══ PRODUCT DETAIL ══ */
+.pd-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.pd-img-area{position:relative}
+.pd-main-img{aspect-ratio:4/5;border-radius:6px;overflow:hidden;
+  border:2px solid var(--border);background:var(--light);
+  display:flex;align-items:center;justify-content:center;font-size:100px}
+.pd-main-img img{width:100%;height:100%;object-fit:cover}
+.pd-info h2{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;margin-bottom:8px}
+.pd-meta{font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.pd-price{font-family:'Playfair Display',serif;font-size:38px;font-weight:900;
+  background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;margin-bottom:20px}
+.pd-desc{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:24px}
+.pd-details{background:var(--light);border-radius:6px;padding:16px;margin-bottom:24px}
+.pd-detail-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;
+  border-bottom:1px solid var(--border)}
+.pd-detail-row:last-child{border:none}
+.pd-detail-row span:first-child{color:var(--muted);font-weight:500}
+.pd-detail-row span:last-child{font-weight:600}
+.pd-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-pd-cart{flex:1;background:var(--gradient);color:#fff;border:none;
+  padding:15px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:4px;min-width:140px}
+.btn-pd-wish{background:var(--light);color:var(--dark);border:2px solid var(--border);
+  padding:15px 18px;border-radius:4px;font-size:20px;cursor:pointer;transition:all .2s}
+.btn-pd-wish:hover,.btn-pd-wish.active{background:#fff0f5;border-color:var(--rose);color:var(--rose)}
+
+/* ══ WISH LIST ══ */
+.wish-section{background:linear-gradient(135deg,#fff0f5,#f8f4ff);border-radius:8px;padding:40px;margin:20px 0}
+.wish-empty{text-align:center;padding:40px;color:var(--muted)}
+
+/* ══ REVIEWS ══ */
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:24px}
+.review-card{background:#fff;border-radius:6px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.r-stars{color:var(--gold);font-size:14px;margin-bottom:8px}
+.r-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:12px}
+.r-author{font-size:12px;font-weight:600;color:var(--dark);display:flex;align-items:center;gap:8px}
+.r-avatar{width:28px;height:28px;border-radius:50%;background:var(--gradient);
+  display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+
+/* ══ BANNER ══ */
+.promo-banner{background:var(--gradient2);padding:48px 80px;text-align:center;color:#fff}
+.promo-banner h2{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:900;margin-bottom:12px}
+.promo-banner p{font-size:16px;opacity:.9;margin-bottom:28px}
+
+/* ══ FOOTER ══ */
+footer{background:linear-gradient(135deg,#0f0520,#1a1040);color:#a090c0;padding:60px 40px 30px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.f-brand{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;
+  background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;letter-spacing:3px;margin-bottom:12px}
+.f-tagline{font-size:13px;color:#6050a0;line-height:1.7;max-width:240px}
+.f-head{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#fff;font-weight:600;margin-bottom:16px}
+footer a{color:#a090c0;text-decoration:none;display:block;margin-bottom:8px;font-size:13px;transition:color .2s}
+footer a:hover{color:var(--gold2)}
+.footer-bottom{border-top:1px solid #2a1a4a;padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-bottom p{font-size:12px}
+.pay-icons{display:flex;gap:10px;font-size:22px}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:110px;right:28px;z-index:9998;
+  background:var(--gradient);color:#fff;
+  padding:14px 24px;font-size:13px;font-weight:500;
+  border-radius:4px;box-shadow:0 8px 32px rgba(124,58,237,.4);
+  transform:translateY(20px);opacity:0;pointer-events:none;transition:all .3s;
+  max-width:300px}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ══ BACKDROP ══ */
+.backdrop{position:fixed;inset:0;z-index:1490;background:rgba(15,5,32,.5);
+  opacity:0;pointer-events:none;transition:opacity .3s}
+.backdrop.show{opacity:1;pointer-events:all}
+
+/* ══ WISHLIST PANEL ══ */
+.wish-panel{position:fixed;top:0;right:0;bottom:0;width:400px;z-index:2000;
+  background:#fff;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;box-shadow:-8px 0 60px rgba(0,0,0,.15)}
+.wish-panel.open{transform:translateX(0)}
+.wish-head{background:var(--gradient2);color:#fff;padding:24px 28px;
+  display:flex;align-items:center;justify-content:space-between}
+.wish-head h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700}
+
+/* ══ ANIM ══ */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.p-card{animation:fadeInUp .5s ease backwards}
+.p-card:nth-child(1){animation-delay:.05s}.p-card:nth-child(2){animation-delay:.1s}
+.p-card:nth-child(3){animation-delay:.15s}.p-card:nth-child(4){animation-delay:.2s}
+.p-card:nth-child(5){animation-delay:.25s}.p-card:nth-child(6){animation-delay:.3s}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}.hero-right{display:none}
+  .hero-left{padding:60px 24px}
+  .nav-main{padding:10px 16px;gap:10px}
+  .nav-cats{padding:0 16px}
+  .section{padding:60px 20px}
+  .footer-top{grid-template-columns:1fr 1fr}
+  footer{padding:40px 20px 20px}
+  .cart-panel,.wish-panel{width:100%}
+  .pd-grid{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr}
+  .strip{padding:16px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- COOKIE -->
+<div id="cookie">
+  <p>🍪 We use cookies to give you the best experience. By continuing, you agree to our <a href="#">Cookie Policy</a> and <a href="#">Privacy Policy</a>.</p>
+  <div class="ck-btns">
+    <button class="ck-dec" onclick="dismissCookie()">Decline</button>
+    <button class="ck-acc" onclick="dismissCookie()">✓ Accept All</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+<!-- BACKDROP -->
+<div class="backdrop" id="backdrop" onclick="closeAll()"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>🎨 Free worldwide shipping on orders over $500 · Certificate of Authenticity included</span>
+  <div class="topbar-links">
+    <a href="#" onclick="showAuth()">My Account</a>
+    <a href="#" onclick="openWish()">Wishlist</a>
+    <a href="#">Track Order</a>
+    <a href="#">Help</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-main">
+    <a class="logo" onclick="scrollTop()">HNF<span style="color:var(--gold)">art</span></a>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search paintings, styles, sizes..." oninput="searchPaintings()">
+      <button onclick="searchPaintings()">🔍</button>
+    </div>
+    <div class="nav-icons">
+      <div class="wish-badge">
+        <button class="nav-btn" onclick="openWish()">
+          <span class="icon">❤️</span><span class="lbl">Wishlist</span>
+          <span class="badge" id="wishBadge">0</span>
+        </button>
+      </div>
+      <div class="cart-badge">
+        <button class="nav-btn" onclick="openCart()">
+          <span class="icon">🛒</span><span class="lbl">Cart</span>
+          <span class="badge" id="cartBadge">0</span>
+        </button>
+      </div>
+      <div id="authBtn">
+        <button class="nav-btn" onclick="showAuth()">
+          <span class="icon">👤</span><span class="lbl">Sign In</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="nav-cats">
+    <button class="cat-btn active" onclick="filterCat('all',this)">All Works</button>
+    <button class="cat-btn" onclick="filterCat('abstract',this)">Abstract</button>
+    <button class="cat-btn" onclick="filterCat('texture',this)">Texture & Mixed</button>
+    <button class="cat-btn" onclick="filterCat('minimalist',this)">Minimalist</button>
+    <button class="cat-btn" onclick="filterCat('colorfield',this)">Color Field</button>
+    <button class="cat-btn" onclick="filterCat('landscape',this)">Landscape</button>
+    <button class="cat-btn" onclick="filterCat('figurative',this)">Figurative</button>
+    <button class="cat-btn" onclick="scrollToUpload()">📤 Upload My Art</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Curated Original Art</div>
+    <h1>Where <em>Colour</em><br>Becomes<br>Emotion</h1>
+    <p class="hero-sub">Handcrafted abstract paintings — each a unique original, created with passion. Bring extraordinary art into your space.</p>
+    <div class="hero-actions">
+      <a class="btn-hero btn-hero-primary" href="#gallery-section">Explore Gallery →</a>
+      <button class="btn-hero btn-hero-outline" onclick="scrollToUpload()">📤 Sell Your Art</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hstat-num">180+</div><div class="hstat-lbl">Originals Sold</div></div>
+      <div><div class="hstat-num">32</div><div class="hstat-lbl">Countries</div></div>
+      <div><div class="hstat-num">4.9★</div><div class="hstat-lbl">Avg Rating</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-showcase">
+      <div class="showcase-main" id="showcaseMain">
+        <div class="showcase-placeholder">🎨</div>
+        <div class="showcase-badge">
+          <div class="showcase-title">Amber Horizon</div>
+          <div class="showcase-price">$1,480</div>
+        </div>
+      </div>
+      <div class="showcase-thumbs" id="showcaseThumbs">
+        <div class="thumb active" onclick="setShowcase(this,'🎨','Amber Horizon','$1,480')"><div class="thumb-ph" style="background:linear-gradient(135deg,#d4a843,#7c3aed)">🎨</div></div>
+        <div class="thumb" onclick="setShowcase(this,'🖼','Crimson Flow','$2,100')"><div class="thumb-ph" style="background:linear-gradient(135deg,#c0392b,#e91e8c)">🖼</div></div>
+        <div class="thumb" onclick="setShowcase(this,'🌊','Teal Dream','$980')"><div class="thumb-ph" style="background:linear-gradient(135deg,#0d9488,#4facfe)">🌊</div></div>
+        <div class="thumb" onclick="setShowcase(this,'💜','Violet Silence','$1,250')"><div class="thumb-ph" style="background:linear-gradient(135deg,#7c3aed,#e91e8c)">💜</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item"><span class="si">🚚</span><span><strong>Free Shipping</strong> orders $500+</span></div>
+  <div class="strip-item"><span class="si">📜</span><span><strong>Certificate</strong> of Authenticity</span></div>
+  <div class="strip-item"><span class="si">🛡️</span><span><strong>Secure</strong> Checkout</span></div>
+  <div class="strip-item"><span class="si">↩️</span><span><strong>30-Day</strong> Return Policy</span></div>
+  <div class="strip-item"><span class="si">📦</span><span><strong>Careful</strong> Professional Packaging</span></div>
+  <div class="strip-item"><span class="si">💳</span><span><strong>All Payment</strong> Methods Accepted</span></div>
+</div>
+
+<!-- GALLERY SECTION -->
+<div class="section" id="gallery-section">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow" style="color:var(--violet)">The Collection</div>
+      <h2 class="sec-title">Original <em>Paintings</em> by <span>HNFart</span></h2>
+    </div>
+    <button class="see-all" onclick="filterCat('all',null)">View All →</button>
+  </div>
+
+  <div class="filters" id="filterRow">
+    <button class="flt active" onclick="filterCat('all',this)">All</button>
+    <button class="flt" onclick="filterCat('abstract',this)">Abstract</button>
+    <button class="flt" onclick="filterCat('texture',this)">Texture</button>
+    <button class="flt" onclick="filterCat('minimalist',this)">Minimalist</button>
+    <button class="flt" onclick="filterCat('colorfield',this)">Color Field</button>
+    <button class="flt" onclick="filterCat('landscape',this)">Landscape</button>
+    <button class="flt" onclick="filterCat('figurative',this)">Figurative</button>
+  </div>
+
+  <div class="sort-row">
+    <div class="result-count" id="resultCount">Showing 16 paintings</div>
+    <select id="sortSel" onchange="sortPaintings()">
+      <option value="featured">Featured</option>
+      <option value="price-low">Price: Low to High</option>
+      <option value="price-high">Price: High to Low</option>
+      <option value="newest">Newest First</option>
+      <option value="rating">Top Rated</option>
+    </select>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid"></div>
+</div>
+
+<!-- UPLOAD SECTION -->
+<div class="section" id="upload-section" style="background:var(--dark);padding-top:60px;padding-bottom:60px">
+  <div class="upload-section">
+    <div class="upload-title">🎨 Sell Your Own Paintings</div>
+    <div class="upload-sub">Upload your artwork, set your price, and reach collectors worldwide.</div>
+    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()"
+      ondragover="event.preventDefault();this.classList.add('drag')"
+      ondragleave="this.classList.remove('drag')"
+      ondrop="handleDrop(event)">
+      <div class="upload-icon">🖼️</div>
+      <p><strong>Click to upload</strong> or drag & drop your painting images here<br>
+      JPEG, PNG, WEBP — up to 20MB per image · Multiple files supported</p>
+    </div>
+    <input type="file" id="fileInput" multiple accept="image/*" onchange="handleFiles(this.files)">
+    <div class="upload-preview" id="uploadPreview"></div>
+    <button class="btn-publish" id="publishBtn" style="display:none" onclick="publishPaintings()">✨ Publish to Gallery</button>
+  </div>
+</div>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <h2>🎁 Commission a Custom Painting</h2>
+  <p>Tell us your vision — size, colours, mood — and HNFart will create something just for you.</p>
+  <button class="btn-hero btn-hero-outline" style="color:#fff;border-color:rgba(255,255,255,.6);margin:0 auto;display:inline-flex" onclick="showAuth()">Get a Custom Quote →</button>
+</div>
+
+<!-- REVIEWS -->
+<div class="section" style="background:var(--light)">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow" style="color:var(--rose)">Customer Love</div>
+      <h2 class="sec-title">What Collectors <em>Say</em></h2>
+    </div>
+  </div>
+  <div class="reviews-grid" id="reviewsGrid"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="f-brand">HNFart</div>
+      <div class="f-tagline">Original abstract paintings. Each work signed, certified, and shipped worldwide with care.</div>
+    </div>
+    <div>
+      <div class="f-head">Shop</div>
+      <a href="#gallery-section">Gallery</a>
+      <a href="#" onclick="filterCat('abstract',null)">Abstract</a>
+      <a href="#" onclick="filterCat('texture',null)">Texture</a>
+      <a href="#upload-section">Sell Art</a>
+    </div>
+    <div>
+      <div class="f-head">Account</div>
+      <a href="#" onclick="showAuth()">Sign In</a>
+      <a href="#" onclick="showAuth()">Create Account</a>
+      <a href="#" onclick="openWish()">Wishlist</a>
+      <a href="#">Track Order</a>
+    </div>
+    <div>
+      <div class="f-head">Legal</div>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">Terms of Sale</a>
+      <a href="#">Shipping Info</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 HNFart. All rights reserved. Original Art Only.</p>
+    <div class="pay-icons" title="Accepted">💳 🅿️ 🍎 ₿ 🏦</div>
+  </div>
+</footer>
+
+<!-- ══ AUTH MODAL ══ -->
+<div class="overlay" id="authModal">
+  <div class="modal">
+    <button class="m-close" onclick="closeOverlay('authModal')">✕</button>
+    <div class="modal-logo">HNFart</div>
+    <div class="modal-sub">Your personal art collection awaits</div>
+    <div class="tabs">
+      <button class="t-btn active" id="tLogin" onclick="swTab('login')">Sign In</button>
+      <button class="t-btn" id="tSignup" onclick="swTab('signup')">Create Account</button>
+    </div>
+    <div id="loginForm">
+      <div class="f-group"><label>Email</label><input type="email" id="lEmail" placeholder="your@email.com"></div>
+      <div class="f-group"><label>Password</label><input type="password" id="lPass" placeholder="••••••••"></div>
+      <button class="btn-modal" onclick="doLogin()">Sign In →</button>
+      <div class="divider"><span>or continue with</span></div>
+      <div class="soc-btns">
+        <button class="soc-btn" onclick="socialLogin('Google')" title="Google">🇬</button>
+        <button class="soc-btn" onclick="socialLogin('Apple')" title="Apple">🍎</button>
+        <button class="soc-btn" onclick="socialLogin('Facebook')" title="Facebook">📘</button>
+      </div>
+      <p class="form-foot">By signing in you agree to our <a href="#">Terms</a> & <a href="#">Privacy Policy</a></p>
+    </div>
+    <div id="signupForm" style="display:none">
+      <div class="f-group"><label>Full Name</label><input type="text" id="sName" placeholder="Your Name"></div>
+      <div class="f-group"><label>Email</label><input type="email" id="sEmail" placeholder="your@email.com"></div>
+      <div class="f-group"><label>Password</label><input type="password" id="sPass" placeholder="Min. 8 characters"></div>
+      <button class="btn-modal" onclick="doSignup()">Create Account →</button>
+      <p class="form-foot">By registering you agree to our <a href="#">Terms</a> & <a href="#">Privacy</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRODUCT DETAIL MODAL ══ -->
+<div class="overlay" id="pdModal">
+  <div class="modal wide">
+    <button class="m-close" onclick="closeOverlay('pdModal')">✕</button>
+    <div id="pdContent"></div>
+  </div>
+</div>
+
+<!-- ══ CHECKOUT MODAL ══ -->
+<div class="overlay" id="checkoutModal">
+  <div class="modal wide">
+    <button class="m-close" onclick="closeOverlay('checkoutModal')">✕</button>
+    <div class="modal-logo" style="margin-bottom:28px">HNFart — Checkout</div>
+    <div class="chk-section">
+      <h4><span class="n">1</span> Delivery Details</h4>
+      <div class="f-group"><label>Full Name</label><input type="text" id="ckName" placeholder="Your full name"></div>
+      <div class="f-group"><label>Email</label><input type="email" id="ckEmail" placeholder="email@example.com"></div>
+      <div class="f-group"><label>Phone</label><input type="tel" id="ckPhone" placeholder="+1 234 567 8900"></div>
+      <div class="f-group"><label>Address</label><input type="text" id="ckAddr" placeholder="Street address, City, Country, ZIP"></div>
+    </div>
+    <div class="chk-section">
+      <h4><span class="n">2</span> Payment Method</h4>
+      <div class="pay-grid">
+        <label class="pay-opt sel" id="pm1"><input type="radio" name="pay" value="card" checked onchange="selPay('pm1')"> 💳 Credit / Debit Card</label>
+        <label class="pay-opt" id="pm2"><input type="radio" name="pay" value="paypal" onchange="selPay('pm2')"> 🅿️ PayPal</label>
+        <label class="pay-opt" id="pm3"><input type="radio" name="pay" value="apple" onchange="selPay('pm3')"> 🍎 Apple Pay</label>
+        <label class="pay-opt" id="pm4"><input type="radio" name="pay" value="crypto" onchange="selPay('pm4')"> ₿ Cryptocurrency</label>
+        <label class="pay-opt" id="pm5"><input type="radio" name="pay" value="bank" onchange="selPay('pm5')"> 🏦 Bank Transfer</label>
+        <label class="pay-opt" id="pm6"><input type="radio" name="pay" value="klarna" onchange="selPay('pm6')"> 🛍 Klarna / BNPL</label>
+      </div>
+      <div id="cardFields">
+        <div class="f-group"><label>Card Number</label><input type="text" placeholder="4242 4242 4242 4242" maxlength="19"></div>
+        <div class="two-col">
+          <div class="f-group"><label>Expiry</label><input type="text" placeholder="MM / YY"></div>
+          <div class="f-group"><label>CVV</label><input type="text" placeholder="•••" maxlength="4"></div>
+        </div>
+      </div>
+    </div>
+    <div class="chk-section">
+      <h4><span class="n">3</span> Order Summary</h4>
+      <div id="ckItems"></div>
+      <div class="inv-totals" style="margin-top:12px">
+        <div class="inv-tr"><span>Subtotal</span><span id="ckSub"></span></div>
+        <div class="inv-tr"><span>Shipping</span><span style="color:var(--teal)">Free 🚀</span></div>
+        <div class="inv-tr"><span>Tax (5%)</span><span id="ckTax"></span></div>
+        <div class="inv-grand"><span>Total</span><span id="ckTotal"></span></div>
+      </div>
+    </div>
+    <button class="btn-checkout" onclick="placeOrder()">✓ Complete Purchase</button>
+  </div>
+</div>
+
+<!-- ══ INVOICE MODAL ══ -->
+<div class="overlay" id="invoiceModal">
+  <div class="modal wide">
+    <button class="m-close" onclick="closeOverlay('invoiceModal')">✕</button>
+    <div id="invContent"></div>
+  </div>
+</div>
+
+<!-- ══ CART PANEL ══ -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-head">
+    <h3>🛒 Shopping Cart</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-foot">
+    <div class="cart-row"><span>Items</span><span id="cartItemCount">0</span></div>
+    <div class="cart-row"><span>Shipping</span><span style="color:var(--teal)">Free</span></div>
+    <div class="cart-total-row"><span>Total</span><span id="cartTotalAmt">$0</span></div>
+    <button class="btn-checkout" onclick="goCheckout()">Proceed to Checkout →</button>
+    <button class="btn-continue" onclick="closeCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- ══ WISHLIST PANEL ══ -->
+<div class="wish-panel" id="wishPanel">
+  <div class="wish-head">
+    <h3>❤️ Wishlist</h3>
+    <button class="cart-close" onclick="closeWish()">✕</button>
+  </div>
+  <div class="cart-body" id="wishBody"></div>
+</div>
+
+<script>
+// ══ DATA ══
+const allPaintings = [
+  {id:1,title:'Amber Horizon',series:'Abstract',cat:'abstract',price:1480,originalPrice:null,emoji:'🎨',bg:'linear-gradient(135deg,#d4a843,#7c3aed,#c0392b)',size:'80×100 cm',medium:'Acrylic on Canvas',rating:4.9,reviews:24,badge:'hot',year:2024,desc:'A sweeping collision of warm gold and cool violet — this piece commands any room it enters. Layers of texture create movement across the canvas.'},
+  {id:2,title:'Crimson Flow',series:'Abstract',cat:'abstract',price:2100,originalPrice:2600,emoji:'🖼',bg:'linear-gradient(135deg,#c0392b,#e91e8c,#d4a843)',size:'120×150 cm',medium:'Oil on Canvas',rating:5.0,reviews:31,badge:'hot',year:2024,desc:'Deep crimson currents intertwine with rose gold, creating a sense of visceral energy and emotional intensity.'},
+  {id:3,title:'Strata No.7',series:'Texture',cat:'texture',price:1750,originalPrice:null,emoji:'🗿',bg:'linear-gradient(135deg,#6b7280,#374151,#d4a843)',size:'100×120 cm',medium:'Mixed Media',rating:4.8,reviews:18,badge:'new',year:2025,desc:'Built up with layers of plaster, sand, and pigment, Strata No.7 invites touch as much as sight.'},
+  {id:4,title:'Teal Dream',series:'Color Field',cat:'colorfield',price:980,originalPrice:1200,emoji:'🌊',bg:'linear-gradient(135deg,#0d9488,#4facfe,#00f2fe)',size:'90×70 cm',medium:'Acrylic on Canvas',rating:4.7,reviews:22,badge:'sale',year:2024,desc:'A peaceful expanse of teal and aqua — inspired by coastal waters at dawn.'},
+  {id:5,title:'Void Studies III',series:'Minimalist',cat:'minimalist',price:2400,originalPrice:null,emoji:'⬛',bg:'linear-gradient(135deg,#1a1025,#374151,#6b7280)',size:'120×120 cm',medium:'Oil on Canvas',rating:5.0,reviews:12,badge:null,year:2025,desc:'Profound restraint. A meditation on negative space, depth, and the beauty of what is left unsaid.'},
+  {id:6,title:'Pale Drift',series:'Minimalist',cat:'minimalist',price:720,originalPrice:null,emoji:'🤍',bg:'linear-gradient(135deg,#f8f4ff,#e8e0f0,#c4b5fd)',size:'50×70 cm',medium:'Watercolour',rating:4.6,reviews:9,badge:'new',year:2025,desc:'Soft washes of pale lavender and cream — elegant and serene. Perfect for intimate spaces.'},
+  {id:7,title:'Rust & Bloom',series:'Texture',cat:'texture',price:1680,originalPrice:null,emoji:'🔶',bg:'linear-gradient(135deg,#d97706,#c0392b,#7c3aed)',size:'100×100 cm',medium:'Mixed Media',rating:4.9,reviews:27,badge:null,year:2024,desc:'Oxidised metal textures meet organic bloom shapes in this bold and tactile masterpiece.'},
+  {id:8,title:'Cyan Dissolution',series:'Color Field',cat:'colorfield',price:1100,originalPrice:null,emoji:'🔷',bg:'linear-gradient(135deg,#0ea5e9,#6366f1,#8b5cf6)',size:'80×80 cm',medium:'Acrylic on Canvas',rating:4.8,reviews:15,badge:null,year:2024,desc:'Electric cyan bleeds into indigo — a hypnotic gradient that seems to glow from within.'},
+  {id:9,title:'Golden Silence',series:'Abstract',cat:'abstract',price:3200,originalPrice:null,emoji:'✨',bg:'linear-gradient(135deg,#f0c060,#d4a843,#92400e)',size:'140×180 cm',medium:'Gold Leaf & Acrylic',rating:5.0,reviews:8,badge:'hot',year:2025,desc:'Real gold leaf incorporated into the canvas. A large-scale statement piece that transforms any space into a gallery.'},
+  {id:10,title:'Violet Silence',series:'Abstract',cat:'abstract',price:1250,originalPrice:1500,emoji:'💜',bg:'linear-gradient(135deg,#7c3aed,#e91e8c,#4c1d95)',size:'80×100 cm',medium:'Acrylic on Canvas',rating:4.9,reviews:20,badge:'sale',year:2024,desc:'Whispers of violet and magenta swirl together in a tender, introspective composition.'},
+  {id:11,title:'Mountain Spirit',series:'Landscape',cat:'landscape',price:1350,originalPrice:null,emoji:'🏔️',bg:'linear-gradient(135deg,#0f172a,#1e3a5f,#d4a843)',size:'90×120 cm',medium:'Oil on Canvas',rating:4.7,reviews:16,badge:'new',year:2025,desc:'Abstract mountain forms emerge from deep midnight blues, lit by a warm golden ridge.'},
+  {id:12,title:'Forest Breath',series:'Landscape',cat:'landscape',price:900,originalPrice:null,emoji:'🌿',bg:'linear-gradient(135deg,#065f46,#059669,#d4a843)',size:'70×90 cm',medium:'Acrylic on Canvas',rating:4.8,reviews:11,badge:null,year:2025,desc:'Textured layers of deep forest green, broken by shafts of golden light filtering through the canopy.'},
+  {id:13,title:'Figure in Red',series:'Figurative',cat:'figurative',price:2800,originalPrice:null,emoji:'🧍',bg:'linear-gradient(135deg,#c0392b,#1a1025,#d4a843)',size:'100×140 cm',medium:'Oil on Canvas',rating:5.0,reviews:6,badge:'new',year:2025,desc:'A solitary figure rendered in bold reds and near-black — powerful, mysterious, utterly memorable.'},
+  {id:14,title:'Dance of Light',series:'Figurative',cat:'figurative',price:1900,originalPrice:2200,emoji:'💃',bg:'linear-gradient(135deg,#e91e8c,#f0c060,#7c3aed)',size:'80×110 cm',medium:'Acrylic on Canvas',rating:4.9,reviews:19,badge:'sale',year:2024,desc:'Movement frozen in pigment — joyful, electric, impossible to ignore.'},
+  {id:15,title:'Ochre Expanse',series:'Color Field',cat:'colorfield',price:1150,originalPrice:null,emoji:'🟠',bg:'linear-gradient(135deg,#d97706,#f59e0b,#fbbf24)',size:'100×80 cm',medium:'Acrylic on Canvas',rating:4.7,reviews:14,badge:null,year:2024,desc:'A warm ocean of earthy ochre and amber, evoking the feeling of standing in the last hour of sunlight.'},
+  {id:16,title:'Midnight Bloom',series:'Abstract',cat:'abstract',price:1600,originalPrice:1900,emoji:'🌸',bg:'linear-gradient(135deg,#1a1025,#7c3aed,#e91e8c)',size:'90×110 cm',medium:'Acrylic on Canvas',rating:4.8,reviews:23,badge:'sale',year:2024,desc:'Dark midnight purples erupt into luminous rose blooms — romantic, dramatic, unforgettable.'},
+];
+
+const reviews = [
+  {text:'Absolutely stunning piece. The colours are even more vibrant in person — photographs do not do it justice at all.',author:'Sarah M.',city:'London, UK',rating:5,art:'Amber Horizon'},
+  {text:'The packaging was incredible and it arrived in perfect condition. The certificate of authenticity is a beautiful touch. Highly recommend.',author:'James R.',city:'New York, USA',rating:5,art:'Crimson Flow'},
+  {text:'I bought Pale Drift for my studio and it completely transformed the mood of the room. Everyone who visits comments on it.',author:'Priya K.',city:'Mumbai, India',rating:5,art:'Pale Drift'},
+  {text:'First time buying original art online. The checkout process was seamless and communication was excellent throughout.',author:'Marco L.',city:'Milan, Italy',rating:4,art:'Teal Dream'},
+  {text:'The texture on Rust & Bloom is extraordinary — you can feel the layers. A truly tactile and emotional piece.',author:'Amelia T.',city:'Sydney, Australia',rating:5,art:'Rust & Bloom'},
+  {text:'Golden Silence is now the centrepiece of our living room. It is worth every penny — an investment and a joy.',author:'David C.',city:'Dubai, UAE',rating:5,art:'Golden Silence'},
+];
+
+// ══ STATE ══
+let cart = [];
+let wishlist = [];
+let user = null;
+let uploadedImages = [];
+let orderNo = 10000 + Math.floor(Math.random()*90000);
+let currentFilter = 'all';
+let currentSort = 'featured';
+let displayedPaintings = [...allPaintings];
+
+// ══ RENDER GALLERY ══
+function renderGallery(paintings){
+  const grid = document.getElementById('galleryGrid');
+  document.getElementById('resultCount').textContent = `Showing ${paintings.length} paintings`;
+  if(!paintings.length){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted)">No paintings found. <button onclick="filterCat(\'all\',null)" style="color:var(--violet);background:none;border:none;cursor:pointer;font-weight:600">Clear filter</button></div>';
+    return;
+  }
+  grid.innerHTML = paintings.map(p => {
+    const inWish = wishlist.find(w=>w.id===p.id);
+    return `<div class="p-card">
+      ${p.badge?`<div class="p-card-badge badge-${p.badge}">${p.badge}</div>`:''}
+      <div class="p-card-img" style="background:${p.bg}">
+        ${p.uploadedImg?`<img src="${p.uploadedImg}" alt="${p.title}">`:`<div class="p-ph" style="background:${p.bg}">${p.emoji}</div>`}
+        <div class="p-card-overlay">
+          <button class="card-act" onclick="openPD(${p.id})">Quick View</button>
+          <button class="card-act wish${inWish?' active':''}" onclick="toggleWish(${p.id},this)">♥</button>
+        </div>
+      </div>
+      <div class="p-card-body">
+        <div class="p-card-title" onclick="openPD(${p.id})">${p.title}</div>
+        <div class="p-card-meta">${p.series} · ${p.size}</div>
+        <div class="stars">${'★'.repeat(Math.floor(p.rating))}${p.rating%1?'½':''} <span style="color:var(--muted);font-size:11px">(${p.reviews})</span></div>
+        <div class="p-card-footer" style="margin-top:10px">
+          <div>
+            <div class="p-price">$${p.price.toLocaleString()}${p.originalPrice?`<span class="p-price-orig">$${p.originalPrice.toLocaleString()}</span>`:''}</div>
+          </div>
+          <button class="btn-addcart" onclick="addToCart(${p.id})">+ Cart</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterCat(cat, btn){
+  currentFilter = cat;
+  document.querySelectorAll('.flt').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  if(btn){btn.classList.add('active')}
+  applyFiltersSort();
+  if(cat!=='all') document.getElementById('gallery-section').scrollIntoView({behavior:'smooth'});
+}
+
+function sortPaintings(){
+  currentSort = document.getElementById('sortSel').value;
+  applyFiltersSort();
+}
+
+function applyFiltersSort(){
+  let list = currentFilter==='all' ? [...allPaintings,...uploadedImages] : [...allPaintings,...uploadedImages].filter(p=>p.cat===currentFilter);
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  if(q) list = list.filter(p=>p.title.toLowerCase().includes(q)||p.series.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q));
+  if(currentSort==='price-low') list.sort((a,b)=>a.price-b.price);
+  else if(currentSort==='price-high') list.sort((a,b)=>b.price-a.price);
+  else if(currentSort==='newest') list.sort((a,b)=>(b.year||2024)-(a.year||2024));
+  else if(currentSort==='rating') list.sort((a,b)=>b.rating-a.rating);
+  renderGallery(list);
+}
+
+function searchPaintings(){applyFiltersSort()}
+
+// ══ CART ══
+function addToCart(id){
+  if(!user){showAuth();showToast('Please sign in to purchase art ✨');return}
+  const p = [...allPaintings,...uploadedImages].find(x=>x.id===id);
+  const ex = cart.find(x=>x.id===id);
+  if(ex){ex.qty++;} else {cart.push({...p,qty:1})}
+  updateCart();openCart();
+  showToast(`"${p.title}" added to cart 🎨`);
+}
+
+function removeFromCart(id){
+  cart = cart.filter(x=>x.id!==id);
+  updateCart();
+}
+
+function changeQty(id, delta){
+  const item = cart.find(x=>x.id===id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0) cart = cart.filter(x=>x.id!==id);
+  updateCart();
+}
+
+function updateCart(){
+  const count = cart.reduce((s,x)=>s+x.qty,0);
+  const badge = document.getElementById('cartBadge');
+  badge.style.display = count>0?'flex':'none';
+  badge.textContent = count;
+  document.getElementById('cartItemCount').textContent = count;
+  const total = cart.reduce((s,x)=>s+(x.price*x.qty),0);
+  document.getElementById('cartTotalAmt').textContent = '$'+total.toLocaleString();
+  const body = document.getElementById('cartBody');
+  if(!cart.length){
+    body.innerHTML = '<div class="cart-empty-msg"><div class="ce">🛒</div>Your cart is empty<br><small>Explore the gallery to find your perfect piece</small></div>';
+    return;
+  }
+  body.innerHTML = cart.map(p=>`
+    <div class="c-item">
+      <div class="c-item-img">
+        ${p.uploadedImg?`<img src="${p.uploadedImg}">`:`<div class="c-ph" style="background:${p.bg}">${p.emoji}</div>`}
+      </div>
+      <div class="c-item-info">
+        <div class="c-item-title">${p.title}</div>
+        <div class="c-item-meta">${p.size} · ${p.medium||'Original'}</div>
+        <div class="c-item-price">$${(p.price*p.qty).toLocaleString()}</div>
+        <div class="c-item-qty">
+          <button class="qty-btn" onclick="changeQty(${p.id},-1)">−</button>
+          <span class="qty-num">${p.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${p.id},1)">+</button>
+          <button class="c-remove" onclick="removeFromCart(${p.id})">Remove</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function openCart(){
+  document.getElementById('cartPanel').classList.add('open');
+  document.getElementById('backdrop').classList.add('show');
+}
+function closeCart(){
+  document.getElementById('cartPanel').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('show');
+}
+
+// ══ WISHLIST ══
+function toggleWish(id, btn){
+  if(!user){showAuth();showToast('Sign in to save to wishlist');return}
+  const p = [...allPaintings,...uploadedImages].find(x=>x.id===id);
+  const idx = wishlist.findIndex(x=>x.id===id);
+  if(idx>-1){
+    wishlist.splice(idx,1);
+    if(btn){btn.classList.remove('active')}
+    showToast(`Removed from wishlist`);
+  } else {
+    wishlist.push(p);
+    if(btn){btn.classList.add('active')}
+    showToast(`"${p.title}" saved to wishlist ❤️`);
+  }
+  updateWishBadge();updateWishPanel();
+}
+function updateWishBadge(){
+  const b = document.getElementById('wishBadge');
+  b.style.display = wishlist.length>0?'flex':'none';
+  b.textContent = wishlist.length;
+}
+function openWish(){
+  updateWishPanel();
+  document.getElementById('wishPanel').classList.add('open');
+  document.getElementById('backdrop').classList.add('show');
+}
+function closeWish(){
+  document.getElementById('wishPanel').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('show');
+}
+function updateWishPanel(){
+  const body = document.getElementById('wishBody');
+  if(!wishlist.length){
+    body.innerHTML = '<div class="cart-empty-msg"><div class="ce">❤️</div>Your wishlist is empty<br><small>Save paintings you love</small></div>';
+    return;
+  }
+  body.innerHTML = wishlist.map(p=>`
+    <div class="c-item">
+      <div class="c-item-img">
+        ${p.uploadedImg?`<img src="${p.uploadedImg}">`:`<div class="c-ph" style="background:${p.bg}">${p.emoji}</div>`}
+      </div>
+      <div class="c-item-info">
+        <div class="c-item-title">${p.title}</div>
+        <div class="c-item-price">$${p.price.toLocaleString()}</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn-addcart" onclick="addToCart(${p.id});closeWish()">Add to Cart</button>
+          <button class="c-remove" onclick="toggleWish(${p.id},null)">Remove</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ══ PRODUCT DETAIL ══
+function openPD(id){
+  const p = [...allPaintings,...uploadedImages].find(x=>x.id===id);
+  const inWish = wishlist.find(w=>w.id===id);
+  document.getElementById('pdContent').innerHTML = `
+    <div class="pd-grid">
+      <div class="pd-img-area">
+        <div class="pd-main-img" style="background:${p.bg}">
+          ${p.uploadedImg?`<img src="${p.uploadedImg}" alt="${p.title}">`:`<span>${p.emoji}</span>`}
+        </div>
+      </div>
+      <div class="pd-info">
+        ${p.badge?`<div class="p-card-badge badge-${p.badge}" style="display:inline-block;margin-bottom:12px">${p.badge}</div>`:''}
+        <h2>${p.title}</h2>
+        <div class="pd-meta">${p.series} · ${p.size} · ${p.year||2024}</div>
+        <div class="stars" style="font-size:16px;margin-bottom:8px">${'★'.repeat(Math.floor(p.rating))} <span style="color:var(--muted);font-size:13px">${p.rating} (${p.reviews} reviews)</span></div>
+        <div class="pd-price">$${p.price.toLocaleString()}${p.originalPrice?` <span style="font-size:18px;color:var(--muted);text-decoration:line-through;-webkit-text-fill-color:var(--muted)">$${p.originalPrice.toLocaleString()}</span>`:''}</div>
+        <p class="pd-desc">${p.desc||'An exceptional original painting, signed by the artist and delivered with a certificate of authenticity.'}</p>
+        <div class="pd-details">
+          <div class="pd-detail-row"><span>Medium</span><span>${p.medium}</span></div>
+          <div class="pd-detail-row"><span>Size</span><span>${p.size}</span></div>
+          <div class="pd-detail-row"><span>Series</span><span>${p.series}</span></div>
+          <div class="pd-detail-row"><span>Year</span><span>${p.year||2024}</span></div>
+          <div class="pd-detail-row"><span>Shipping</span><span>Free · 7–14 days</span></div>
+          <div class="pd-detail-row"><span>Returns</span><span>30-day policy</span></div>
+        </div>
+        <div class="pd-actions">
+          <button class="btn-pd-cart" onclick="addToCart(${p.id});closeOverlay('pdModal')">🛒 Add to Cart</button>
+          <button class="btn-pd-wish${inWish?' active':''}" onclick="toggleWish(${p.id},this)">♥</button>
+        </div>
+      </div>
+    </div>`;
+  openOverlay('pdModal');
+}
+
+// ══ CHECKOUT ══
+function goCheckout(){
+  if(!cart.length){showToast('Your cart is empty');return}
+  closeCart();
+  const sub = cart.reduce((s,x)=>s+(x.price*x.qty),0);
+  const tax = Math.round(sub*.05);
+  document.getElementById('ckItems').innerHTML = cart.map(p=>
+    `<div class="inv-tr"><span>${p.title}${p.qty>1?` ×${p.qty}`:''}</span><span>$${(p.price*p.qty).toLocaleString()}</span></div>`).join('');
+  document.getElementById('ckSub').textContent = '$'+sub.toLocaleString();
+  document.getElementById('ckTax').textContent = '$'+tax.toLocaleString();
+  document.getElementById('ckTotal').textContent = '$'+(sub+tax).toLocaleString();
+  if(user){
+    document.getElementById('ckName').value = user.name;
+    document.getElementById('ckEmail').value = user.email;
+  }
+  openOverlay('checkoutModal');
+}
+
+function selPay(active){
+  ['pm1','pm2','pm3','pm4','pm5','pm6'].forEach(id=>{
+    document.getElementById(id).classList.toggle('sel',id===active);
+  });
+  document.getElementById('cardFields').style.display = active==='pm1'?'block':'none';
+}
+
+function placeOrder(){
+  const name=document.getElementById('ckName').value;
+  const email=document.getElementById('ckEmail').value;
+  const addr=document.getElementById('ckAddr').value;
+  if(!name||!email||!addr){showToast('Please complete all delivery fields');return}
+  const sub = cart.reduce((s,x)=>s+(x.price*x.qty),0);
+  const tax = Math.round(sub*.05);
+  const total = sub+tax;
+  const payMethod = document.querySelector('input[name=pay]:checked').value;
+  const payLabels={card:'Credit / Debit Card',paypal:'PayPal',apple:'Apple Pay',crypto:'Cryptocurrency',bank:'Bank Transfer',klarna:'Klarna / BNPL'};
+  const inv = `INV-${new Date().getFullYear()}-${++orderNo}`;
+  const date = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const cartSnap = [...cart];
+  closeOverlay('checkoutModal');
+  cart=[];updateCart();
+  document.getElementById('invContent').innerHTML = `
+    <div class="inv-header">
+      <div><div class="inv-brand">HNFart</div><div style="font-size:12px;color:var(--muted);margin-top:4px">hello@hnfart.com · hnfart.com</div></div>
+      <div class="inv-meta"><div><strong>INVOICE</strong></div><div>${inv}</div><div>${date}</div><div style="margin-top:6px"><span class="status-ok">✓ Confirmed</span></div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;font-size:13px">
+      <div><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Billed To</div>
+        <div style="font-weight:600;font-size:15px">${name}</div>
+        <div style="color:var(--muted)">${email}</div>
+        <div style="color:var(--muted)">${addr}</div></div>
+      <div><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Payment</div>
+        <div style="font-weight:600">${payLabels[payMethod]}</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:4px">Shipping: Free International</div>
+        <div style="color:var(--muted);font-size:12px">Est. Delivery: 7–14 business days</div></div>
+    </div>
+    <table class="inv-table">
+      <thead><tr><th>Artwork</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr></thead>
+      <tbody>${cartSnap.map(p=>`<tr><td style="color:var(--dark);font-weight:600">${p.title}<br><small>${p.size} · ${p.medium||'Original'}</small></td><td>${p.qty}</td><td>$${p.price.toLocaleString()}</td><td>$${(p.price*p.qty).toLocaleString()}</td></tr>`).join('')}</tbody>
+    </table>
+    <div class="inv-totals">
+      <div class="inv-tr"><span>Subtotal</span><span>$${sub.toLocaleString()}</span></div>
+      <div class="inv-tr"><span>Shipping</span><span style="color:var(--teal)">Free 🚀</span></div>
+      <div class="inv-tr"><span>Tax (5%)</span><span>$${tax.toLocaleString()}</span></div>
+      <div class="inv-grand"><span>Total</span><span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$${total.toLocaleString()}</span></div>
+    </div>
+    <div class="inv-foot">Thank you for supporting original art, ${name.split(' ')[0]}! 🎨<br>Your paintings will be carefully packaged and shipped with a certificate of authenticity.<br>${inv} · hello@hnfart.com</div>
+    <div class="inv-btns">
+      <button class="inv-btns inv-print" style="flex:1;padding:13px;font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:4px;border:none;background:var(--gradient);color:#fff" onclick="printInv()">🖨 Print / Save PDF</button>
+      <button class="inv-btns inv-close" style="flex:1;padding:13px;font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:4px;border:none;background:var(--light);color:var(--dark)" onclick="closeOverlay(\'invoiceModal\')">Done</button>
+    </div>`;
+  openOverlay('invoiceModal');
+  showToast('Order placed! Invoice generated 🎉');
+}
+
+function printInv(){
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>Invoice - HNFart</title>
+  <style>body{font-family:Georgia,serif;max-width:720px;margin:40px auto;padding:0 20px;color:#1a1025}
+  .inv-brand{font-size:28px;font-weight:900;letter-spacing:3px;color:#7c3aed}
+  table{width:100%;border-collapse:collapse;margin:20px 0}th,td{padding:10px 0;text-align:left;border-bottom:1px solid #eee;font-size:13px}
+  @media print{body{margin:0}}</style></head><body>`);
+  w.document.write(document.getElementById('invContent').innerHTML);
+  w.document.write('</body></html>');
+  w.document.close();w.print();
+}
+
+// ══ UPLOAD ══
+function handleFiles(files){
+  Array.from(files).forEach(f=>{
+    if(!f.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => addUploadPreview(e.target.result, f.name);
+    reader.readAsDataURL(f);
+  });
+}
+function handleDrop(e){
+  e.preventDefault();document.getElementById('uploadArea').classList.remove('drag');
+  handleFiles(e.dataTransfer.files);
+}
+function addUploadPreview(src, name){
+  const id = 'up_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+  const prev = document.getElementById('uploadPreview');
+  document.getElementById('publishBtn').style.display='block';
+  const div = document.createElement('div');
+  div.className='preview-card';div.id=id;
+  div.innerHTML=`<img src="${src}" alt="${name}">
+    <div class="preview-info">
+      <div class="preview-name">${name.replace(/\.[^.]+$/,'')}</div>
+      <input class="preview-price-input" type="number" placeholder="Set price ($)" id="price_${id}" min="1">
+    </div>
+    <button class="preview-del" onclick="removeUpload('${id}','${id}')">✕</button>`;
+  prev.appendChild(div);
+  // store reference
+  div.dataset.src=src;div.dataset.name=name.replace(/\.[^.]+$/,'');
+}
+function removeUpload(divId){
+  const el=document.getElementById(divId);
+  if(el)el.remove();
+  if(!document.getElementById('uploadPreview').children.length)
+    document.getElementById('publishBtn').style.display='none';
+}
+function publishPaintings(){
+  if(!user){showAuth();showToast('Sign in to publish your paintings');return}
+  const cards = document.getElementById('uploadPreview').querySelectorAll('.preview-card');
+  let count=0;
+  cards.forEach(card=>{
+    const priceEl = card.querySelector('.preview-price-input');
+    const price = parseFloat(priceEl.value)||500;
+    const name = card.dataset.name||'My Painting';
+    const src = card.dataset.src;
+    const newId = Date.now()+Math.random();
+    uploadedImages.push({
+      id:newId,title:name,series:'My Art',cat:'abstract',
+      price,originalPrice:null,emoji:'🖼',bg:'linear-gradient(135deg,#7c3aed,#d4a843)',
+      size:'Custom',medium:'Original',rating:5,reviews:0,badge:'new',year:2025,
+      uploadedImg:src,desc:`Original artwork by ${user.name}.`
+    });
+    count++;
+  });
+  document.getElementById('uploadPreview').innerHTML='';
+  document.getElementById('publishBtn').style.display='none';
+  applyFiltersSort();
+  showToast(`${count} painting${count>1?'s':''} published to gallery! 🎉`);
+  document.getElementById('gallery-section').scrollIntoView({behavior:'smooth'});
+}
+
+// ══ AUTH ══
+function showAuth(){openOverlay('authModal')}
+function swTab(t){
+  document.getElementById('loginForm').style.display=t==='login'?'block':'none';
+  document.getElementById('signupForm').style.display=t==='signup'?'block':'none';
+  document.getElementById('tLogin').classList.toggle('active',t==='login');
+  document.getElementById('tSignup').classList.toggle('active',t==='signup');
+}
+function doLogin(){
+  const e=document.getElementById('lEmail').value;
+  const p=document.getElementById('lPass').value;
+  if(!e||!p){showToast('Please fill all fields');return}
+  user={name:e.split('@')[0],email:e};setLoggedIn();closeOverlay('authModal');showToast(`Welcome back! ✨`);
+}
+function doSignup(){
+  const n=document.getElementById('sName').value;
+  const e=document.getElementById('sEmail').value;
+  const p=document.getElementById('sPass').value;
+  if(!n||!e||!p){showToast('Please fill all fields');return}
+  user={name:n,email:e};setLoggedIn();closeOverlay('authModal');showToast(`Welcome to HNFart, ${n}! 🎨`);
+}
+function socialLogin(prov){
+  user={name:`${prov} User`,email:`user@${prov.toLowerCase()}.com`};
+  setLoggedIn();closeOverlay('authModal');showToast(`Signed in with ${prov} ✨`);
+}
+function setLoggedIn(){
+  document.getElementById('authBtn').innerHTML=`
+    <button class="nav-btn" onclick="doLogout()">
+      <span class="icon">👤</span><span class="lbl">${user.name.split(' ')[0]}</span>
+    </button>`;
+}
+function doLogout(){
+  user=null;cart=[];wishlist=[];updateCart();updateWishBadge();
+  document.getElementById('authBtn').innerHTML=`<button class="nav-btn" onclick="showAuth()"><span class="icon">👤</span><span class="lbl">Sign In</span></button>`;
+  showToast('Signed out');
+}
+
+// ══ MODALS ══
+function openOverlay(id){document.getElementById(id).classList.add('on')}
+function closeOverlay(id){document.getElementById(id).classList.remove('on')}
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('on')})
+});
+
+// ══ UTILS ══
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+function closeAll(){closeCart();closeWish();document.getElementById('backdrop').classList.remove('show')}
+function dismissCookie(){document.getElementById('cookie').style.display='none'}
+function scrollTop(){window.scrollTo({top:0,behavior:'smooth'})}
+function scrollToUpload(){document.getElementById('upload-section').scrollIntoView({behavior:'smooth'})}
+function setShowcase(el,emoji,title,price){
+  document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('showcaseMain').querySelector('.showcase-placeholder').textContent=emoji;
+  document.querySelector('.showcase-title').textContent=title;
+  document.querySelector('.showcase-price').textContent=price;
+}
+
+// ══ REVIEWS ══
+function renderReviews(){
+  document.getElementById('reviewsGrid').innerHTML = reviews.map(r=>`
+    <div class="review-card">
+      <div class="r-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+      <p class="r-text">"${r.text}"</p>
+      <div class="r-author">
+        <span class="r-avatar">${r.author.charAt(0)}</span>
+        <span><strong>${r.author}</strong> · ${r.city}<br><small style="color:var(--muted);font-weight:400">${r.art}</small></span>
+      </div>
+    </div>`).join('');
+}
+
+// ══ INIT ══
+renderGallery(allPaintings);
+renderReviews();
+updateCart();
+</script>
+</body>
+</html>

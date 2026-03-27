@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HNFart — Original Abstract Paintings</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf9f7;
+  --surface: #f2f0ec;
+  --border: #e0ddd7;
+  --dark: #1a1a18;
+  --mid: #6b6760;
+  --light: #a09d98;
+  --accent: #c8a96e;
+  --accent-dark: #9e7e45;
+  --white: #ffffff;
+  --error: #c0392b;
+  --success: #2e7d5a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--dark);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  cursor: default;
+}
+
+/* ── COOKIE BANNER ── */
+#cookieBanner {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: var(--dark); color: #fff;
+  padding: 18px 40px;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  font-size: 13px; letter-spacing: .3px;
+  transform: translateY(100%);
+  animation: slideUp 0.6s 1.5s forwards cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideUp { to { transform: translateY(0); } }
+#cookieBanner a { color: var(--accent); text-decoration: underline; }
+.cookie-btns { display: flex; gap: 12px; flex-shrink: 0; }
+.cookie-btns button {
+  font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 1.5px;
+  padding: 9px 22px; cursor: pointer; font-weight: 500; border: none;
+  text-transform: uppercase;
+}
+.btn-accept { background: var(--accent); color: #fff; }
+.btn-decline { background: transparent; color: #aaa; border: 1px solid #555 !important; }
+
+/* ── HEADER / NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(250,249,247,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 72px;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 300; letter-spacing: 4px;
+  color: var(--dark); text-decoration: none;
+  cursor: pointer;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links {
+  display: flex; gap: 36px; list-style: none;
+}
+.nav-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--mid); text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--dark); }
+.nav-actions { display: flex; align-items: center; gap: 24px; }
+.nav-icon-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 18px; color: var(--mid); position: relative;
+  transition: color .2s;
+}
+.nav-icon-btn:hover { color: var(--dark); }
+.cart-count {
+  position: absolute; top: -6px; right: -8px;
+  background: var(--accent); color: #fff;
+  font-size: 9px; font-weight: 600;
+  width: 16px; height: 16px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  display: none;
+}
+.btn-nav-login {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  background: var(--dark); color: #fff;
+  border: none; padding: 10px 24px; cursor: pointer;
+  transition: background .2s;
+}
+.btn-nav-login:hover { background: var(--accent); }
+.user-greeting { font-size: 12px; color: var(--mid); cursor: pointer; }
+.user-greeting:hover { color: var(--accent); }
+
+/* ── HERO ── */
+.hero {
+  padding-top: 72px;
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; overflow: hidden;
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 64px 80px 80px;
+}
+.hero-tag {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--accent); }
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 6vw, 88px);
+  font-weight: 300; line-height: 1.05;
+  letter-spacing: -1px; color: var(--dark);
+  margin-bottom: 28px;
+}
+h1 em { font-style: italic; color: var(--accent); }
+.hero-desc {
+  font-size: 14px; color: var(--mid); max-width: 380px;
+  margin-bottom: 44px; line-height: 1.8;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  background: var(--dark); color: #fff;
+  border: none; padding: 16px 36px; cursor: pointer;
+  transition: all .3s; text-decoration: none;
+  width: fit-content;
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  background: transparent; color: var(--dark);
+  border: 1px solid var(--border); padding: 14px 28px; cursor: pointer;
+  transition: all .2s;
+}
+.btn-secondary:hover { border-color: var(--dark); }
+
+.hero-right {
+  background: var(--surface);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-canvas {
+  width: 75%; aspect-ratio: 3/4;
+  position: relative;
+}
+.abstract-art {
+  width: 100%; height: 100%;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, #f0ede8 0%, #e8e4dd 40%, #f5f2ee 70%, #ede9e3 100%);
+  position: relative; overflow: hidden;
+}
+.abstract-art::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(200,169,110,0.25) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 70%, rgba(160,157,152,0.2) 0%, transparent 50%);
+}
+.art-shape { position: absolute; }
+.s1 { width: 55%; height: 60%; top: 10%; left: 8%; background: rgba(200,169,110,0.35); border-radius: 2px; transform: rotate(-3deg); }
+.s2 { width: 40%; height: 45%; top: 30%; right: 5%; background: rgba(107,103,96,0.2); border-radius: 1px; transform: rotate(2deg); }
+.s3 { width: 25%; height: 35%; bottom: 15%; left: 20%; background: rgba(26,26,24,0.12); border-radius: 50%; }
+.s4 { width: 60%; height: 3px; top: 55%; left: 10%; background: rgba(200,169,110,0.6); transform: rotate(-1deg); }
+.art-price-tag {
+  position: absolute; bottom: -1px; right: -1px;
+  background: var(--dark); color: #fff;
+  padding: 14px 20px; font-size: 13px;
+}
+.art-price-tag span { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--accent); }
+
+/* ── SECTIONS ── */
+section { padding: 100px 80px; }
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+}
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(34px, 4vw, 56px); font-weight: 300;
+  letter-spacing: -0.5px; line-height: 1.1;
+  margin-bottom: 48px;
+}
+h2 em { font-style: italic; }
+
+/* ── GALLERY ── */
+#gallery { background: var(--white); }
+.gallery-filters {
+  display: flex; gap: 8px; margin-bottom: 48px; flex-wrap: wrap;
+}
+.filter-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 8px 20px; border: 1px solid var(--border);
+  background: transparent; cursor: pointer; color: var(--mid);
+  transition: all .2s;
+}
+.filter-btn.active, .filter-btn:hover { background: var(--dark); color: #fff; border-color: var(--dark); }
+
+.gallery-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2px;
+}
+.painting-card {
+  background: var(--surface);
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: transform .3s;
+}
+.painting-card:hover { transform: translateY(-4px); }
+.painting-card:hover .card-overlay { opacity: 1; }
+.card-img {
+  aspect-ratio: 4/5; width: 100%;
+  position: relative; overflow: hidden;
+}
+.card-canvas {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+}
+.card-overlay {
+  position: absolute; inset: 0;
+  background: rgba(26,26,24,0.7);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .3s;
+  gap: 12px;
+}
+.card-info { padding: 20px; }
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 400; margin-bottom: 4px;
+}
+.card-series { font-size: 11px; color: var(--light); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+.card-bottom { display: flex; align-items: center; justify-content: space-between; }
+.card-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; color: var(--dark);
+}
+.btn-add-cart {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  background: var(--dark); color: #fff; border: none;
+  padding: 9px 16px; cursor: pointer; transition: background .2s;
+}
+.btn-add-cart:hover { background: var(--accent); }
+
+/* ── MODAL OVERLAY ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(26,26,24,0.7);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.modal-overlay.active { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--white);
+  max-width: 480px; width: 100%;
+  padding: 48px;
+  transform: translateY(20px);
+  transition: transform .3s;
+  position: relative; max-height: 90vh; overflow-y: auto;
+}
+.modal-overlay.active .modal { transform: translateY(0); }
+.modal-close {
+  position: absolute; top: 20px; right: 24px;
+  background: none; border: none; font-size: 22px;
+  cursor: pointer; color: var(--light);
+}
+.modal-close:hover { color: var(--dark); }
+.modal-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px; letter-spacing: 3px;
+  color: var(--dark); text-align: center; margin-bottom: 6px;
+}
+.modal-logo span { color: var(--accent); }
+.modal-sub { text-align: center; font-size: 12px; color: var(--light); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 36px; }
+.tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+.tab-btn {
+  flex: 1; background: none; border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--light); padding: 12px; cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: all .2s;
+}
+.tab-btn.active { color: var(--dark); border-bottom-color: var(--dark); }
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block; font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--mid); margin-bottom: 8px;
+}
+.form-group input {
+  width: 100%; padding: 13px 16px;
+  border: 1px solid var(--border); background: var(--bg);
+  font-family: 'Montserrat', sans-serif; font-size: 14px;
+  color: var(--dark); outline: none;
+  transition: border-color .2s;
+}
+.form-group input:focus { border-color: var(--dark); }
+.btn-full {
+  width: 100%; font-family: 'Montserrat', sans-serif;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  background: var(--dark); color: #fff; border: none;
+  padding: 16px; cursor: pointer; transition: background .2s;
+  margin-top: 8px;
+}
+.btn-full:hover { background: var(--accent); }
+.divider { display: flex; align-items: center; gap: 16px; margin: 24px 0; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.divider span { font-size: 11px; color: var(--light); }
+.social-logins { display: flex; gap: 10px; }
+.btn-social {
+  flex: 1; padding: 11px; border: 1px solid var(--border);
+  background: none; cursor: pointer; font-size: 18px;
+  transition: border-color .2s;
+}
+.btn-social:hover { border-color: var(--mid); }
+.form-note { font-size: 11px; color: var(--light); text-align: center; margin-top: 20px; line-height: 1.7; }
+
+/* ── CART PANEL ── */
+.cart-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 420px; z-index: 1500;
+  background: var(--white);
+  transform: translateX(100%);
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+  display: flex; flex-direction: column;
+  box-shadow: -4px 0 40px rgba(0,0,0,0.1);
+}
+.cart-panel.open { transform: translateX(0); }
+.cart-header {
+  padding: 28px 32px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cart-header h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-weight: 400; letter-spacing: 1px;
+}
+.cart-items { flex: 1; overflow-y: auto; padding: 24px 32px; }
+.cart-item {
+  display: flex; gap: 16px; padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.cart-item-img {
+  width: 72px; height: 90px; background: var(--surface);
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+}
+.cart-item-info { flex: 1; }
+.cart-item-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; margin-bottom: 4px;
+}
+.cart-item-price { font-size: 13px; color: var(--accent); margin-bottom: 8px; }
+.cart-item-remove {
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--light); cursor: pointer; background: none; border: none;
+  font-family: 'Montserrat', sans-serif;
+}
+.cart-item-remove:hover { color: var(--error); }
+.cart-empty { text-align: center; padding: 60px 0; color: var(--light); font-size: 14px; }
+.cart-footer { padding: 24px 32px; border-top: 1px solid var(--border); }
+.cart-subtotal {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px;
+}
+.cart-subtotal span:first-child { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); }
+.cart-subtotal span:last-child {
+  font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--dark);
+}
+
+/* ── CHECKOUT MODAL ── */
+.checkout-section { margin-bottom: 28px; }
+.checkout-section h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.pay-method {
+  border: 1px solid var(--border); padding: 14px 12px;
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; transition: all .2s; font-size: 13px;
+}
+.pay-method.selected { border-color: var(--dark); background: var(--surface); }
+.pay-method input[type=radio] { accent-color: var(--dark); }
+.order-summary-line {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: var(--mid); margin-bottom: 8px;
+}
+.order-summary-total {
+  display: flex; justify-content: space-between;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── INVOICE MODAL ── */
+.invoice { padding: 8px 0; }
+.invoice-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+.invoice-brand { font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 3px; }
+.invoice-brand span { color: var(--accent); }
+.invoice-meta { text-align: right; font-size: 12px; color: var(--mid); line-height: 2; }
+.invoice-meta strong { color: var(--dark); font-size: 14px; }
+.invoice-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13px; }
+.invoice-table th {
+  text-align: left; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--light); padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.invoice-table td { padding: 14px 0; border-bottom: 1px solid var(--surface); color: var(--mid); }
+.invoice-table td:last-child { text-align: right; color: var(--dark); }
+.invoice-totals { margin-top: 20px; }
+.invoice-total-row {
+  display: flex; justify-content: space-between;
+  font-size: 13px; padding: 6px 0; color: var(--mid);
+}
+.invoice-total-row.grand {
+  font-family: 'Cormorant Garamond', serif; font-size: 22px;
+  color: var(--dark); border-top: 1px solid var(--border); margin-top: 8px; padding-top: 14px;
+}
+.invoice-footer { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 12px; color: var(--light); text-align: center; line-height: 2; }
+.status-badge {
+  display: inline-block; padding: 4px 12px;
+  background: rgba(46,125,90,0.1); color: var(--success);
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  border: 1px solid rgba(46,125,90,0.3);
+}
+
+/* ── ABOUT ── */
+#about {
+  background: var(--dark); color: #fff;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+#about h2 { color: #fff; }
+#about .section-label { color: var(--accent); }
+.about-text { font-size: 15px; color: #b0aca5; line-height: 1.9; margin-bottom: 24px; }
+.about-stats { display: flex; gap: 40px; margin-top: 40px; }
+.stat { }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; color: var(--accent); line-height: 1; }
+.stat-label { font-size: 11px; color: #7a766f; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+.about-visual {
+  aspect-ratio: 1; background: #242420;
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+  gap: 3px; overflow: hidden;
+}
+.about-cell { background: #2e2e2a; }
+.about-cell:nth-child(1) { background: rgba(200,169,110,0.2); }
+.about-cell:nth-child(3) { background: rgba(200,169,110,0.1); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark); color: #7a766f;
+  padding: 60px 80px;
+  border-top: 1px solid #2a2a26;
+}
+.footer-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding-bottom: 40px; margin-bottom: 40px;
+  border-bottom: 1px solid #2a2a26;
+}
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px; letter-spacing: 4px; color: #fff;
+}
+.footer-brand span { color: var(--accent); }
+.footer-tagline { font-size: 13px; margin-top: 8px; color: #555; }
+.footer-links h5 {
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  color: #fff; margin-bottom: 16px;
+}
+.footer-links a {
+  display: block; font-size: 13px; color: #7a766f;
+  text-decoration: none; margin-bottom: 8px; transition: color .2s;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-bottom { display: flex; justify-content: space-between; font-size: 12px; }
+.payment-icons { display: flex; gap: 8px; font-size: 20px; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 100px; right: 32px; z-index: 9998;
+  background: var(--dark); color: #fff;
+  padding: 14px 24px; font-size: 13px; letter-spacing: .3px;
+  transform: translateY(20px); opacity: 0;
+  transition: all .3s; pointer-events: none;
+  border-left: 3px solid var(--accent);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ANIMATIONS */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-left > * {
+  animation: fadeInUp 0.7s ease backwards;
+}
+.hero-left > *:nth-child(1) { animation-delay: .1s; }
+.hero-left > *:nth-child(2) { animation-delay: .2s; }
+.hero-left > *:nth-child(3) { animation-delay: .35s; }
+.hero-left > *:nth-child(4) { animation-delay: .5s; }
+
+/* Backdrop for cart */
+.backdrop {
+  position: fixed; inset: 0; z-index: 1400;
+  background: rgba(26,26,24,0.4);
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.backdrop.show { opacity: 1; pointer-events: all; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 60px 24px; }
+  section { padding: 60px 24px; }
+  #about { grid-template-columns: 1fr; }
+  .about-visual { display: none; }
+  footer { padding: 40px 24px; }
+  .footer-top { flex-direction: column; gap: 32px; }
+  .cart-panel { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner">
+  <div>🍪 We use cookies to enhance your experience. By continuing, you agree to our <a href="#">Cookie Policy</a> & <a href="#">Privacy Policy</a>.</div>
+  <div class="cookie-btns">
+    <button class="btn-decline" onclick="document.getElementById('cookieBanner').style.display='none'">Decline</button>
+    <button class="btn-accept" onclick="document.getElementById('cookieBanner').style.display='none'">Accept All</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- BACKDROP -->
+<div class="backdrop" id="backdrop" onclick="closeCart()"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="scrollToTop()">HNF<span>art</span></a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#" onclick="showLogin()">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon-btn" onclick="openCart()">
+      🛒 <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <div id="authArea">
+      <button class="btn-nav-login" onclick="showLogin()">Sign In</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Original Paintings · Hand crafted</div>
+    <h1>Where <em>Art</em><br>Finds Its<br>Home</h1>
+    <p class="hero-desc">Each piece is a unique original — abstract expressions born from emotion, texture, and form. Own a work that speaks directly to you.</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <a class="btn-primary" href="#gallery">Explore Gallery →</a>
+      <button class="btn-secondary" onclick="showLogin()">Create Account</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-canvas">
+      <div class="abstract-art">
+        <div class="art-shape s1"></div>
+        <div class="art-shape s2"></div>
+        <div class="art-shape s3"></div>
+        <div class="art-shape s4"></div>
+      </div>
+      <div class="art-price-tag">Featured Work — <span>$1,200</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <p class="section-label">The Collection</p>
+  <h2>Original <em>Paintings</em></h2>
+  <div class="gallery-filters">
+    <button class="filter-btn active" onclick="filterGallery('all', this)">All Works</button>
+    <button class="filter-btn" onclick="filterGallery('abstract', this)">Abstract</button>
+    <button class="filter-btn" onclick="filterGallery('texture', this)">Texture</button>
+    <button class="filter-btn" onclick="filterGallery('minimalist', this)">Minimalist</button>
+    <button class="filter-btn" onclick="filterGallery('color', this)">Color Field</button>
+  </div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div>
+    <p class="section-label">The Artist</p>
+    <h2>Painting is my<br><em>language</em></h2>
+    <p class="about-text">Every canvas begins with a feeling. I work intuitively with texture, layer, and negative space — creating pieces that evolve as you live with them.</p>
+    <p class="about-text">Each painting is signed, certificated, and shipped with care. Original work only — no prints, no reproductions.</p>
+    <div class="about-stats">
+      <div class="stat"><div class="stat-num">120+</div><div class="stat-label">Originals Sold</div></div>
+      <div class="stat"><div class="stat-num">8</div><div class="stat-label">Years Creating</div></div>
+      <div class="stat"><div class="stat-num">22</div><div class="stat-label">Countries Shipped</div></div>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-cell"></div>
+    <div class="about-cell"></div>
+    <div class="about-cell"></div>
+    <div class="about-cell"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">HNF<span>art</span></div>
+      <div class="footer-tagline">Original Abstract Paintings · Worldwide Shipping</div>
+    </div>
+    <div class="footer-links">
+      <h5>Shop</h5>
+      <a href="#gallery">Gallery</a>
+      <a href="#" onclick="showLogin()">My Account</a>
+      <a href="#">Shipping Info</a>
+    </div>
+    <div class="footer-links">
+      <h5>Legal</h5>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">Terms of Sale</a>
+    </div>
+    <div class="footer-links">
+      <h5>Contact</h5>
+      <a href="#">hello@hnfart.com</a>
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 HNFart. All rights reserved.</span>
+    <div class="payment-icons" title="Accepted payments">💳 🅿️ 🍎 ₿</div>
+  </div>
+</footer>
+
+<!-- LOGIN / SIGNUP MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('authModal')">✕</button>
+    <div class="modal-logo">HNF<span>art</span></div>
+    <div class="modal-sub">Your personal art collection awaits</div>
+    <div class="tabs">
+      <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+      <button class="tab-btn" id="tabSignup" onclick="switchTab('signup')">Create Account</button>
+    </div>
+    <div id="loginForm">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="••••••••">
+      </div>
+      <button class="btn-full" onclick="doLogin()">Sign In →</button>
+      <div class="divider"><span>or</span></div>
+      <div class="social-logins">
+        <button class="btn-social" title="Google" onclick="socialLogin('Google')">🇬</button>
+        <button class="btn-social" title="Apple" onclick="socialLogin('Apple')">🍎</button>
+        <button class="btn-social" title="Facebook" onclick="socialLogin('Facebook')">📘</button>
+      </div>
+      <p class="form-note">By signing in, you agree to our <a href="#" style="color:var(--accent)">Terms</a> and <a href="#" style="color:var(--accent)">Privacy Policy</a>.</p>
+    </div>
+    <div id="signupForm" style="display:none">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="signupName" placeholder="Your Name">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="signupEmail" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signupPass" placeholder="Min. 8 characters">
+      </div>
+      <button class="btn-full" onclick="doSignup()">Create Account →</button>
+      <p class="form-note">By creating an account, you agree to our <a href="#" style="color:var(--accent)">Terms</a> and <a href="#" style="color:var(--accent)">Privacy Policy</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal" style="max-width:560px">
+    <button class="modal-close" onclick="closeModal('checkoutModal')">✕</button>
+    <div class="modal-logo" style="margin-bottom:32px">HNF<span>art</span> — Checkout</div>
+
+    <div class="checkout-section">
+      <h4>Delivery Information</h4>
+      <div class="form-group"><label>Full Name</label><input type="text" id="chkName" placeholder="Your full name"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="chkEmail" placeholder="your@email.com"></div>
+      <div class="form-group"><label>Shipping Address</label><input type="text" id="chkAddr" placeholder="Street, City, Country, ZIP"></div>
+    </div>
+
+    <div class="checkout-section">
+      <h4>Payment Method</h4>
+      <div class="payment-methods">
+        <label class="pay-method selected" id="pm-card">
+          <input type="radio" name="payment" value="card" checked onchange="selectPay(this.closest('.pay-method'), 'pm-card')">
+          💳 Credit / Debit Card
+        </label>
+        <label class="pay-method" id="pm-paypal">
+          <input type="radio" name="payment" value="paypal" onchange="selectPay(this.closest('.pay-method'), 'pm-paypal')">
+          🅿️ PayPal
+        </label>
+        <label class="pay-method" id="pm-apple">
+          <input type="radio" name="payment" value="apple" onchange="selectPay(this.closest('.pay-method'), 'pm-apple')">
+          🍎 Apple Pay
+        </label>
+        <label class="pay-method" id="pm-crypto">
+          <input type="radio" name="payment" value="crypto" onchange="selectPay(this.closest('.pay-method'), 'pm-crypto')">
+          ₿ Crypto
+        </label>
+      </div>
+      <div id="cardDetails">
+        <div class="form-group"><label>Card Number</label><input type="text" placeholder="4242 4242 4242 4242" maxlength="19"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group"><label>Expiry</label><input type="text" placeholder="MM / YY"></div>
+          <div class="form-group"><label>CVV</label><input type="text" placeholder="•••"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-section">
+      <h4>Order Summary</h4>
+      <div id="checkoutItems"></div>
+      <div class="invoice-totals">
+        <div class="order-summary-line"><span>Subtotal</span><span id="chkSubtotal"></span></div>
+        <div class="order-summary-line"><span>Shipping</span><span>Free</span></div>
+        <div class="order-summary-line"><span>Tax (5%)</span><span id="chkTax"></span></div>
+        <div class="order-summary-total"><span>Total</span><span id="chkTotal"></span></div>
+      </div>
+    </div>
+
+    <button class="btn-full" style="margin-top:8px" onclick="placeOrder()">Complete Purchase →</button>
+  </div>
+</div>
+
+<!-- INVOICE MODAL -->
+<div class="modal-overlay" id="invoiceModal">
+  <div class="modal" style="max-width:560px">
+    <button class="modal-close" onclick="closeModal('invoiceModal')">✕</button>
+    <div class="invoice" id="invoiceContent"></div>
+    <div style="display:flex;gap:12px;margin-top:24px">
+      <button class="btn-full" style="background:var(--accent)" onclick="printInvoice()">🖨 Print Invoice</button>
+      <button class="btn-full" onclick="closeModal('invoiceModal')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="modal-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span id="cartTotal">$0</span>
+    </div>
+    <button class="btn-full" onclick="openCheckout()">Proceed to Checkout →</button>
+    <button class="btn-secondary" style="width:100%;margin-top:10px;justify-content:center" onclick="closeCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+const paintings = [
+  { id:1, title:'Amber Flux', series:'Abstract', price:1200, emoji:'🎨', category:'abstract', size:'80×100 cm', medium:'Acrylic on Canvas' },
+  { id:2, title:'Quiet Geometry', series:'Minimalist', price:950, emoji:'🖼', category:'minimalist', size:'60×80 cm', medium:'Oil on Canvas' },
+  { id:3, title:'Strata No.4', series:'Texture', price:1450, emoji:'🎭', category:'texture', size:'100×120 cm', medium:'Mixed Media' },
+  { id:4, title:'Horizon Whisper', series:'Color Field', price:880, emoji:'🌅', category:'color', size:'90×70 cm', medium:'Acrylic on Canvas' },
+  { id:5, title:'Void Studies', series:'Abstract', price:2100, emoji:'⬛', category:'abstract', size:'120×150 cm', medium:'Oil on Canvas' },
+  { id:6, title:'Pale Drift', series:'Minimalist', price:720, emoji:'🤍', category:'minimalist', size:'50×70 cm', medium:'Watercolor' },
+  { id:7, title:'Rust & Bone', series:'Texture', price:1680, emoji:'🔶', category:'texture', size:'100×100 cm', medium:'Mixed Media' },
+  { id:8, title:'Cyan Dissolution', series:'Color Field', price:1100, emoji:'🔷', category:'color', size:'80×80 cm', medium:'Acrylic on Canvas' },
+];
+
+let cart = [];
+let currentUser = null;
+let orderNum = Math.floor(10000 + Math.random()*90000);
+
+// ── GALLERY ──
+function renderGallery(filter='all') {
+  const grid = document.getElementById('galleryGrid');
+  const items = filter === 'all' ? paintings : paintings.filter(p => p.category === filter);
+  grid.innerHTML = items.map(p => `
+    <div class="painting-card" data-cat="${p.category}">
+      <div class="card-img">
+        <div class="card-canvas" style="background:${getCardBg(p.id)}">${p.emoji}</div>
+        <div class="card-overlay">
+          <button class="btn-primary" style="padding:12px 20px;font-size:10px" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">${p.title}</div>
+        <div class="card-series">${p.series} · ${p.size}</div>
+        <div class="card-bottom">
+          <div class="card-price">$${p.price.toLocaleString()}</div>
+          <button class="btn-add-cart" onclick="addToCart(${p.id})">+ Cart</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getCardBg(id) {
+  const bgs = [
+    'linear-gradient(135deg,#f0ede8,#e8d5b0)',
+    'linear-gradient(135deg,#ece9e4,#d8d4cc)',
+    'linear-gradient(135deg,#e8e4dd,#c8b89a)',
+    'linear-gradient(135deg,#f5f0e8,#e0d0b8)',
+    'linear-gradient(135deg,#2a2a26,#3a3a34)',
+    'linear-gradient(135deg,#f8f6f3,#edeae4)',
+    'linear-gradient(135deg,#e0c8a0,#c8a06a)',
+    'linear-gradient(135deg,#c8dce8,#a0c0d4)',
+  ];
+  return bgs[(id-1) % bgs.length];
+}
+
+function filterGallery(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGallery(cat);
+}
+
+// ── CART ──
+function addToCart(id) {
+  if (!currentUser) { showLogin(); showToast('Please sign in to purchase artwork'); return; }
+  const p = paintings.find(x => x.id === id);
+  const existing = cart.find(x => x.id === id);
+  if (existing) { showToast(`"${p.title}" is already in your cart`); return; }
+  cart.push({...p});
+  updateCart();
+  openCart();
+  showToast(`"${p.title}" added to cart`);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(x => x.id !== id);
+  updateCart();
+}
+
+function updateCart() {
+  const count = cart.length;
+  const badge = document.getElementById('cartCount');
+  badge.style.display = count > 0 ? 'flex' : 'none';
+  badge.textContent = count;
+
+  const total = cart.reduce((s, p) => s + p.price, 0);
+  document.getElementById('cartTotal').textContent = '$' + total.toLocaleString();
+
+  const itemsEl = document.getElementById('cartItems');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '<div class="cart-empty">Your cart is empty.<br>Explore the gallery to find your piece.</div>';
+  } else {
+    itemsEl.innerHTML = cart.map(p => `
+      <div class="cart-item">
+        <div class="cart-item-img" style="background:${getCardBg(p.id)}">${p.emoji}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-title">${p.title}</div>
+          <div class="cart-item-price">$${p.price.toLocaleString()} · ${p.size}</div>
+          <button class="cart-item-remove" onclick="removeFromCart(${p.id})">Remove</button>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function openCart() {
+  document.getElementById('cartPanel').classList.add('open');
+  document.getElementById('backdrop').classList.add('show');
+}
+function closeCart() {
+  document.getElementById('cartPanel').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('show');
+}
+
+// ── AUTH ──
+function showLogin() { openModal('authModal'); }
+
+function switchTab(tab) {
+  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+}
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const pass = document.getElementById('loginPass').value;
+  if (!email || !pass) { showToast('Please fill in all fields'); return; }
+  currentUser = { name: email.split('@')[0], email };
+  setLoggedIn();
+  closeModal('authModal');
+  showToast(`Welcome back, ${currentUser.name}! ✨`);
+}
+
+function doSignup() {
+  const name = document.getElementById('signupName').value;
+  const email = document.getElementById('signupEmail').value;
+  const pass = document.getElementById('signupPass').value;
+  if (!name || !email || !pass) { showToast('Please fill in all fields'); return; }
+  currentUser = { name, email };
+  setLoggedIn();
+  closeModal('authModal');
+  showToast(`Welcome to HNFart, ${name}! 🎨`);
+}
+
+function socialLogin(provider) {
+  currentUser = { name: `${provider} User`, email: `user@${provider.toLowerCase()}.com` };
+  setLoggedIn();
+  closeModal('authModal');
+  showToast(`Signed in with ${provider} ✨`);
+}
+
+function setLoggedIn() {
+  document.getElementById('authArea').innerHTML = `
+    <span class="user-greeting" onclick="logout()">👤 ${currentUser.name} &nbsp;·&nbsp; Sign Out</span>
+  `;
+}
+
+function logout() {
+  currentUser = null;
+  cart = [];
+  updateCart();
+  document.getElementById('authArea').innerHTML = `<button class="btn-nav-login" onclick="showLogin()">Sign In</button>`;
+  showToast('Signed out successfully');
+}
+
+// ── CHECKOUT ──
+function openCheckout() {
+  if (cart.length === 0) { showToast('Your cart is empty'); return; }
+  closeCart();
+  const sub = cart.reduce((s,p) => s + p.price, 0);
+  const tax = Math.round(sub * 0.05);
+  const total = sub + tax;
+  document.getElementById('checkoutItems').innerHTML = cart.map(p =>
+    `<div class="order-summary-line"><span>${p.title} (${p.size})</span><span>$${p.price.toLocaleString()}</span></div>`
+  ).join('');
+  document.getElementById('chkSubtotal').textContent = '$' + sub.toLocaleString();
+  document.getElementById('chkTax').textContent = '$' + tax.toLocaleString();
+  document.getElementById('chkTotal').textContent = '$' + total.toLocaleString();
+  if (currentUser) {
+    document.getElementById('chkName').value = currentUser.name;
+    document.getElementById('chkEmail').value = currentUser.email;
+  }
+  openModal('checkoutModal');
+}
+
+function selectPay(el, id) {
+  document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('cardDetails').style.display = id === 'pm-card' ? 'block' : 'none';
+}
+
+function placeOrder() {
+  const name = document.getElementById('chkName').value;
+  const email = document.getElementById('chkEmail').value;
+  const addr = document.getElementById('chkAddr').value;
+  if (!name || !email || !addr) { showToast('Please complete all delivery details'); return; }
+  closeModal('checkoutModal');
+  generateInvoice(name, email, addr);
+  cart = [];
+  updateCart();
+  orderNum++;
+}
+
+// ── INVOICE ──
+function generateInvoice(name, email, addr) {
+  const sub = cart.length > 0 ? cart.reduce((s,p) => s+p.price, 0) : 
+    (parseInt(document.getElementById('chkSubtotal').textContent.replace(/[$,]/g,'')) || 0);
+  // recalculate from stored snapshot before clearing
+  const invoiceItems = [...cart]; // already cleared above if called after, so pass earlier
+  // Use last checkout state
+  const storedItems = document.getElementById('checkoutItems').innerHTML;
+  const tax = Math.round(sub * 0.05);
+  const total = sub + tax;
+  const date = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+  const payment = document.querySelector('input[name=payment]:checked')?.value || 'card';
+  const payLabel = {card:'Credit / Debit Card', paypal:'PayPal', apple:'Apple Pay', crypto:'Cryptocurrency'}[payment];
+
+  const invNum = `INV-${new Date().getFullYear()}-${orderNum}`;
+
+  document.getElementById('invoiceContent').innerHTML = `
+    <div class="invoice-header">
+      <div>
+        <div class="invoice-brand">HNF<span>art</span></div>
+        <div style="font-size:12px;color:var(--mid);margin-top:4px">hello@hnfart.com · hnfart.com</div>
+      </div>
+      <div class="invoice-meta">
+        <div><strong>INVOICE</strong></div>
+        <div>${invNum}</div>
+        <div>${date}</div>
+        <div style="margin-top:8px"><span class="status-badge">✓ Paid</span></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;font-size:13px">
+      <div>
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--light);margin-bottom:8px">Billed To</div>
+        <div style="font-weight:500">${name}</div>
+        <div style="color:var(--mid)">${email}</div>
+        <div style="color:var(--mid)">${addr}</div>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--light);margin-bottom:8px">Payment</div>
+        <div style="color:var(--mid)">${payLabel}</div>
+        <div style="font-size:10px;color:var(--light);margin-top:6px">Shipping: Free International</div>
+        <div style="font-size:10px;color:var(--light)">Est. Delivery: 7–14 business days</div>
+      </div>
+    </div>
+    <table class="invoice-table">
+      <thead><tr><th>Artwork</th><th>Medium</th><th>Size</th><th>Price</th></tr></thead>
+      <tbody>${storedItems.replace(/<div class="order-summary-line"><span>(.*?)<\/span><span>(.*?)<\/span><\/div>/g, 
+        '<tr><td style="color:var(--dark);font-weight:400">$1</td><td>—</td><td>—</td><td>$2</td></tr>')}</tbody>
+    </table>
+    <div class="invoice-totals">
+      <div class="invoice-total-row"><span>Subtotal</span><span>$${sub.toLocaleString()}</span></div>
+      <div class="invoice-total-row"><span>Shipping</span><span>Free</span></div>
+      <div class="invoice-total-row"><span>Tax (5%)</span><span>$${tax.toLocaleString()}</span></div>
+      <div class="invoice-total-row grand"><span>Total</span><span>$${total.toLocaleString()}</span></div>
+    </div>
+    <div class="invoice-footer">
+      Thank you for supporting original art, ${name.split(' ')[0]}.<br>
+      Your painting will be carefully packaged and shipped with a certificate of authenticity.<br>
+      Questions? Contact us at hello@hnfart.com · Invoice ${invNum}
+    </div>
+  `;
+  openModal('invoiceModal');
+}
+
+function printInvoice() {
+  const w = window.open('','_blank');
+  w.document.write('<html><head><title>Invoice - HNFart</title><style>body{font-family:Georgia,serif;padding:40px;max-width:700px;margin:0 auto}@media print{body{padding:0}}</style></head><body>');
+  w.document.write(document.getElementById('invoiceContent').innerHTML);
+  w.document.write('</body></html>');
+  w.document.close();
+  w.print();
+}
+
+// ── MODALS ──
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+// Close on backdrop click
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
+});
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
+
+// ── INIT ──
+renderGallery();
+updateCart();
+</script>
+</body>
+</html>
