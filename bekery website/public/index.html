@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kataria Bakery</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body id="top">
+    <div id="progressBar" class="progress-bar" aria-hidden="true"></div>
+
+    <header class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+      </div>
+
+      <nav class="nav">
+        <a href="#top" class="brand">Kataria Bakery</a>
+        <div class="nav-links">
+          <a href="#menu">Menu</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#about">About</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact" class="btn btn-primary btn-sm">Order Now</a>
+        </div>
+      </nav>
+
+      <div class="hero-content reveal" data-reveal>
+        <h2>Freshly Baked Happiness Every Day</h2>
+        <p>
+          Premium cakes, breads, cookies, and snacks made with quality
+          ingredients. Check availability and get an instant alternative if a
+          product is out of stock.
+        </p>
+        <div class="cta-row">
+          <a href="#menu" class="btn btn-primary">Browse Menu</a>
+          <a href="#menu" class="btn btn-ghost">Check Availability</a>
+        </div>
+
+        <div class="hero-badges" role="list">
+          <div class="hero-badge" role="listitem">Fresh Daily</div>
+          <div class="hero-badge" role="listitem">Fast Delivery</div>
+          <div class="hero-badge" role="listitem">Order in Minutes</div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section reveal" data-reveal id="menu">
+        <h3>Store Menu & Availability</h3>
+        <p class="section-sub">
+          Search any item to see whether it is available right now. If it is out
+          of stock, we show the expected restock date and a partner bakery contact.
+        </p>
+
+        <div class="toolbar">
+          <input
+            id="productSearch"
+            type="search"
+            placeholder="Search: cake, croissant, bread..."
+            autocomplete="off"
+          />
+
+          <label class="toggle">
+            <input id="availableOnly" type="checkbox" />
+            <span>Available only</span>
+          </label>
+
+          <select id="categorySelect" class="select" aria-label="Category filter">
+            <option value="All">All categories</option>
+          </select>
+        </div>
+
+        <div class="menu-stats" aria-live="polite">
+          <div class="stat-pill">
+            Available: <strong id="availableCount">0</strong>
+          </div>
+          <div class="stat-pill stat-pill-warn">
+            Out of stock: <strong id="outOfStockCount">0</strong>
+          </div>
+        </div>
+
+        <div id="productsGrid" class="product-grid"></div>
+      </section>
+
+      <section class="section reveal" data-reveal id="services">
+        <h3>Why Kataria Bakery</h3>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h4>Quality Ingredients</h4>
+            <p>We choose fresh and trusted ingredients for consistent flavor.</p>
+          </article>
+          <article class="feature-card">
+            <h4>Custom Orders</h4>
+            <p>Need a special message or theme? Tell us in the contact form.</p>
+          </article>
+          <article class="feature-card">
+            <h4>Transparent Availability</h4>
+            <p>
+              Check your item first. If it isn't ready, we share restock ETA and a
+              partner bakery contact.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" data-reveal id="gallery">
+        <h3>Gallery</h3>
+        <p class="section-sub">A few moments of sweetness (just like you).</p>
+        <div class="gallery-grid">
+          <img
+            class="gallery-item"
+            src="https://images.unsplash.com/photo-1542826438-bb0a6f2f0d44?auto=format&fit=crop&w=900&q=80"
+            alt="Cake gallery"
+          />
+          <img
+            class="gallery-item"
+            src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80"
+            alt="Croissant gallery"
+          />
+          <img
+            class="gallery-item"
+            src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=80"
+            alt="Cookies gallery"
+          />
+          <img
+            class="gallery-item"
+            src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=900&q=80"
+            alt="Bread gallery"
+          />
+          <img
+            class="gallery-item"
+            src="https://images.unsplash.com/photo-1519869325930-28139f9d0a3f?auto=format&fit=crop&w=900&q=80"
+            alt="Brownie gallery"
+          />
+          <img
+            class="gallery-item"
+            src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=900&q=80"
+            alt="Cupcake gallery"
+          />
+        </div>
+      </section>
+
+      <section class="section reveal" data-reveal id="about">
+        <h3>About Kataria Bakery</h3>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              Kataria Bakery is built for everyday celebrations. From birthdays to
+              tea-time cravings, we bake with care and deliver with speed.
+            </p>
+            <p>
+              Our store menu shows real-time availability status (demo data). If an item
+              is out of stock, we display the restock ETA and a partner bakery so you
+              never miss your moment.
+            </p>
+            <div class="about-metrics">
+              <div class="metric">
+                <span class="metric-num">50+</span>
+                <span class="metric-label">Daily baked items</span>
+              </div>
+              <div class="metric">
+                <span class="metric-num">4.9/5</span>
+                <span class="metric-label">Customer love</span>
+              </div>
+              <div class="metric">
+                <span class="metric-num">Fast</span>
+                <span class="metric-label">Order updates</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-card">
+            <h4>How it Works</h4>
+            <ol class="howto">
+              <li>Search an item in the menu.</li>
+              <li>Check availability and restock ETA.</li>
+              <li>
+                Contact Kataria (or partner bakery if it is out of stock).
+              </li>
+            </ol>
+            <a href="#contact" class="btn btn-primary btn-wide">Start an Order</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" data-reveal id="faq">
+        <h3>FAQ</h3>
+        <div class="faq-grid">
+          <div class="accordion">
+            <div class="accordion-item">
+              <button class="accordion-btn" type="button">
+                Is availability real-time?
+              </button>
+              <div class="accordion-panel">
+                <p>
+                  In this demo website, availability uses predefined data. In a real
+                  setup, it would be connected to your bakery inventory system.
+                </p>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-btn" type="button">
+                What happens if the product is out of stock?
+              </button>
+              <div class="accordion-panel">
+                <p>
+                  We show the expected restock date and a partner bakery contact so
+                  you can still get something similar quickly.
+                </p>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-btn" type="button">
+                Can I order customized cakes?
+              </button>
+              <div class="accordion-panel">
+                <p>
+                  Yes. Use the contact form and include your theme/message. We will
+                  confirm details by phone.
+                </p>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-btn" type="button">
+                Do you deliver?
+              </button>
+              <div class="accordion-panel">
+                <p>
+                  Deliveries depend on location and order type. Mention your address
+                  in the message and we will confirm.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal contact" data-reveal id="contact">
+        <h3>Contact Kataria Bakery</h3>
+        <p class="section-sub">
+          Tell us what you need. If you checked an out-of-stock item, we can guide
+          you with partner bakery contact too.
+        </p>
+
+        <div id="contactContext" class="contact-context" aria-live="polite">
+          <p class="muted">
+            Tip: Use "Contact" from a product card to prefill your message.
+          </p>
+        </div>
+
+        <form id="contactForm" class="contact-form">
+          <input type="hidden" id="destinationInput" name="destination" value="Kataria Bakery" />
+          <input type="hidden" id="productNameInput" name="productName" value="" />
+
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="tel" name="phone" placeholder="Phone Number" required />
+          <textarea
+            id="messageInput"
+            name="message"
+            rows="5"
+            placeholder="Your Order / Message"
+            required
+          ></textarea>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <p id="formResult" class="form-result"></p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        © <span id="year"></span> Kataria Bakery. All rights reserved.
+      </p>
+    </footer>
+
+    <!-- Product details modal -->
+    <div id="productModal" class="modal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" type="button" aria-label="Close modal">
+          ✕
+        </button>
+
+        <div class="modal-body">
+          <div class="modal-media">
+            <img id="modalImage" src="" alt="" />
+          </div>
+
+          <div class="modal-content">
+            <h3 id="modalTitle"></h3>
+            <div class="modal-meta">
+              <span id="modalCategory" class="modal-pill"></span>
+              <span id="modalPrice" class="modal-pill modal-pill-warm"></span>
+            </div>
+
+            <p id="modalStatus" class="modal-status"></p>
+            <p id="modalRestock" class="modal-restock"></p>
+
+            <div id="modalFallback" class="modal-fallback" style="display: none;">
+              <h4>Partner Bakery Option</h4>
+              <p>
+                Since this item is currently out of stock, contact:
+                <strong id="fallbackName"></strong>
+                (<span id="fallbackPhone"></span>)
+              </p>
+              <a id="fallbackCallLink" class="btn btn-ghost btn-wide" href="#" target="_blank" rel="noreferrer">
+                Copy / Call Partner Phone
+              </a>
+              <button id="contactFallbackBtn" class="btn btn-secondary btn-wide" type="button">
+                Contact Partner for this Item
+              </button>
+            </div>
+
+            <div class="modal-actions">
+              <button id="contactKatariaBtn" class="btn btn-primary btn-wide" type="button">
+                Contact Kataria Bakery
+              </button>
+            </div>
+
+            <p class="modal-note">
+              We will confirm availability and pickup/delivery details by phone.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
