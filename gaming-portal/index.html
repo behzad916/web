@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Multiplayer Hub</title>
+    <!-- PeerJS for WebRTC -->
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- BACKGROUND EFFECTS -->
+    <div class="bg-fx">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- MAIN HUB UI -->
+    <div id="hub-ui" class="app-container">
+        <!-- HEADER -->
+        <header class="hub-header">
+            <div class="logo">
+                <span class="glitch" data-text="NEXUS">NEXUS</span>
+                <span class="subtitle">LIVE GAMING PORTAL</span>
+            </div>
+            <div class="user-profile" id="userProfileBtn" onclick="toggleProfileModal()">
+                <div class="avatar" id="avatarIcon">P1</div>
+                <div class="user-info">
+                    <span id="displayUsername" class="username">Guest</span>
+                    <span id="displayScore" class="score">Score: 0</span>
+                </div>
+            </div>
+            <button class="btn btn-small btn-secondary" onclick="toggleLeaderboard()" style="margin-right: 1rem;">RANKS</button>
+        </header>
+
+        <!-- LOBBY / CONNECTION UI -->
+        <div class="lobby-controls" id="lobbyControls">
+            <div class="connection-status">
+                <div class="status-indicator offline" id="connStatusDot"></div>
+                <span id="connStatusText">Connecting to Nexus Nodes...</span>
+            </div>
+            
+            <div class="lobby-actions">
+                <button class="btn btn-primary" id="btnCreateLobby" onclick="createLobby()">HOST A GAME</button>
+                <div class="divider">OR</div>
+                <div class="join-input-group">
+                    <input type="text" id="joinLobbyId" placeholder="Enter Invite Code (e.g. nxs-xxxx)">
+                    <button class="btn btn-secondary" onclick="joinLobby()">JOIN</button>
+                </div>
+            </div>
+
+            <!-- Active Lobby Info (hidden default) -->
+            <div class="active-lobby" id="activeLobby" style="display:none;">
+                <h3>HOSTING WAITING ROOM</h3>
+                <p>Share this link with your friend to play live:</p>
+                <div class="invite-link-box">
+                    <input type="text" id="inviteLinkInput" readonly>
+                    <button class="btn btn-small" onclick="copyInviteLink()">COPY</button>
+                </div>
+                <p class="waiting-text" id="waitingText">⏳ Waiting for player 2 to join...</p>
+                <button class="btn btn-danger btn-small" onclick="disconnect()">CANCEL</button>
+            </div>
+        </div>
+
+        <!-- GAME SELECTION GRID -->
+        <main class="games-grid" id="gamesGrid">
+            <!-- Game 1 -->
+            <div class="game-card" onclick="selectGame('pong')">
+                <div class="game-thumb pong-bg"></div>
+                <div class="game-info">
+                    <h3>NEON PONG</h3>
+                    <p>Hyper-speed physics duel.</p>
+                    <span class="badge">LIVE MULTIPLAYER</span>
+                </div>
+            </div>
+            <!-- Game 2 -->
+            <div class="game-card" onclick="selectGame('space')">
+                <div class="game-thumb space-bg"></div>
+                <div class="game-info">
+                    <h3>SPACE ARENA</h3>
+                    <p>Top-down galactic dogfight.</p>
+                    <span class="badge">LIVE MULTIPLAYER</span>
+                </div>
+            </div>
+            <!-- Game 3 -->
+            <div class="game-card" onclick="selectGame('hex')">
+                <div class="game-thumb hex-bg"></div>
+                <div class="game-info">
+                    <h3>HEX STRATEGY</h3>
+                    <p>Turn-based territory control.</p>
+                    <span class="badge">LIVE MULTIPLAYER</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- GAMEPLAY UI (hidden default) -->
+    <div id="game-ui" class="game-container" style="display:none;">
+        <div class="game-header">
+            <button class="btn btn-small btn-danger" onclick="quitGame()">QUIT TO HUB</button>
+            <div class="match-score">
+                <span id="p1Name">Player 1</span>
+                <span id="p1Score" class="score-p1">0</span>
+                <span class="vs">VS</span>
+                <span id="p2Score" class="score-p2">0</span>
+                <span id="p2Name">Player 2</span>
+            </div>
+            <div id="gamePing" class="ping">Ping: -- ms</div>
+        </div>
+        
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas"></canvas>
+            <div id="gameOverlay" class="game-overlay">
+                <h2 id="winnerText">WAITING FOR OVERLAY</h2>
+                <button class="btn btn-primary" id="rematchBtn" onclick="requestRematch()">REMATCH</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="toggleProfileModal()">&times;</span>
+            <div id="authForms">
+                <div id="loginForm">
+                    <h2>NEXUS LOGIN</h2>
+                    <div class="form-group">
+                        <label>Gamer Tag</label>
+                        <input type="text" id="loginUsername" placeholder="Enter username...">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••">
+                    </div>
+                    <button class="btn btn-primary" style="width:100%" onclick="handleLogin()">LOGIN</button>
+                    <p class="switch-form">New here? <a href="#" onclick="showRegister()">Register</a></p>
+                </div>
+                <div id="registerForm" style="display:none;">
+                    <h2>JOIN THE NEXUS</h2>
+                    <div class="form-group">
+                        <label>Gamer Tag</label>
+                        <input type="text" id="regUsername" placeholder="Enter username..." maxlength="12">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label>Avatar Color</label>
+                        <input type="color" id="regColor" value="#00ffcc">
+                    </div>
+                    <button class="btn btn-primary" style="width:100%" onclick="handleRegister()">CREATE ACCOUNT</button>
+                    <p class="switch-form">Got an account? <a href="#" onclick="showLogin()">Login</a></p>
+                </div>
+            </div>
+            
+            <div id="loggedInProfile" style="display:none;">
+                <h2>GAMER PROFILE</h2>
+                <div class="profile-details">
+                    <p>Tag: <span id="profileTagName">--</span></p>
+                    <p>Total Score: <span id="profileTotalScore">0</span></p>
+                </div>
+                <button class="btn btn-danger" style="width:100%; margin-top:1rem;" onclick="handleLogout()">LOGOUT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD MODAL -->
+    <div id="leaderboardModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="toggleLeaderboard()">&times;</span>
+            <h2>GLOBAL LEADERBOARD</h2>
+            <div id="leaderboardList" class="leaderboard-list">
+                <!-- Scores injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="js/app.js"></script>
+    <script src="js/multiplayer.js"></script>
+    <script src="js/games/pong.js"></script>
+    <script src="js/games/space.js"></script>
+    <script src="js/games/hex.js"></script>
+</body>
+</html>
