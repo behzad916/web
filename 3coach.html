@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FireCoach Pro — Esports Coaching Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ff:#ff4500;--ff2:#ff6b35;--gold:#ffd700;--cyan:#00d4ff;--green:#00ff88;
+  --dark:#050810;--dark2:#0a0f1e;--dark3:#0f1628;--card:#111827;
+  --border:#1e293b;--muted:#64748b;--text:#e2e8f0;--white:#fff;
+  --grad1:linear-gradient(135deg,#ff4500,#ff6b35);
+  --grad2:linear-gradient(135deg,#00d4ff,#0066ff);
+  --grad3:linear-gradient(135deg,#ffd700,#ff8c00);
+  --grad4:linear-gradient(135deg,#00ff88,#00bcd4);
+  --grad5:linear-gradient(135deg,#7c3aed,#ec4899);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;cursor:default}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--ff);border-radius:3px}
+
+/* PARTICLES */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;border-radius:50%;animation:float linear infinite;opacity:0}
+@keyframes float{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.6}90%{opacity:.3}100%{transform:translateY(-100px) scale(1.5);opacity:0}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(5,8,16,.9);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,69,0,.2);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:64px}
+.nav-logo{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;
+  background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;letter-spacing:2px;cursor:pointer}
+.nav-logo span{color:var(--cyan);-webkit-text-fill-color:var(--cyan)}
+.nav-links{display:flex;gap:4px}
+.nl{background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;
+  font-size:13px;font-weight:500;padding:8px 14px;cursor:pointer;border-radius:4px;
+  transition:all .2s;letter-spacing:.5px}
+.nl:hover,.nl.active{background:rgba(255,69,0,.1);color:var(--ff)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.btn-nav{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;padding:9px 22px;border:none;
+  cursor:pointer;border-radius:3px;transition:all .2s}
+.btn-outline{background:transparent;color:var(--ff);border:2px solid var(--ff)}
+.btn-outline:hover{background:var(--ff);color:#fff}
+.btn-solid{background:var(--grad1);color:#fff;box-shadow:0 0 20px rgba(255,69,0,.3)}
+.btn-solid:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(255,69,0,.5)}
+#userNav{display:none;align-items:center;gap:10px;color:var(--text);font-size:13px;cursor:pointer}
+#userNav:hover{color:var(--ff)}
+
+/* SECTIONS */
+.page{display:none;padding-top:64px;min-height:100vh;position:relative;z-index:1}
+.page.active{display:block}
+.section{padding:60px 40px}
+.s-tag{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--ff);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.s-tag::before{content:'';width:30px;height:2px;background:var(--ff)}
+.s-title{font-family:'Orbitron',monospace;font-size:clamp(24px,4vw,44px);font-weight:700;
+  line-height:1.1;margin-bottom:16px;letter-spacing:-1px}
+.s-title span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.s-title .cy{background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.s-sub{color:var(--muted);font-size:15px;line-height:1.7;max-width:600px;margin-bottom:40px}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;
+  background:radial-gradient(ellipse at 20% 50%,rgba(255,69,0,.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 30%,rgba(0,212,255,.1) 0%,transparent 50%),
+             var(--dark)}
+.hero-inner{max-width:1200px;margin:0 auto;padding:80px 40px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.h-eyebrow{font-family:'Orbitron',monospace;font-size:11px;letter-spacing:4px;
+  color:var(--cyan);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.h-eyebrow::before{content:'';width:40px;height:2px;background:var(--cyan)}
+.hero-h1{font-family:'Orbitron',monospace;font-size:clamp(36px,5vw,64px);
+  font-weight:900;line-height:1.05;letter-spacing:-2px;color:#fff;margin-bottom:24px}
+.hero-h1 .fire{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-h1 .glow{color:var(--gold);text-shadow:0 0 30px rgba(255,215,0,.5)}
+.hero-p{color:rgba(255,255,255,.6);font-size:16px;line-height:1.8;margin-bottom:36px;max-width:480px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:32px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border)}
+.hs{text-align:center}
+.hs-num{font-family:'Orbitron',monospace;font-size:28px;font-weight:700;
+  background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.hero-visual{position:relative}
+.hv-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:24px;
+  position:relative;overflow:hidden}
+.hv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad1)}
+.hv-title{font-family:'Orbitron',monospace;font-size:14px;color:var(--ff);margin-bottom:16px;font-weight:600}
+.role-preview{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rp-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;padding:14px;
+  display:flex;align-items:center;gap:10px;transition:all .3s;cursor:pointer}
+.rp-item:hover{border-color:var(--ff);background:rgba(255,69,0,.05)}
+.rp-icon{font-size:24px}
+.rp-name{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--text)}
+.rp-desc{font-size:11px;color:var(--muted)}
+.floating-badge{position:absolute;background:var(--grad1);color:#fff;padding:8px 14px;border-radius:4px;
+  font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;
+  animation:bobble 3s ease-in-out infinite;box-shadow:0 4px 20px rgba(255,69,0,.4)}
+.fb1{top:-12px;right:20px;animation-delay:0s}
+.fb2{bottom:20px;right:-10px;animation-delay:1.5s}
+@keyframes bobble{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* CARDS */
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;
+  transition:transform .3s,border-color .3s,box-shadow .3s;cursor:pointer}
+.card:hover{transform:translateY(-6px);border-color:var(--ff);box-shadow:0 8px 40px rgba(255,69,0,.15)}
+.card-glow:hover{box-shadow:0 8px 40px rgba(0,212,255,.15);border-color:var(--cyan)}
+.card-head{padding:20px 20px 0;position:relative}
+.card-icon{font-size:36px;margin-bottom:12px}
+.card-title{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:6px}
+.card-sub{font-size:13px;color:var(--muted);line-height:1.6}
+.card-body{padding:16px 20px 20px}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tag{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.tag-fire{background:rgba(255,69,0,.15);color:var(--ff);border:1px solid rgba(255,69,0,.3)}
+.tag-cyan{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.25)}
+.tag-gold{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.25)}
+.tag-green{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.25)}
+
+/* ROLE SELECTOR */
+.roles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.role-card{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:24px;
+  text-align:center;cursor:pointer;transition:all .3s}
+.role-card:hover,.role-card.sel{border-color:var(--ff);background:rgba(255,69,0,.05);
+  box-shadow:0 0 30px rgba(255,69,0,.2)}
+.role-card .ri{font-size:40px;margin-bottom:12px}
+.role-card .rn{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:#fff;margin-bottom:8px}
+.role-card .rd{font-size:12px;color:var(--muted);line-height:1.5}
+.role-detail{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:32px;display:none}
+.role-detail.show{display:block}
+.rd-title{font-family:'Orbitron',monospace;font-size:22px;font-weight:700;color:var(--ff);margin-bottom:16px}
+.skill-bar{margin-bottom:14px}
+.sb-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;font-weight:600}
+.sb-track{background:rgba(255,255,255,.05);height:8px;border-radius:4px;overflow:hidden}
+.sb-fill{height:100%;border-radius:4px;transition:width 1s ease}
+.tip-list{list-style:none;margin-top:16px}
+.tip-list li{padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;
+  display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,.8)}
+.tip-list li::before{content:'⚡';flex-shrink:0}
+
+/* REFLEX TRAINER */
+.reflex-arena{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:32px;text-align:center;max-width:700px;margin:0 auto}
+.ra-title{font-family:'Orbitron',monospace;font-size:20px;color:var(--cyan);margin-bottom:8px;font-weight:700}
+.ra-sub{color:var(--muted);font-size:14px;margin-bottom:32px}
+.ra-board{width:100%;aspect-ratio:16/9;background:rgba(0,0,0,.5);border-radius:8px;
+  position:relative;overflow:hidden;cursor:crosshair;
+  border:2px solid var(--border);margin-bottom:20px}
+.ra-board.ready{border-color:var(--cyan)}
+.ra-board.go{border-color:var(--green)}
+.ra-target{position:absolute;width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  cursor:pointer;transform:translate(-50%,-50%);
+  animation:targetPop .2s ease;box-shadow:0 0 20px currentColor}
+@keyframes targetPop{from{transform:translate(-50%,-50%) scale(0)}to{transform:translate(-50%,-50%) scale(1)}}
+.ra-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.rs-box{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:6px;padding:12px}
+.rs-val{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:var(--ff)}
+.rs-lbl{font-size:11px;color:var(--muted);margin-top:3px}
+.ra-msg{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;min-height:24px;color:var(--green)}
+.btn-start{background:var(--grad2);color:#fff;border:none;
+  font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;
+  padding:14px 40px;border-radius:4px;cursor:pointer;text-transform:uppercase;margin:0 6px;transition:all .2s}
+.btn-start:hover{opacity:.9;transform:translateY(-2px)}
+.btn-reset{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);
+  font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;
+  padding:14px 32px;border-radius:4px;cursor:pointer;text-transform:uppercase;margin:0 6px}
+.btn-reset:hover{border-color:var(--muted);color:var(--text)}
+.difficulty-row{display:flex;justify-content:center;gap:10px;margin-bottom:24px}
+.diff-btn{padding:8px 20px;border-radius:20px;border:2px solid var(--border);
+  background:transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:1px}
+.diff-btn.active{background:var(--grad1);color:#fff;border-color:transparent}
+.mode-row{display:flex;justify-content:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.mode-btn{padding:7px 16px;border-radius:4px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);font-size:12px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.mode-btn.active{background:rgba(0,212,255,.1);color:var(--cyan);border-color:var(--cyan)}
+
+/* MAP SECTION */
+.map-tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+.mt{padding:10px 22px;border:2px solid var(--border);border-radius:4px;
+  background:transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;transition:all .2s}
+.mt.active{background:var(--grad1);color:#fff;border-color:transparent}
+.map-container{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.map-visual{background:var(--card);border:1px solid var(--border);border-radius:8px;
+  aspect-ratio:1;position:relative;overflow:hidden}
+.map-grid-bg{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,212,255,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(0,212,255,.05) 1px,transparent 1px);
+  background-size:40px 40px}
+.map-zone{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;text-align:center;cursor:pointer;transition:all .3s;
+  border:2px solid transparent}
+.map-zone:hover{transform:scale(1.15);z-index:10}
+.map-zone .zone-label{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-size:9px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.5px}
+.z-hot{background:rgba(255,69,0,.3);border-color:var(--ff);color:var(--ff)}
+.z-safe{background:rgba(0,255,136,.2);border-color:var(--green);color:var(--green)}
+.z-vehicle{background:rgba(255,215,0,.2);border-color:var(--gold);color:var(--gold)}
+.z-launch{background:rgba(0,212,255,.2);border-color:var(--cyan);color:var(--cyan)}
+.map-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ml-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.ml-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.map-info{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:24px;overflow-y:auto;max-height:400px}
+.mi-zone{padding:14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;border-radius:6px}
+.mi-zone:hover{background:rgba(255,69,0,.05)}
+.mi-name{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.mi-type{font-size:11px;margin-bottom:6px}
+.mi-tips{font-size:12px;color:rgba(255,255,255,.6);line-height:1.6}
+
+/* AI CHAT */
+.ai-container{display:grid;grid-template-columns:280px 1fr;gap:20px;height:75vh;min-height:500px}
+.ai-sidebar{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
+.ai-sb-head{background:var(--grad1);padding:18px;font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:#fff}
+.ai-topics{flex:1;overflow-y:auto;padding:12px}
+.ai-topic{padding:10px 12px;border-radius:6px;cursor:pointer;font-size:13px;
+  color:var(--muted);transition:all .2s;border:1px solid transparent;margin-bottom:4px}
+.ai-topic:hover,.ai-topic.active{background:rgba(255,69,0,.1);color:var(--ff);border-color:rgba(255,69,0,.2)}
+.ai-chat{background:var(--card);border:1px solid var(--border);border-radius:8px;
+  display:flex;flex-direction:column;overflow:hidden}
+.ai-chat-head{background:linear-gradient(135deg,rgba(0,212,255,.1),rgba(255,69,0,.1));
+  padding:18px 24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px}
+.ai-avatar{width:40px;height:40px;border-radius:50%;background:var(--grad2);
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ai-name{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:var(--cyan)}
+.ai-status{font-size:11px;color:var(--green);display:flex;align-items:center;gap:5px}
+.ai-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);display:block;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ai-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.msg{display:flex;gap:10px;animation:msgIn .3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{flex-direction:row-reverse}
+.msg-av{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.msg-av.bot{background:var(--grad2)}
+.msg-av.user{background:var(--grad1)}
+.msg-bubble{max-width:75%;padding:12px 16px;border-radius:8px;font-size:14px;line-height:1.6}
+.msg-bubble.bot{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.15);color:var(--text)}
+.msg-bubble.user{background:var(--grad1);color:#fff}
+.msg-bubble strong{color:var(--cyan)}
+.ai-input-row{padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:10px}
+.ai-input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);
+  border-radius:6px;padding:12px 16px;color:var(--text);font-family:'DM Sans',sans-serif;
+  font-size:14px;outline:none;transition:border-color .2s}
+.ai-input:focus{border-color:var(--cyan)}
+.ai-send{background:var(--grad2);color:#fff;border:none;padding:12px 20px;
+  border-radius:6px;cursor:pointer;font-size:18px;transition:all .2s;flex-shrink:0}
+.ai-send:hover{opacity:.9;transform:scale(1.05)}
+.ai-suggestions{display:flex;gap:8px;padding:0 20px 12px;flex-wrap:wrap}
+.ai-sug{background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);
+  color:var(--cyan);padding:6px 12px;border-radius:20px;font-size:12px;
+  cursor:pointer;transition:all .2s}
+.ai-sug:hover{background:rgba(0,212,255,.15)}
+
+/* PROFILE */
+.profile-layout{display:grid;grid-template-columns:320px 1fr;gap:24px}
+.profile-card{background:var(--card);border:1px solid var(--border);border-radius:8px;
+  overflow:hidden;position:sticky;top:80px}
+.profile-banner{height:100px;background:linear-gradient(135deg,#ff4500,#7c3aed,#0066ff);position:relative}
+.profile-avatar-wrap{position:absolute;bottom:-40px;left:24px}
+.profile-avatar{width:80px;height:80px;border-radius:50%;border:4px solid var(--dark2);
+  background:var(--grad1);display:flex;align-items:center;justify-content:center;
+  font-size:32px;overflow:hidden;cursor:pointer;position:relative}
+.profile-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-avatar .av-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);
+  display:none;align-items:center;justify-content:center;font-size:12px;color:#fff}
+.profile-avatar:hover .av-overlay{display:flex}
+.profile-info{padding:52px 24px 24px}
+.profile-name{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+.profile-id{font-size:12px;color:var(--muted);margin-bottom:12px}
+.profile-role{display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,69,0,.1);border:1px solid rgba(255,69,0,.3);
+  padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;color:var(--ff);
+  font-family:'Rajdhani',sans-serif;letter-spacing:1px;margin-bottom:16px}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px}
+.ps-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;
+  padding:10px;text-align:center}
+.ps-val{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:var(--ff)}
+.ps-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.profile-bio{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:16px}
+.profile-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.pbadge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px}
+.btn-edit-profile{width:100%;background:var(--grad1);color:#fff;border:none;
+  padding:12px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:4px;
+  transition:opacity .2s;margin-bottom:8px}
+.btn-edit-profile:hover{opacity:.9}
+.profile-main{}
+.clips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.clip-card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;
+  transition:all .3s}
+.clip-card:hover{border-color:var(--cyan);transform:translateY(-4px)}
+.clip-thumb{aspect-ratio:16/9;position:relative;overflow:hidden;cursor:pointer}
+.clip-thumb-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:48px;background:linear-gradient(135deg,#0a0f1e,#1e293b)}
+.clip-thumb img{width:100%;height:100%;object-fit:cover}
+.clip-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.4);font-size:36px;opacity:0;transition:opacity .2s}
+.clip-card:hover .clip-play{opacity:1}
+.clip-meta{padding:12px}
+.clip-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.clip-info{font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+.upload-clip-area{border:2px dashed rgba(0,212,255,.3);border-radius:8px;padding:40px;
+  text-align:center;cursor:pointer;transition:all .3s;background:rgba(0,212,255,.02);margin-bottom:20px}
+.upload-clip-area:hover{border-color:var(--cyan);background:rgba(0,212,255,.05)}
+.upload-clip-area .uci{font-size:40px;margin-bottom:12px}
+.upload-clip-area p{color:var(--muted);font-size:14px}
+.upload-clip-area strong{color:var(--cyan)}
+
+/* TEAM COORDINATION */
+.coord-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.coord-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:28px}
+.coord-title{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:#fff;
+  margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.callout-table{width:100%;border-collapse:collapse}
+.callout-table th{text-align:left;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);font-weight:600}
+.callout-table td{padding:10px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top}
+.callout-table td:first-child{color:var(--cyan);font-weight:700;font-family:'Rajdhani',sans-serif;font-size:14px;width:100px}
+.callout-table td:last-child{color:rgba(255,255,255,.7)}
+.signal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sig-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;padding:12px}
+.sig-key{font-family:'Orbitron',monospace;font-size:12px;color:var(--gold);margin-bottom:4px}
+.sig-action{font-size:12px;color:rgba(255,255,255,.7)}
+
+/* ROTATION */
+.rotation-section{}
+.rot-map{background:var(--card);border:1px solid var(--border);border-radius:8px;
+  aspect-ratio:16/9;position:relative;overflow:hidden;margin-bottom:20px}
+.rot-bg{position:absolute;inset:0;background:radial-gradient(ellipse at center,#0a1628,#050810)}
+.rot-arrow{position:absolute;font-size:20px;animation:rotPulse 2s ease-in-out infinite}
+@keyframes rotPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+.rot-point{position:absolute;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%)}
+.rot-label{position:absolute;font-size:10px;font-family:'Rajdhani',sans-serif;font-weight:700;white-space:nowrap}
+.rot-phases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.rot-phase{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px}
+.rp-phase{font-family:'Orbitron',monospace;font-size:11px;color:var(--ff);letter-spacing:2px;margin-bottom:8px}
+.rp-title{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.rp-list{font-size:12px;color:var(--muted);line-height:2}
+.rp-list li{list-style:none;display:flex;align-items:flex-start;gap:6px}
+.rp-list li::before{content:'→';color:var(--ff);flex-shrink:0}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;z-index:9999;
+  background:var(--grad1);color:#fff;padding:14px 24px;border-radius:6px;
+  font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;
+  box-shadow:0 8px 32px rgba(255,69,0,.4);
+  transform:translateY(20px);opacity:0;pointer-events:none;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* AUTH OVERLAY */
+.auth-overlay{position:fixed;inset:0;background:rgba(5,8,16,.9);z-index:2000;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .3s}
+.auth-overlay.on{opacity:1;pointer-events:all}
+.auth-box{background:var(--dark2);border:1px solid rgba(255,69,0,.3);border-radius:12px;
+  padding:48px;max-width:420px;width:100%;position:relative;
+  box-shadow:0 0 80px rgba(255,69,0,.15)}
+.auth-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--grad1);border-radius:12px 12px 0 0}
+.auth-logo{font-family:'Orbitron',monospace;font-size:22px;font-weight:900;
+  background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;text-align:center;letter-spacing:2px;margin-bottom:6px}
+.auth-sub{text-align:center;font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:28px}
+.auth-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px}
+.auth-tab{flex:1;background:none;border:none;color:var(--muted);font-family:'Rajdhani',sans-serif;
+  font-size:13px;font-weight:700;padding:12px;cursor:pointer;letter-spacing:1px;
+  border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;text-transform:uppercase}
+.auth-tab.active{color:var(--ff);border-bottom-color:var(--ff)}
+.f-g{margin-bottom:16px}
+.f-g label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:7px;font-weight:600}
+.f-g input,.f-g select{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);
+  border-radius:4px;padding:12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;
+  font-size:14px;outline:none;transition:border-color .2s}
+.f-g input:focus,.f-g select:focus{border-color:var(--ff)}
+.f-g select option{background:var(--dark2)}
+.btn-auth{width:100%;background:var(--grad1);color:#fff;border:none;
+  padding:14px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:4px;
+  transition:opacity .2s;margin-top:4px}
+.btn-auth:hover{opacity:.9}
+.auth-close{position:absolute;top:16px;right:18px;background:rgba(255,255,255,.05);
+  border:none;color:var(--muted);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px}
+.auth-close:hover{background:rgba(255,69,0,.2);color:var(--ff)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;padding:40px 20px}
+  .hero-visual{display:none}
+  .section{padding:40px 20px}
+  nav{padding:0 16px}.nav-links{display:none}
+  .ai-container{grid-template-columns:1fr}
+  .ai-sidebar{display:none}
+  .profile-layout{grid-template-columns:1fr}
+  .coord-grid{grid-template-columns:1fr}
+  .map-container{grid-template-columns:1fr}
+  .rot-phases{grid-template-columns:1fr}
+}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeInUp .5s ease backwards}
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- AUTH OVERLAY -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box">
+    <button class="auth-close" onclick="closeAuth()">✕</button>
+    <div class="auth-logo">🔥 FireCoach</div>
+    <div class="auth-sub">Join the Elite Training Platform</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="atLogin" onclick="swAuth('login')">Login</button>
+      <button class="auth-tab" id="atSign" onclick="swAuth('signup')">Register</button>
+    </div>
+    <div id="loginF">
+      <div class="f-g"><label>Username / Email</label><input type="text" id="lu" placeholder="your_ign or email"></div>
+      <div class="f-g"><label>Password</label><input type="password" id="lp" placeholder="••••••••"></div>
+      <button class="btn-auth" onclick="doLogin()">→ Enter The Arena</button>
+    </div>
+    <div id="signF" style="display:none">
+      <div class="f-g"><label>In-Game Name</label><input type="text" id="su" placeholder="YourIGN"></div>
+      <div class="f-g"><label>Email</label><input type="email" id="se" placeholder="email@example.com"></div>
+      <div class="f-g"><label>Password</label><input type="password" id="sp" placeholder="Min 8 chars"></div>
+      <div class="f-g"><label>Your Main Role</label>
+        <select id="sr">
+          <option value="">Select your role...</option>
+          <option value="Rusher">⚡ Rusher</option>
+          <option value="Assaulter">💥 Assaulter</option>
+          <option value="Sniper">🎯 Sniper</option>
+          <option value="Healer">💊 Healer / Support</option>
+          <option value="Scout">👁️ Scout</option>
+        </select>
+      </div>
+      <button class="btn-auth" onclick="doSignup()">🚀 Create Profile</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">🔥FireCoach<span>PRO</span></div>
+  <div class="nav-links">
+    <button class="nl active" onclick="showPage('home')">Home</button>
+    <button class="nl" onclick="showPage('roles')">Roles</button>
+    <button class="nl" onclick="showPage('map')">Map Guide</button>
+    <button class="nl" onclick="showPage('rotation')">Rotation</button>
+    <button class="nl" onclick="showPage('team')">Team Comms</button>
+    <button class="nl" onclick="showPage('reflex')">Reflex Training</button>
+    <button class="nl" onclick="showPage('ai')">AI Coach</button>
+    <button class="nl" onclick="showPage('profile')">Profile</button>
+  </div>
+  <div class="nav-right">
+    <div id="userNav" onclick="showPage('profile')">
+      <span id="userEmoji">🎮</span>
+      <span id="userName">Player</span>
+    </div>
+    <button class="btn-nav btn-outline" id="loginBtn" onclick="openAuth()">Login</button>
+    <button class="btn-nav btn-solid" id="signBtn" onclick="openAuth()">Get Started</button>
+  </div>
+</nav>
+
+<!-- ══ HOME ══ -->
+<div class="page active" id="page-home">
+  <div class="hero-inner">
+    <div>
+      <div class="h-eyebrow">Free Fire Esports Academy</div>
+      <h1 class="hero-h1">
+        Train Like a<br>
+        <span class="fire">Pro. Play</span><br>
+        Like a <span class="glow">Legend.</span>
+      </h1>
+      <p class="hero-p">The most advanced Free Fire coaching platform. Master every role, dominate every map, coordinate your team, and train your reflexes to pro level.</p>
+      <div class="hero-btns">
+        <button class="btn-nav btn-solid" onclick="openAuth()">🚀 Start Free Training</button>
+        <button class="btn-nav btn-outline" onclick="showPage('ai')">🤖 Ask AI Coach</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hs"><div class="hs-num">50K+</div><div class="hs-lbl">Players Trained</div></div>
+        <div class="hs"><div class="hs-num">5</div><div class="hs-lbl">Roles Covered</div></div>
+        <div class="hs"><div class="hs-num">4.9★</div><div class="hs-lbl">Rating</div></div>
+        <div class="hs"><div class="hs-num">Free</div><div class="hs-lbl">AI Support</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hv-card fade-in">
+        <div class="floating-badge fb1">⚡ LIVE TRAINING</div>
+        <div class="floating-badge fb2">🏆 PRO CERTIFIED</div>
+        <div class="hv-title">🎮 SELECT YOUR ROLE</div>
+        <div class="role-preview">
+          <div class="rp-item" onclick="showPage('roles')"><span class="rp-icon">⚡</span><div><div class="rp-name">RUSHER</div><div class="rp-desc">First contact specialist</div></div></div>
+          <div class="rp-item" onclick="showPage('roles')"><span class="rp-icon">💊</span><div><div class="rp-name">HEALER</div><div class="rp-desc">Keep your squad alive</div></div></div>
+          <div class="rp-item" onclick="showPage('roles')"><span class="rp-icon">💥</span><div><div class="rp-name">ASSAULTER</div><div class="rp-desc">Mid-range domination</div></div></div>
+          <div class="rp-item" onclick="showPage('roles')"><span class="rp-icon">🎯</span><div><div class="rp-name">SNIPER</div><div class="rp-desc">Long-range precision</div></div></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <div class="rp-item" onclick="showPage('reflex')" style="flex:1"><span class="rp-icon">👁️</span><div><div class="rp-name">REFLEX TRAIN</div><div class="rp-desc">Sharpen your aim</div></div></div>
+          <div class="rp-item" onclick="showPage('ai')" style="flex:1"><span class="rp-icon">🤖</span><div><div class="rp-name">AI COACH</div><div class="rp-desc">Ask anything</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--dark2)">
+    <div class="s-tag">What We Offer</div>
+    <h2 class="s-title">Everything You Need to Go <span>Pro</span></h2>
+    <div class="grid-3">
+      <div class="card" onclick="showPage('roles')"><div class="card-head"><div class="card-icon">🎭</div><div class="card-title">Role Mastery</div><div class="card-sub">Deep guides for every role — Rusher, Healer, Assaulter, Sniper, Scout</div></div><div class="card-body"><div class="tag-row"><span class="tag tag-fire">5 Roles</span><span class="tag tag-gold">Pro Tips</span></div></div></div>
+      <div class="card card-glow" onclick="showPage('map')"><div class="card-head"><div class="card-icon">🗺️</div><div class="card-title">Map Knowledge</div><div class="card-sub">Every zone, vehicle spawn, launchpad, and rotation path for Bermuda & Kalahari</div></div><div class="card-body"><div class="tag-row"><span class="tag tag-cyan">2 Maps</span><span class="tag tag-green">Updated</span></div></div></div>
+      <div class="card" onclick="showPage('reflex')"><div class="card-head"><div class="card-icon">👁️</div><div class="card-title">Reflex Training</div><div class="card-sub">Interactive aim training games to sharpen your eye speed and reaction time</div></div><div class="card-body"><div class="tag-row"><span class="tag tag-fire">3 Modes</span><span class="tag tag-gold">Track Progress</span></div></div></div>
+      <div class="card" onclick="showPage('team')"><div class="card-head"><div class="card-icon">📡</div><div class="card-title">Team Coordination</div><div class="card-sub">Callouts, signals, IGL guides, and squad communication strategies</div></div><div class="card-body"><div class="tag-row"><span class="tag tag-cyan">Callouts</span><span class="tag tag-green">IGL Guide</span></div></div></div>
+      <div class="card card-glow" onclick="showPage('ai')"><div class="card-head"><div class="card-icon">🤖</div><div class="card-title">Free AI Coach</div><div class="card-sub">Ask any question — strategy, loadout, positioning, mindset — get instant expert answers</div></div><div class="card-body"><div class="tag-row"><span class="tag tag-cyan">24/7 Free</span><span class="tag tag-green">Instant</span></div></div></div>
+      <div class="card" onclick="showPage('profile')"><div class="card-head"><div class="card-icon">🏆</div><div class="card-title">Player Profile</div><div class="card-sub">Upload gameplay clips, build your esports portfolio, get scouted by pro teams</div></div><div class="card-body"><div class="tag-row"><span class="tag tag-fire">Scout Ready</span><span class="tag tag-gold">Pro Teams</span></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ROLES ══ -->
+<div class="page" id="page-roles">
+  <div class="section">
+    <div class="s-tag">Role Mastery</div>
+    <h2 class="s-title">Choose Your <span>Role.</span> Master It.</h2>
+    <p class="s-sub">Every great team needs players who truly own their role. Select your role below to see the full guide, skills, and pro tips.</p>
+    <div class="roles-grid" id="rolesGrid"></div>
+    <div class="role-detail" id="roleDetail"></div>
+  </div>
+</div>
+
+<!-- ══ MAP GUIDE ══ -->
+<div class="page" id="page-map">
+  <div class="section">
+    <div class="s-tag">Map Knowledge</div>
+    <h2 class="s-title">Know Every <span>Corner.</span> Win Every <span class="cy">Zone.</span></h2>
+    <p class="s-sub">Knowing the map better than your enemies is your greatest weapon. Study every key location, vehicle spawn, and escape route.</p>
+    <div class="map-tabs">
+      <button class="mt active" onclick="showMap('bermuda',this)">🌿 Bermuda</button>
+      <button class="mt" onclick="showMap('kalahari',this)">🏜️ Kalahari</button>
+    </div>
+    <div class="map-container">
+      <div>
+        <div class="map-visual" id="mapVisual">
+          <div class="map-grid-bg"></div>
+          <div id="mapZones"></div>
+        </div>
+        <div class="map-legend">
+          <div class="ml-item"><div class="ml-dot" style="background:var(--ff)"></div>Hot Zone (High Loot)</div>
+          <div class="ml-item"><div class="ml-dot" style="background:var(--green)"></div>Safe Landing</div>
+          <div class="ml-item"><div class="ml-dot" style="background:var(--gold)"></div>Vehicle Spawn</div>
+          <div class="ml-item"><div class="ml-dot" style="background:var(--cyan)"></div>Launchpad</div>
+        </div>
+      </div>
+      <div class="map-info" id="mapInfo"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ROTATION ══ -->
+<div class="page" id="page-rotation">
+  <div class="section">
+    <div class="s-tag">Rotation Strategy</div>
+    <h2 class="s-title">Rotate <span>Smart.</span> Survive <span class="cy">Longer.</span></h2>
+    <p class="s-sub">Rotation is the most underrated skill in Free Fire. Know when to push, when to rotate, and how to always have an escape plan.</p>
+    <div class="rot-phases">
+      <div class="rot-phase"><div class="rp-phase">PHASE 1 — DROP</div><div class="rp-title">Landing Phase</div><ul class="rp-list"><li>Land at edge zones first match</li><li>Hot drops only if confident in gunfights</li><li>Spread out but stay within 100m of each other</li><li>Priority: weapons → ammo → armour → medkits</li></ul></div>
+      <div class="rot-phase"><div class="rp-phase">PHASE 2 — MID GAME</div><div class="rp-title">Zone Rotation</div><ul class="rp-list"><li>Start rotating when 2nd zone appears</li><li>Always move with cover — trees, rocks, buildings</li><li>Scout uses Gloo Wall to create paths</li><li>IGL calls direction — team follows immediately</li></ul></div>
+      <div class="rot-phase"><div class="rp-phase">PHASE 3 — END GAME</div><div class="rp-title">Final Circle</div><ul class="rp-list"><li>Take high ground before zone closes</li><li>Healer stays center of squad formation</li><li>Rusher waits for IGL call before engaging</li><li>Use Gloo Walls to force enemy position</li></ul></div>
+    </div>
+    <div class="grid-2">
+      <div class="coord-card">
+        <div class="coord-title">🚗 Vehicle Escape Routes</div>
+        <ul class="tip-list">
+          <li>Always note vehicle spawns before engaging a fight — know your exit</li>
+          <li>Jeep can carry 4 players — ideal for full squad rotation</li>
+          <li>Motorbike is fastest — use for solo scout rotations</li>
+          <li>Never drive in straight lines — zigzag to avoid sniper fire</li>
+          <li>Drop vehicles 50m before your destination to avoid giving position</li>
+        </ul>
+      </div>
+      <div class="coord-card">
+        <div class="coord-title">🚀 Launchpad Tactics</div>
+        <ul class="tip-list">
+          <li>Use launchpads to surprise enemies from unexpected angles</li>
+          <li>Pre-place Gloo Walls at landing spot before jumping</li>
+          <li>IGL calls launchpad rotation — team goes one at a time</li>
+          <li>Healer jumps last to cover squad landing</li>
+          <li>Never use launchpad when fully in the open — enemies will track you</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TEAM COMMS ══ -->
+<div class="page" id="page-team">
+  <div class="section">
+    <div class="s-tag">Team Coordination</div>
+    <h2 class="s-title">Communicate. <span>Coordinate.</span> Conquer.</h2>
+    <p class="s-sub">The difference between a random squad and a pro team is communication. Master callouts, signals, and IGL strategy.</p>
+    <div class="coord-grid">
+      <div class="coord-card">
+        <div class="coord-title">📢 Essential Callouts</div>
+        <table class="callout-table">
+          <thead><tr><th>Call</th><th>Meaning & Usage</th></tr></thead>
+          <tbody>
+            <tr><td>"PUSH NOW"</td><td>IGL signal — all rush immediately, no hesitation</td></tr>
+            <tr><td>"HOLD HOLD"</td><td>Stay in position, do not engage — enemy is baiting</td></tr>
+            <tr><td>"ONE DOWN"</td><td>Enemy knocked — push to finish before revive</td></tr>
+            <tr><td>"HEAL ME"</td><td>Player is low HP — healer comes to assist immediately</td></tr>
+            <tr><td>"ROTATE LEFT/RIGHT"</td><td>Move direction — whole team shifts together</td></tr>
+            <tr><td>"THIRD PARTY"</td><td>New enemy squad approaching — disengage current fight</td></tr>
+            <tr><td>"GLOO UP"</td><td>Place Gloo Walls for cover — defensive position</td></tr>
+            <tr><td>"COUNT ENEMIES"</td><td>Scout calls enemy number before engage</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="coord-card">
+        <div class="coord-title">🎮 Quick Signals (No Voice)</div>
+        <div class="signal-grid">
+          <div class="sig-item"><div class="sig-key">👆 Ping once</div><div class="sig-action">Enemy spotted here</div></div>
+          <div class="sig-item"><div class="sig-key">👆👆 Ping twice</div><div class="sig-action">Loot / item here</div></div>
+          <div class="sig-item"><div class="sig-key">🗺️ Map ping</div><div class="sig-action">Rotate to this location</div></div>
+          <div class="sig-item"><div class="sig-key">❓ Question ping</div><div class="sig-action">Asking for team decision</div></div>
+          <div class="sig-item"><div class="sig-key">✅ Agree signal</div><div class="sig-action">Confirm IGL call</div></div>
+          <div class="sig-item"><div class="sig-key">🔫 Weapon ping</div><div class="sig-action">Need this weapon / ammo</div></div>
+          <div class="sig-item"><div class="sig-key">💊 Medkit ping</div><div class="sig-action">Need healing items</div></div>
+          <div class="sig-item"><div class="sig-key">🚗 Vehicle ping</div><div class="sig-action">Vehicle spotted for rotation</div></div>
+        </div>
+      </div>
+      <div class="coord-card">
+        <div class="coord-title">👑 IGL (In-Game Leader) Guide</div>
+        <ul class="tip-list">
+          <li>IGL always calls — team never acts without the call unless emergency</li>
+          <li>Before every match: agree on drop location, roles, and rotation plan</li>
+          <li>IGL watches the minimap while others focus on combat</li>
+          <li>Good IGL = calm voice, clear calls, adapts instantly to changing situation</li>
+          <li>IGL does NOT need to be the best gunfighter — best decision-maker wins</li>
+          <li>End-game: IGL tells each player which target to focus — no confusion</li>
+        </ul>
+      </div>
+      <div class="coord-card">
+        <div class="coord-title">⚔️ Squad Formation</div>
+        <ul class="tip-list">
+          <li>Scout moves 20m ahead — spots enemies, calls info back</li>
+          <li>Rusher flanks left or right on IGL command</li>
+          <li>Assaulter takes center — highest DPS in the fight</li>
+          <li>Healer stays 15m behind — never front line, always cover</li>
+          <li>Keep 10–15m spacing — avoid grenade kills wiping squad</li>
+          <li>After a kill: hold position, wait for IGL call before advancing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ REFLEX TRAINING ══ -->
+<div class="page" id="page-reflex">
+  <div class="section">
+    <div class="s-tag">Reflex & Aim Training</div>
+    <h2 class="s-title">Train Your <span>Eyes.</span> Trust Your <span class="cy">Instincts.</span></h2>
+    <p class="s-sub">Pro players have reaction times under 200ms. This trainer will push your limits — track your progress and watch your skills improve.</p>
+    <div class="reflex-arena">
+      <div class="ra-title">🎯 REFLEX ARENA</div>
+      <div class="ra-sub">Click/tap every target as fast as you can — 30 seconds · Track your ms reaction time</div>
+      <div class="ra-stats">
+        <div class="rs-box"><div class="rs-val" id="rxScore">0</div><div class="rs-lbl">Score</div></div>
+        <div class="rs-box"><div class="rs-val" id="rxTime">30</div><div class="rs-lbl">Time (s)</div></div>
+        <div class="rs-box"><div class="rs-val" id="rxAvg">—</div><div class="rs-lbl">Avg Ms</div></div>
+        <div class="rs-box"><div class="rs-val" id="rxBest">—</div><div class="rs-lbl">Best Ms</div></div>
+      </div>
+      <div class="difficulty-row">
+        <button class="diff-btn active" onclick="setDiff('easy',this)">EASY</button>
+        <button class="diff-btn" onclick="setDiff('medium',this)">MEDIUM</button>
+        <button class="diff-btn" onclick="setDiff('hard',this)">HARD</button>
+        <button class="diff-btn" onclick="setDiff('pro',this)">PRO</button>
+      </div>
+      <div class="mode-row">
+        <button class="mode-btn active" onclick="setMode('click',this)">🎯 Click Targets</button>
+        <button class="mode-btn" onclick="setMode('color',this)">🎨 Color Reaction</button>
+        <button class="mode-btn" onclick="setMode('track',this)">👁️ Moving Target</button>
+      </div>
+      <div class="ra-board" id="raBoard" onclick="boardClick(event)"></div>
+      <div class="ra-msg" id="raMsg">Select difficulty and press START</div>
+      <div style="margin-top:16px">
+        <button class="btn-start" id="startBtn" onclick="startReflex()">▶ START</button>
+        <button class="btn-reset" onclick="resetReflex()">↺ RESET</button>
+      </div>
+    </div>
+    <div class="section" style="padding:40px 0 0">
+      <h3 style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:20px">📊 Performance Ratings</h3>
+      <div class="grid-4">
+        <div class="coord-card" style="text-align:center"><div style="font-size:32px">🐢</div><div style="font-family:'Orbitron',monospace;font-size:14px;color:var(--muted)">BEGINNER</div><div style="font-size:13px;color:var(--muted);margin-top:6px">&gt; 400ms</div></div>
+        <div class="coord-card" style="text-align:center"><div style="font-size:32px">⚡</div><div style="font-family:'Orbitron',monospace;font-size:14px;color:var(--gold)">AVERAGE</div><div style="font-size:13px;color:var(--muted);margin-top:6px">300–400ms</div></div>
+        <div class="coord-card" style="text-align:center"><div style="font-size:32px">🔥</div><div style="font-family:'Orbitron',monospace;font-size:14px;color:var(--ff)">SKILLED</div><div style="font-size:13px;color:var(--muted);margin-top:6px">200–300ms</div></div>
+        <div class="coord-card" style="text-align:center"><div style="font-size:32px">💫</div><div style="font-family:'Orbitron',monospace;font-size:14px;color:var(--cyan)">PRO LEVEL</div><div style="font-size:13px;color:var(--muted);margin-top:6px">&lt; 200ms</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AI COACH ══ -->
+<div class="page" id="page-ai">
+  <div class="section">
+    <div class="s-tag">AI Coaching</div>
+    <h2 class="s-title">Your Personal <span>AI Coach</span> — Free, 24/7</h2>
+    <p class="s-sub">Ask anything about Free Fire — strategy, loadouts, positioning, team play, esports career advice. Powered by advanced AI.</p>
+    <div class="ai-container">
+      <div class="ai-sidebar">
+        <div class="ai-sb-head">💬 Quick Topics</div>
+        <div class="ai-topics">
+          <div class="ai-topic active" onclick="askTopic('How do I become a better Rusher in Free Fire?')">⚡ Rusher Tips</div>
+          <div class="ai-topic" onclick="askTopic('What is the best loadout for ranked matches?')">🔫 Best Loadout</div>
+          <div class="ai-topic" onclick="askTopic('How do I improve my aim and sensitivity settings?')">🎯 Aim & Sensitivity</div>
+          <div class="ai-topic" onclick="askTopic('What are the best drop locations on Bermuda for ranked?')">🗺️ Drop Locations</div>
+          <div class="ai-topic" onclick="askTopic('How do I become an IGL (In-Game Leader)?')">👑 IGL Guide</div>
+          <div class="ai-topic" onclick="askTopic('What characters are best for competitive Free Fire?')">🧬 Best Characters</div>
+          <div class="ai-topic" onclick="askTopic('How do I handle panic in clutch situations?')">🧠 Clutch Mindset</div>
+          <div class="ai-topic" onclick="askTopic('How do I get scouted by a pro team?')">🏆 Go Pro</div>
+          <div class="ai-topic" onclick="askTopic('How should my squad rotate in the final zone?')">🔄 Final Zone Rotation</div>
+          <div class="ai-topic" onclick="askTopic('What are the best healing strategies for a support player?')">💊 Healer Strategy</div>
+          <div class="ai-topic" onclick="askTopic('How do I play sniper effectively in ranked?')">🎯 Sniper Guide</div>
+          <div class="ai-topic" onclick="askTopic('How do I improve my Gloo Wall placement?')">🧱 Gloo Wall Mastery</div>
+        </div>
+      </div>
+      <div class="ai-chat">
+        <div class="ai-chat-head">
+          <div class="ai-avatar">🤖</div>
+          <div>
+            <div class="ai-name">APEX COACH AI</div>
+            <div class="ai-status">Online — Ready to coach</div>
+          </div>
+        </div>
+        <div class="ai-messages" id="aiMessages">
+          <div class="msg"><div class="msg-av bot">🤖</div><div class="msg-bubble bot">Welcome to <strong>FireCoach Pro</strong>! 🔥<br><br>I'm your personal AI coaching assistant. Ask me <strong>anything</strong> about Free Fire — strategy, roles, map knowledge, team coordination, loadouts, or how to go pro.<br><br>Select a topic on the left or type your question below. Let's level up your game! 💪</div></div>
+        </div>
+        <div class="ai-suggestions" id="aiSugs">
+          <div class="ai-sug" onclick="askTopic('How do I improve my win rate?')">How to win more?</div>
+          <div class="ai-sug" onclick="askTopic('What sensitivity settings should I use?')">Best sensitivity?</div>
+          <div class="ai-sug" onclick="askTopic('How do I rank up fast in Free Fire?')">Rank up fast?</div>
+        </div>
+        <div class="ai-input-row">
+          <input class="ai-input" id="aiInput" placeholder="Ask your coach anything..." onkeydown="if(event.key==='Enter')sendAI()">
+          <button class="ai-send" onclick="sendAI()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROFILE ══ -->
+<div class="page" id="page-profile">
+  <div class="section">
+    <div class="s-tag">Player Profile</div>
+    <h2 class="s-title">Your Esports <span>Portfolio</span></h2>
+    <p class="s-sub">Build your profile, upload gameplay clips, and get discovered by pro teams looking for talent.</p>
+    <div id="profileContent"></div>
+  </div>
+</div>
+
+<script>
+// ══ STATE ══
+let user=null,reflexTimer=null,reflexScore=0,reflexTimes=[],reflexRunning=false,reflexTimeLeft=30;
+let difficulty={easy:{size:60,time:2500},medium:{size:45,time:1800},hard:{size:32,time:1200},pro:{size:22,time:700}};
+let curDiff='easy',curMode='click',moveInterval=null,targetEl=null,trackX=50,trackY=50,trackDX=1.5,trackDY=1.2;
+let uploadedClips=[],profilePic=null;
+let currentMap='bermuda';
+
+// ══ PARTICLES ══
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<25;i++){
+    const p=document.createElement('div');p.className='particle';
+    const s=Math.random()*4+2;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;
+      background:${['#ff4500','#00d4ff','#ffd700','#00ff88','#7c3aed'][Math.floor(Math.random()*5)]};
+      animation-duration:${Math.random()*15+10}s;animation-delay:${Math.random()*10}s`;
+    c.appendChild(p);
+  }
+})();
+
+// ══ NAVIGATION ══
+function showPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nl').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.nl').forEach(b=>{if(b.textContent.toLowerCase().includes(p.substring(0,4))||b.getAttribute('onclick')?.includes(p))b.classList.add('active')});
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(p==='profile')renderProfile();
+  if(p==='map')renderMap('bermuda');
+}
+
+// ══ AUTH ══
+function openAuth(){document.getElementById('authOverlay').classList.add('on')}
+function closeAuth(){document.getElementById('authOverlay').classList.remove('on')}
+document.getElementById('authOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('authOverlay'))closeAuth()});
+function swAuth(t){
+  document.getElementById('loginF').style.display=t==='login'?'block':'none';
+  document.getElementById('signF').style.display=t==='signup'?'block':'none';
+  document.getElementById('atLogin').classList.toggle('active',t==='login');
+  document.getElementById('atSign').classList.toggle('active',t==='signup');
+}
+function doLogin(){
+  const u=document.getElementById('lu').value;
+  if(!u){showToast('Enter your username');return}
+  user={name:u.split('@')[0],ign:u,role:'Rusher',pic:null,kills:234,wins:45,matches:189,clips:[]};
+  setLoggedIn();closeAuth();showToast('Welcome back, '+user.name+'! 🔥');
+}
+function doSignup(){
+  const n=document.getElementById('su').value,r=document.getElementById('sr').value;
+  if(!n){showToast('Enter your IGN');return}
+  user={name:n,ign:n,role:r||'Rusher',pic:null,kills:0,wins:0,matches:0,clips:[]};
+  setLoggedIn();closeAuth();showToast('Welcome to FireCoach, '+n+'! 🚀 Let\'s go PRO!');
+}
+function setLoggedIn(){
+  document.getElementById('loginBtn').style.display='none';
+  document.getElementById('signBtn').style.display='none';
+  document.getElementById('userNav').style.display='flex';
+  document.getElementById('userName').textContent=user.ign;
+}
+
+// ══ ROLES ══
+const roles=[
+  {id:'rusher',icon:'⚡',name:'RUSHER',color:'var(--ff)',short:'First contact specialist — aggressive entry',
+   desc:'The Rusher is the team\'s aggression engine. Your job is to create chaos, break enemy positions, and open space for your team. High risk, high reward.',
+   skills:{Aggression:95,Speed:90,'Close Range':92,'Gloo Walls':85,Survival:60},
+   tips:['Always carry a shotgun (M1014/SPAS) + SMG combo for close quarters','Use Alok or Kelly for maximum speed and movement advantage','Rush with Gloo Walls — place behind you to cut off enemy retreat and protect yourself','Never rush alone — confirm IGL call before engaging','After knocking an enemy, immediately take cover — the squad will finish them','Learn "peek and shoot" — expose yourself for 0.2 seconds maximum','Warm up with reflex trainer daily to keep reaction time sharp']},
+  {id:'healer',icon:'💊',name:'HEALER',short:'Keep your squad alive — the backbone of any team',
+   color:'var(--green)',
+   desc:'The Healer is the most important role for team survival. Without healing, even the best squad collapses. Your positioning and timing can determine the entire match outcome.',
+   skills:{Healing:98,'Team Awareness':95,Positioning:88,Survival:90,'Under Pressure':85},
+   tips:['Always carry Medkits, EP potions, and Inhalers — never run out','Character: Alok or K (Captain Booyah) for AOE healing','Position yourself 15–20m behind the frontline — never on the front','Call out your own HP level to the team proactively','In a fight, your first priority is heals — not kills','Learn to throw mushrooms and use pets for passive healing','If you go down, the fight is over — stay alive above all else']},
+  {id:'assaulter',icon:'💥',name:'ASSAULTER',short:'Mid-range domination — the main damage dealer',
+   color:'var(--ff2)',
+   desc:'The Assaulter is the squad\'s primary damage dealer. You control mid-range engagements, chip enemy health before the Rusher engages, and clean up fights.',
+   skills:{'Mid Range':94,'Damage Output':92,Positioning:88,'Spray Control':90,Awareness:85},
+   tips:['AR of choice: M4A1, AK, or GROZA for high DPS','Always use 4x scope for medium range — learn to control recoil','Position on elevated angles — height advantage = massive damage bonus','Coordinate with Rusher — chip enemies to low HP, then Rusher finishes','Use Gloo Walls to get elevation — shoot over the top','Never waste bullets — burst fire at range, spray only at close','Practice spray patterns in training mode for 15 mins daily']},
+  {id:'sniper',icon:'🎯',name:'SNIPER',short:'Long-range precision — control the field',
+   color:'var(--cyan)',
+   desc:'The Sniper controls entire zones from long range. A great sniper breaks enemy pushes, zones enemies out of safe areas, and creates openings for the team to advance.',
+   skills:{'Long Range':97,'Aim Precision':95,Patience:88,Positioning:92,'Target Priority':90},
+   tips:['Weapon: AWM > Kar98k > M82B — always prioritize scoped weapons','Character: Moco (tag enemies) + Rafael (silenced sniper) combo is devastating','Never stay in the same position after 2 shots — relocate immediately','Target priority: Healer first → IGL → Rusher → others','Pre-aim corners and angles before enemies arrive','Use 8x scope for 150m+, 4x for 80–150m','Train with moving targets in reflex trainer daily for 20 minutes']},
+  {id:'scout',icon:'👁️',name:'SCOUT',short:'Eyes of the team — information is power',
+   color:'var(--gold)',
+   desc:'The Scout gathers information so the team can make perfect decisions. You are the team\'s early warning system — your callouts determine the quality of every IGL decision.',
+   skills:{Awareness:97,Speed:90,'Info Gathering':95,Survival:82,Communication:95},
+   tips:['Character: A124 or Hayato for speed and survivability','Always move 15–20m ahead of the squad — but never out of support range','Minimap awareness is your primary skill — check it every 3 seconds','Call enemy count, position, and equipment before engagement','Carry Gloo Walls to escape — your life = team\'s information','Use pets for extra spotting range','Never engage alone — spot and report, let the team decide']},
+];
+
+function renderRoles(){
+  document.getElementById('rolesGrid').innerHTML=roles.map(r=>`
+    <div class="role-card" onclick="showRoleDetail('${r.id}')" id="rc_${r.id}">
+      <div class="ri">${r.icon}</div>
+      <div class="rn" style="color:${r.color}">${r.name}</div>
+      <div class="rd">${r.short}</div>
+    </div>`).join('');
+}
+
+function showRoleDetail(id){
+  const r=roles.find(x=>x.id===id);
+  document.querySelectorAll('.role-card').forEach(c=>{c.classList.remove('sel');});
+  document.getElementById('rc_'+id).classList.add('sel');
+  const d=document.getElementById('roleDetail');
+  d.classList.add('show');
+  d.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;flex-wrap:wrap">
+    <div>
+      <div class="rd-title">${r.icon} ${r.name}</div>
+      <p style="color:rgba(255,255,255,.7);font-size:14px;line-height:1.8;margin-bottom:24px">${r.desc}</p>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:2px;margin-bottom:16px">SKILL RATINGS</div>
+      ${Object.entries(r.skills).map(([k,v])=>`
+        <div class="skill-bar">
+          <div class="sb-label"><span>${k}</span><span style="color:${r.color}">${v}%</span></div>
+          <div class="sb-track"><div class="sb-fill" style="width:${v}%;background:${r.color.includes('grad')?'linear-gradient(90deg,'+r.color+')':r.color}"></div></div>
+        </div>`).join('')}
+    </div>
+    <div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:16px">⚡ PRO TIPS TO MASTER THIS ROLE</div>
+      <ul class="tip-list">${r.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+      <div style="margin-top:24px">
+        <button class="btn-nav btn-solid" onclick="showPage('reflex')" style="margin-right:10px">🎯 Train Reflexes</button>
+        <button class="btn-nav btn-outline" onclick="showPage('ai')">🤖 Ask AI Coach</button>
+      </div>
+    </div>
+  </div>`;
+  d.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ══ MAP DATA ══
+const maps={
+  bermuda:{
+    zones:[
+      {x:50,y:30,w:70,h:70,type:'hot',label:'Peak',tip:'Highest loot density on Bermuda. Extreme early-game fights. Land only if confident in gunfights. Great for quick gear-up.'},
+      {x:25,y:20,w:60,h:60,type:'hot',label:'Mill',tip:'Industrial area with lots of buildings. Good loot. Third-party danger is high from Pochinok and Peak squads.'},
+      {x:75,y:55,w:55,h:55,type:'hot',label:'Pochinok',tip:'Central hot drop. High-level loot but expect 3–5 squads. Only for experienced teams. Exit routes: east and west roads.'},
+      {x:15,y:60,w:55,h:55,type:'safe',label:'Sentosa',tip:'Safe, moderate loot. Great for beginners. Easy rotation to center. Vehicles usually available nearby.'},
+      {x:80,y:20,w:50,h:50,type:'safe',label:'Cape Town',tip:'Low traffic, good loot. Excellent for passive playstyle. Easy access to vehicles for rotation.'},
+      {x:40,y:70,w:50,h:50,type:'safe',label:'Bimasakti',tip:'Quiet landing. Moderate loot. Safe zone position is often nearby. Good team coordination spot.'},
+      {x:60,y:15,w:40,h:40,type:'vehicle',label:'Vehicles',tip:'Main vehicle spawn corridor. Jeep and motorbikes available. Use for fast rotations when zone moves far.'},
+      {x:30,y:45,w:40,h:40,type:'vehicle',label:'Vehicles',tip:'Mid-map vehicle zone. Critical for rotation from Sentosa to center zone. Usually 1–2 vehicles available.'},
+      {x:70,y:75,w:36,h:36,type:'launch',label:'Launchpad',tip:'Jump to the east side of the map quickly. Useful for escaping final zone or surprising enemies. Pre-place Gloo Walls before jumping.'},
+      {x:20,y:80,w:36,h:36,type:'launch',label:'Launchpad',tip:'South Bermuda launchpad. Use to cross the waterway zone or reach high-ground positions in late game.'},
+    ]
+  },
+  kalahari:{
+    zones:[
+      {x:50,y:25,w:65,h:65,type:'hot',label:'Nerve Center',tip:'The hottest drop on Kalahari. Multi-level building complex with top-tier loot. Expect intense early-game fights.'},
+      {x:20,y:50,w:55,h:55,type:'hot',label:'Refinery',tip:'Industrial loot hub. Good weapons and armour. High traffic from Nerve Center teams rotating through.'},
+      {x:75,y:40,w:55,h:55,type:'hot',label:'Training Camp',tip:'Structured drop with military-grade loot. Multiple buildings — systematic loot route is key.'},
+      {x:15,y:20,w:50,h:50,type:'safe',label:'Oasis',tip:'Quieter start with water and healing items nearby. Good for teams who prefer passive scaling.'},
+      {x:80,y:70,w:50,h:50,type:'safe',label:'Graveyard',tip:'Low contest zone with decent loot. Rock formations provide natural cover during fights.'},
+      {x:45,y:75,w:50,h:50,type:'safe',label:'Dunas',tip:'Sand dunes area — moderate loot, great positioning. Natural elevation advantages for snipers.'},
+      {x:55,y:50,w:38,h:38,type:'vehicle',label:'Vehicles',tip:'Central Kalahari vehicle spawn. Buggy and jeep available. Critical for zone rotation in desert map.'},
+      {x:30,y:70,w:38,h:38,type:'vehicle',label:'Vehicles',tip:'Southwest vehicle cluster. Motorbikes here for quick solo rotation. Good escape route from Refinery fights.'},
+      {x:65,y:20,w:34,h:34,type:'launch',label:'Launchpad',tip:'North launchpad for quick access to Training Camp high ground. Surprise enemies with sky approach.'},
+      {x:25,y:80,w:34,h:34,type:'launch',label:'Launchpad',tip:'South Kalahari launch. Use in final circles to bypass rocky terrain and reach zone center fast.'},
+    ]
+  }
+};
+
+function renderMap(m){
+  currentMap=m;
+  const data=maps[m];
+  const vw=document.getElementById('mapVisual').offsetWidth;
+  document.getElementById('mapZones').innerHTML=data.zones.map((z,i)=>{
+    const typeClass={hot:'z-hot',safe:'z-safe',vehicle:'z-vehicle',launch:'z-launch'}[z.type];
+    const typeIcon={hot:'🔥',safe:'✅',vehicle:'🚗',launch:'🚀'}[z.type];
+    return `<div class="map-zone ${typeClass}" 
+      style="left:${z.x}%;top:${z.y}%;width:${z.w*0.8}px;height:${z.h*0.8}px"
+      onclick="showZoneInfo(${i},'${m}')"
+      title="${z.label}">
+      ${typeIcon}
+      <span class="zone-label">${z.label}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('mapInfo').innerHTML=`<div style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--muted);letter-spacing:2px;margin-bottom:16px">📍 TAP A ZONE FOR DETAILS</div>`+
+    data.zones.map((z,i)=>`<div class="mi-zone" onclick="showZoneInfo(${i},'${m}')">
+      <div class="mi-name">${{hot:'🔥',safe:'✅',vehicle:'🚗',launch:'🚀'}[z.type]} ${z.label}</div>
+      <div class="mi-type"><span class="tag ${{hot:'tag-fire',safe:'tag-green',vehicle:'tag-gold',launch:'tag-cyan'}[z.type]}">${z.type.toUpperCase()}</span></div>
+      <div class="mi-tips">${z.tip.substring(0,80)}...</div>
+    </div>`).join('');
+}
+
+function showZoneInfo(i,m){
+  const z=maps[m].zones[i];
+  const typeColors={hot:'var(--ff)',safe:'var(--green)',vehicle:'var(--gold)',launch:'var(--cyan)'};
+  document.getElementById('mapInfo').innerHTML=`
+    <button onclick="renderMap('${m}')" style="background:none;border:none;color:var(--cyan);font-family:'Rajdhani',sans-serif;font-size:13px;cursor:pointer;margin-bottom:16px">← Back to all zones</button>
+    <div style="font-size:36px;margin-bottom:12px">${{hot:'🔥',safe:'✅',vehicle:'🚗',launch:'🚀'}[z.type]}</div>
+    <div style="font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:${typeColors[z.type]};margin-bottom:8px">${z.label}</div>
+    <div class="tag ${{hot:'tag-fire',safe:'tag-green',vehicle:'tag-gold',launch:'tag-cyan'}[z.type]}" style="display:inline-block;margin-bottom:16px">${z.type.toUpperCase()}</div>
+    <p style="font-size:14px;color:rgba(255,255,255,.75);line-height:1.8">${z.tip}</p>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+      <div style="font-size:12px;color:var(--muted)">Pro Tip for this zone:</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:8px;line-height:1.7">
+        ${{hot:'Always have an exit planned before landing here. Pre-assign each squad member a building.',safe:'Use this zone to gear up before the 2nd zone appears, then rotate aggressively.',vehicle:'Mark this on your minimap. If you don\'t have a vehicle, controlling this spawn gives your team massive rotation advantage.',launch:'Pre-place Gloo Walls at the landing spot. The jump gives a 2-3 second window where you\'re vulnerable.'}[z.type]}
+      </div>
+    </div>`;
+}
+
+function showMap(m,btn){
+  document.querySelectorAll('.mt').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMap(m);
+}
+
+// ══ REFLEX TRAINER ══
+let reflexBest=Infinity;
+function setDiff(d,btn){curDiff=d;document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+function setMode(m,btn){curMode=m;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+
+function startReflex(){
+  if(reflexRunning)return;
+  reflexRunning=true;reflexScore=0;reflexTimes=[];reflexTimeLeft=30;
+  document.getElementById('rxScore').textContent='0';
+  document.getElementById('rxTime').textContent='30';
+  document.getElementById('rxAvg').textContent='—';
+  document.getElementById('rxBest').textContent='—';
+  document.getElementById('raMsg').textContent='GO! Hit every target!';
+  document.getElementById('raMsg').style.color='var(--green)';
+  document.getElementById('startBtn').disabled=true;
+  const board=document.getElementById('raBoard');
+  board.classList.add('go');
+  if(curMode==='track')startTrackMode();else spawnTarget();
+  reflexTimer=setInterval(()=>{
+    reflexTimeLeft--;
+    document.getElementById('rxTime').textContent=reflexTimeLeft;
+    if(reflexTimeLeft<=0){endReflex()}
+  },1000);
+}
+
+let lastSpawnTime=0;
+function spawnTarget(){
+  if(!reflexRunning)return;
+  clearTarget();
+  const board=document.getElementById('raBoard');
+  const bw=board.offsetWidth,bh=board.offsetHeight;
+  const d=difficulty[curDiff];
+  const t=document.createElement('div');
+  t.className='ra-target';
+  const colors=[{c:'#ff4500',bg:'rgba(255,69,0,.3)',icon:'🎯'},{c:'#00d4ff',bg:'rgba(0,212,255,.3)',icon:'💠'},{c:'#ffd700',bg:'rgba(255,215,0,.3)',icon:'⭐'},{c:'#ff1493',bg:'rgba(255,20,147,.3)',icon:'💥'}];
+  const col=colors[Math.floor(Math.random()*colors.length)];
+  t.style.cssText=`left:${10+Math.random()*80}%;top:${10+Math.random()*80}%;width:${d.size}px;height:${d.size}px;background:${col.bg};border:2px solid ${col.c};color:${col.c}`;
+  t.textContent=col.icon;
+  lastSpawnTime=Date.now();
+  t.onclick=(e)=>{
+    e.stopPropagation();
+    const ms=Date.now()-lastSpawnTime;
+    reflexScore++;reflexTimes.push(ms);
+    document.getElementById('rxScore').textContent=reflexScore;
+    const avg=Math.round(reflexTimes.reduce((a,b)=>a+b,0)/reflexTimes.length);
+    const best=Math.min(...reflexTimes);
+    document.getElementById('rxAvg').textContent=avg+'ms';
+    document.getElementById('rxBest').textContent=best+'ms';
+    const msg=ms<200?'INSANE! 💫':ms<300?'PRO! 🔥':ms<400?'Good! ⚡':'Train more 💪';
+    document.getElementById('raMsg').textContent=`${ms}ms — ${msg}`;
+    clearTarget();
+    if(reflexRunning)setTimeout(spawnTarget,100);
+  };
+  board.appendChild(t);
+  targetEl=t;
+  setTimeout(()=>{if(reflexRunning&&targetEl===t){clearTarget();if(reflexRunning)spawnTarget()}},d.time);
+}
+
+function clearTarget(){if(targetEl&&targetEl.parentNode){targetEl.parentNode.removeChild(targetEl);targetEl=null}}
+
+function startTrackMode(){
+  trackX=50;trackY=50;trackDX=(curDiff==='easy'?.8:curDiff==='medium'?1.5:curDiff==='hard'?2.5:4);trackDY=trackDX*.7;
+  const board=document.getElementById('raBoard');
+  const t=document.createElement('div');
+  t.className='ra-target';t.id='trackTarget';
+  t.style.cssText=`left:50%;top:50%;width:${difficulty[curDiff].size}px;height:${difficulty[curDiff].size}px;background:rgba(255,69,0,.3);border:2px solid var(--ff);color:var(--ff);transition:none`;
+  t.textContent='🎯';
+  t.onclick=(e)=>{e.stopPropagation();reflexScore++;document.getElementById('rxScore').textContent=reflexScore;document.getElementById('raMsg').textContent='Hit! 🔥 Keep tracking!'};
+  board.appendChild(t);targetEl=t;
+  moveInterval=setInterval(()=>{
+    trackX+=trackDX;trackY+=trackDY;
+    if(trackX>90||trackX<10)trackDX*=-1;
+    if(trackY>85||trackY<10)trackDY*=-1;
+    if(t.parentNode)t.style.left=trackX+'%',t.style.top=trackY+'%';
+  },16);
+}
+
+function boardClick(e){
+  if(curMode!=='click')return;
+  // missed click
+}
+
+function endReflex(){
+  clearInterval(reflexTimer);clearInterval(moveInterval);reflexRunning=false;
+  clearTarget();
+  document.getElementById('raBoard').classList.remove('go');
+  document.getElementById('startBtn').disabled=false;
+  if(!reflexTimes.length){document.getElementById('raMsg').textContent='No targets hit!';return}
+  const avg=Math.round(reflexTimes.reduce((a,b)=>a+b,0)/reflexTimes.length);
+  const best=Math.min(...reflexTimes);
+  const rank=best<200?'💫 PRO LEVEL':best<300?'🔥 SKILLED':best<400?'⚡ AVERAGE':'🐢 KEEP TRAINING';
+  document.getElementById('raMsg').textContent=`Done! Score: ${reflexScore} | Best: ${best}ms | Rank: ${rank}`;
+  document.getElementById('raMsg').style.color='var(--gold)';
+}
+
+function resetReflex(){
+  clearInterval(reflexTimer);clearInterval(moveInterval);
+  reflexRunning=false;reflexScore=0;reflexTimes=[];reflexTimeLeft=30;
+  clearTarget();
+  document.getElementById('rxScore').textContent='0';
+  document.getElementById('rxTime').textContent='30';
+  document.getElementById('rxAvg').textContent='—';
+  document.getElementById('rxBest').textContent='—';
+  document.getElementById('raMsg').textContent='Select difficulty and press START';
+  document.getElementById('raMsg').style.color='var(--green)';
+  document.getElementById('raBoard').classList.remove('go','ready');
+  document.getElementById('startBtn').disabled=false;
+}
+
+// ══ AI COACH ══
+const aiResponses={
+  'rusher':`**⚡ RUSHER MASTERY GUIDE**\n\nAs a Rusher, your job is to be the team's weapon of disruption. Here's how to dominate:\n\n**Loadout:** M1014 Shotgun + MP40/UMP for close quarters. Always carry at least 3 Gloo Walls.\n\n**Movement:** Use diagonal movement + jumping to make yourself harder to hit. Never run in straight lines.\n\n**Timing:** Rush only when IGL calls "PUSH." A rusher who acts alone is a dead rusher.\n\n**Gloo Walls:** Place one behind you when rushing to block enemies behind, and one in front to push from cover.\n\n**Characters:** Alok (movement + heal) or Kelly (speed boost) are your best picks for this role.`,
+  'healer':`**💊 HEALER MASTERY GUIDE**\n\nThe Healer is the most important player in any pro squad. Your positioning and awareness win games.\n\n**Inventory:** Always carry: 5 Medkits, 3 Inhalers, 10+ EP Potions, Mushrooms. Never compromise on this.\n\n**Position:** Stay 15–20m behind front line AT ALL TIMES. Your death = squad wipe.\n\n**Priority:** Heal the player with lowest HP first, then work upward. In a pinch, heal whoever is in the fight.\n\n**Character:** K (Captain Booyah) = best healer character. His EP mode gives constant healing to nearby teammates.\n\n**Communication:** Constantly call out your own HP — team needs to know if you need to be protected.`,
+  'loadout':`**🔫 META LOADOUT GUIDE (Current Season)**\n\n**Ranked Competitive:**\n• Primary: M4A1 or AK47 (AR) — high damage, good range\n• Secondary: AWM or SKS (Sniper) — for long range picks\n• Always: Medkits + 3 Gloo Walls minimum\n\n**Aggressive Rush:**\n• Primary: GROZA or XM8 — high fire rate\n• Secondary: M1014 or SPAS — close range dominant\n\n**Support/Healer:**\n• Primary: UMP or MP40 — light, quick movement\n• Secondary: MP40 or shotgun for emergencies\n\n**Sniper Setup:**\n• Primary: AWM + 8x scope\n• Secondary: M4A1 for self-defense`,
+  'sensitivity':`**🎯 SENSITIVITY SETTINGS GUIDE**\n\nThe "perfect" sensitivity depends on your device, but here are pro baselines:\n\n**General:**\n• Character Sensitivity: 100 (maximum — always)\n• Firing Mode: Auto\n\n**Scope Sensitivity:**\n• Red Dot: 80–90\n• 2x Scope: 65–75\n• 4x Scope: 45–55\n• 8x Scope: 25–35\n\n**HUD Layout Tips:**\n• Use 5-finger claw layout for maximum control\n• Fire buttons on both sides for quick reaction\n\n**Key Rule:** Find a sensitivity and STICK WITH IT for 2+ weeks before changing. Your muscle memory needs consistency.`,
+  'default':`I'm analyzing your question... 🤖\n\nAs your AI coach, here's what I know about this topic in Free Fire:\n\nThis is a great question that many players struggle with. The key is to focus on fundamentals: **positioning, communication, and practice**.\n\nFor personalized advice on this specific topic, I'd recommend:\n1. Watch pro Free Fire tournament gameplay — FFWS and regional leagues\n2. Review your own gameplay recordings critically\n3. Practice in training mode with specific goals each session\n4. Ask your squad for honest feedback\n\nWhat specific aspect would you like to go deeper on? Type your follow-up and I'll give you a detailed breakdown! 💪`
+};
+
+function sendAI(){
+  const input=document.getElementById('aiInput');
+  const q=input.value.trim();
+  if(!q)return;
+  addMsg(q,'user');
+  input.value='';
+  setTimeout(()=>{
+    const lower=q.toLowerCase();
+    let resp=aiResponses.default;
+    if(lower.includes('rush'))resp=aiResponses.rusher;
+    else if(lower.includes('heal')||lower.includes('support'))resp=aiResponses.healer;
+    else if(lower.includes('loadout')||lower.includes('weapon')||lower.includes('gun'))resp=aiResponses.loadout;
+    else if(lower.includes('sensitiv')||lower.includes('aim')||lower.includes('setting'))resp=aiResponses.sensitivity;
+    else if(lower.includes('sniper')||lower.includes('awm')||lower.includes('kar'))resp=`**🎯 SNIPER GUIDE**\n\nSniping in Free Fire is an art of patience and positioning.\n\n**Best Weapons:** AWM > Kar98k > M82B\n\n**Positioning:** Always take elevated ground. Rooftops, hills, and cliffs give you sight lines AND safety.\n\n**Targeting Priority:** Always target the Healer first — removing their heals cripples the enemy squad.\n\n**After shooting:** Relocate EVERY TIME. Pro snipers are never in the same spot twice.\n\n**Characters:** Moco (tags enemies) + Rafael (silenced shots) = the most feared sniper combo.\n\n**Training:** Use the reflex trainer in Moving Target mode daily for 20 minutes.`;
+    else if(lower.includes('rotation')||lower.includes('zone'))resp=`**🔄 ROTATION STRATEGY**\n\nRotation is where most squads lose in ranked mode. Here's the pro approach:\n\n**Early Rotation (Zone 1→2):** Start moving when you see Zone 2 appear on minimap. Don't wait until forced.\n\n**Movement:** Always move with cover — trees, walls, rocks. Never cross open fields without a Gloo Wall ready.\n\n**Vehicle Rule:** If the zone is 400m+ away, find a vehicle. Never rotate on foot over long distances.\n\n**High Ground Priority:** Arrive at your destination BEFORE enemies. Setup takes time.\n\n**Final Circle:** IGL chooses a rock/building as anchor. Healer center, Sniper on high point, Rusher on entry point.`;
+    else if(lower.includes('igl')||lower.includes('leader')||lower.includes('call'))resp=`**👑 IGL (IN-GAME LEADER) GUIDE**\n\nBeing an IGL is the most important skill in team Free Fire.\n\n**Mindset:** You are the chess player. Your team are the pieces. Stay calm under ALL pressure.\n\n**Pre-match:** Call the drop zone, rotation plan, and role assignments BEFORE the plane launches.\n\n**During match:** Watch minimap 50% of the time. Call enemy positions before your team engages.\n\n**Communication:** Short, clear calls. "Push left NOW" not "I think maybe we should go left."\n\n**Decision making:** Act in 2 seconds or less. A wrong decision made fast beats no decision.\n\n**After match:** Review what calls worked and what didn't. Great IGLs constantly self-improve.`;
+    addMsg(resp,'bot');
+  },800);
+}
+
+function askTopic(q){
+  document.getElementById('aiInput').value=q;
+  document.querySelectorAll('.ai-topic').forEach(t=>t.classList.remove('active'));
+  sendAI();
+}
+
+function addMsg(text,type){
+  const msgs=document.getElementById('aiMessages');
+  const div=document.createElement('div');
+  div.className=`msg ${type}`;
+  div.innerHTML=`<div class="msg-av ${type}">${type==='bot'?'🤖':'👤'}</div>
+    <div class="msg-bubble ${type}">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+// ══ PROFILE ══
+function renderProfile(){
+  if(!user){
+    document.getElementById('profileContent').innerHTML=`
+      <div style="text-align:center;padding:80px 20px">
+        <div style="font-size:60px;margin-bottom:20px">🏆</div>
+        <h3 style="font-family:'Orbitron',monospace;font-size:22px;color:#fff;margin-bottom:12px">Create Your Esports Profile</h3>
+        <p style="color:var(--muted);margin-bottom:28px">Sign up to build your player profile, upload gameplay clips, and get discovered by pro teams.</p>
+        <button class="btn-nav btn-solid" onclick="openAuth()">🚀 Create Profile Now</button>
+      </div>`;
+    return;
+  }
+  document.getElementById('profileContent').innerHTML=`
+    <div class="profile-layout">
+      <div class="profile-card">
+        <div class="profile-banner"></div>
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar" onclick="triggerAvatarUpload()" id="profAvatar">
+            ${profilePic?`<img src="${profilePic}" id="avatarImg">`:'🎮'}
+            <div class="av-overlay">📷 Change</div>
+          </div>
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="handleAvatar(this)">
+        <div class="profile-info">
+          <div class="profile-name" id="pName">${user.ign}</div>
+          <div class="profile-id">UID: #${Math.floor(100000+Math.random()*900000)} · Active Player</div>
+          <div class="profile-role">⚔️ ${user.role||'Rusher'}</div>
+          <div class="profile-stats">
+            <div class="ps-box"><div class="ps-val" id="pKills">${user.kills}</div><div class="ps-lbl">Kills</div></div>
+            <div class="ps-box"><div class="ps-val" id="pWins">${user.wins}</div><div class="ps-lbl">Wins</div></div>
+            <div class="ps-box"><div class="ps-val" id="pMatches">${user.matches}</div><div class="ps-lbl">Matches</div></div>
+          </div>
+          <div class="profile-bio" id="pBio">Aspiring Free Fire esports athlete. Training daily. Looking for a competitive team.</div>
+          <div class="profile-badges">
+            <span class="pbadge tag-fire">🔥 Active</span>
+            <span class="pbadge tag-gold">⚡ ${user.role}</span>
+            <span class="pbadge tag-cyan">🎯 Ranked Player</span>
+          </div>
+          <button class="btn-edit-profile" onclick="openEditProfile()">✏️ Edit Profile</button>
+          <button class="btn-nav btn-outline" style="width:100%;justify-content:center;display:flex" onclick="showToast('Profile link copied! Share with teams 🔗')">🔗 Share Profile</button>
+        </div>
+      </div>
+      <div class="profile-main">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+          <div style="font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:#fff">🎬 GAMEPLAY CLIPS</div>
+          <div style="font-size:13px;color:var(--muted)">Upload your best moments — teams are watching</div>
+        </div>
+        <div class="upload-clip-area" onclick="document.getElementById('clipInput').click()">
+          <div class="uci">🎮</div>
+          <p><strong>Click to upload gameplay clips</strong><br>MP4, MOV, AVI · Show your best plays, clutches, and teamwork</p>
+        </div>
+        <input type="file" id="clipInput" accept="video/*,image/*" multiple style="display:none" onchange="handleClips(this)">
+        <div class="clips-grid" id="clipsGrid">${renderClips()}</div>
+        <div style="margin-top:32px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:24px">
+          <div style="font-family:'Orbitron',monospace;font-size:14px;color:var(--gold);margin-bottom:16px">📊 STATS TRACKER</div>
+          <div class="grid-4" style="gap:12px">
+            <div class="ps-box"><div class="ps-val" style="color:var(--cyan)">${user.matches>0?((user.wins/user.matches)*100).toFixed(1):0}%</div><div class="ps-lbl">Win Rate</div></div>
+            <div class="ps-box"><div class="ps-val" style="color:var(--green)">${user.matches>0?(user.kills/user.matches).toFixed(1):0}</div><div class="ps-lbl">K/D Ratio</div></div>
+            <div class="ps-box"><div class="ps-val" style="color:var(--gold)">Platinum</div><div class="ps-lbl">Rank</div></div>
+            <div class="ps-box"><div class="ps-val" style="color:var(--ff)">${uploadedClips.length}</div><div class="ps-lbl">Clips</div></div>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+            <button class="btn-nav btn-solid" onclick="editStats()">📈 Update Stats</button>
+            <button class="btn-nav btn-outline" onclick="showPage('ai')">🤖 Get Coaching Advice</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderClips(){
+  if(!uploadedClips.length)return`<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)"><div style="font-size:40px;margin-bottom:12px">🎬</div>No clips yet. Upload your best plays to get scouted!</div>`;
+  return uploadedClips.map(c=>`
+    <div class="clip-card">
+      <div class="clip-thumb">
+        ${c.isVideo?`<div class="clip-thumb-bg">${c.thumbnail||'🎮'}</div>`:`<img src="${c.src}" alt="${c.name}">`}
+        <div class="clip-play">▶️</div>
+      </div>
+      <div class="clip-meta">
+        <div class="clip-title">${c.name}</div>
+        <div class="clip-info"><span>${c.date}</span><span>👁️ ${c.views} views</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function handleClips(input){
+  Array.from(input.files).forEach(f=>{
+    const isVid=f.type.startsWith('video/');
+    if(isVid){
+      uploadedClips.push({name:f.name.replace(/\.[^.]+$/,''),isVideo:true,thumbnail:'🎮',date:new Date().toLocaleDateString(),views:0,src:null});
+    } else {
+      const r=new FileReader();
+      r.onload=e=>{
+        uploadedClips.push({name:f.name.replace(/\.[^.]+$/,''),isVideo:false,src:e.target.result,date:new Date().toLocaleDateString(),views:0});
+        document.getElementById('clipsGrid').innerHTML=renderClips();
+      };r.readAsDataURL(f);
+      return;
+    }
+    document.getElementById('clipsGrid').innerHTML=renderClips();
+  });
+  showToast('Clip uploaded! Teams can now discover you 🏆');
+}
+
+function triggerAvatarUpload(){document.getElementById('avatarInput').click()}
+function handleAvatar(input){
+  if(!input.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    profilePic=e.target.result;
+    document.getElementById('profAvatar').innerHTML=`<img src="${profilePic}"><div class="av-overlay">📷 Change</div>`;
+    showToast('Profile picture updated! 🔥');
+  };r.readAsDataURL(input.files[0]);
+}
+
+function openEditProfile(){
+  const newIGN=prompt('Enter your IGN:',user.ign);
+  if(newIGN){user.ign=newIGN;renderProfile();showToast('Profile updated!')}
+}
+function editStats(){
+  const kills=parseInt(prompt('Enter your total kills:',user.kills));
+  const wins=parseInt(prompt('Enter your total wins:',user.wins));
+  const matches=parseInt(prompt('Enter your total matches:',user.matches));
+  if(!isNaN(kills))user.kills=kills;
+  if(!isNaN(wins))user.wins=wins;
+  if(!isNaN(matches))user.matches=matches;
+  renderProfile();showToast('Stats updated! 📊');
+}
+
+// ══ TOAST ══
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ══ INIT ══
+renderRoles();
+renderMap('bermuda');
+</script>
+</body>
+</html>

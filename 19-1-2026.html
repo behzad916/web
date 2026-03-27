@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You.</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Nunito:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f0ebe4;
+    font-family: 'Lora', serif;
+    min-height: 100vh;
+    overflow: hidden;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(220,180,180,0.22) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(185,200,220,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 50%, rgba(240,225,210,0.28) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* broken heart cursor */
+  #cursor-svg {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    width: 30px;
+    height: 30px;
+    transform: translate(-50%, -50%);
+  }
+
+  /* stage */
+  #stage {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 680px;
+    padding: 40px 28px;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .msg {
+    position: absolute;
+    width: 100%;
+    padding: 0 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    pointer-events: none;
+  }
+  .msg.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .msg.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  /* text flavors */
+  .t-default {
+    font-size: clamp(22px, 4.2vw, 36px);
+    font-weight: 400;
+    line-height: 1.7;
+    color: #6b4f4f;
+  }
+  .t-italic {
+    font-size: clamp(20px, 3.8vw, 32px);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #7a5c5c;
+  }
+  .t-response {
+    font-size: clamp(26px, 5.2vw, 46px);
+    font-weight: 500;
+    color: #6b3a3a;
+    line-height: 1.55;
+  }
+  .t-response span {
+    color: #b06060;
+    font-style: italic;
+  }
+  .t-big {
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 500;
+    font-style: italic;
+    color: #5c3d3d;
+    line-height: 1.5;
+  }
+  .t-soft {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 300;
+    font-size: clamp(17px, 3vw, 26px);
+    color: #907070;
+    line-height: 1.8;
+  }
+  .t-apology {
+    font-size: clamp(21px, 4vw, 34px);
+    font-style: italic;
+    color: #7a5555;
+    line-height: 1.65;
+  }
+  .t-promise {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 300;
+    font-size: clamp(18px, 3.2vw, 28px);
+    color: #8a7070;
+    line-height: 1.8;
+    font-style: italic;
+  }
+  .t-final {
+    font-size: clamp(26px, 5vw, 46px);
+    font-weight: 500;
+    font-style: italic;
+    color: #5c3a3a;
+    line-height: 1.55;
+  }
+
+  /* progress dots */
+  #dots {
+    position: fixed;
+    bottom: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 7px;
+    z-index: 10;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 300px;
+  }
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(170,120,120,0.22);
+    transition: background 0.4s, transform 0.4s;
+    flex-shrink: 0;
+  }
+  .dot.active {
+    background: rgba(150,90,90,0.5);
+    transform: scale(1.5);
+  }
+
+  /* floating petals */
+  .petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: petalFall linear infinite;
+    color: rgba(195,150,145,0.3);
+    user-select: none;
+  }
+  @keyframes petalFall {
+    0%   { transform: translateY(-30px) rotate(0deg) translateX(0); opacity: 0; }
+    8%   { opacity: 1; }
+    50%  { transform: translateY(50vh) rotate(180deg) translateX(20px); }
+    92%  { opacity: 0.25; }
+    100% { transform: translateY(105vh) rotate(360deg) translateX(-10px); opacity: 0; }
+  }
+
+  /* tap hint */
+  #tap-hint {
+    position: fixed;
+    bottom: 64px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Nunito', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(140,100,100,0.38);
+    z-index: 10;
+    transition: opacity 0.8s;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- broken heart cursor -->
+<svg id="cursor-svg" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 24 C15 24 4 17 4 10.5 C4 7.2 6.8 5 10 5 C12.2 5 13.8 6.3 15 7.8" fill="rgba(185,120,115,0.18)" stroke="#b08080" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M15 24 C15 24 26 17 26 10.5 C26 7.2 23.2 5 20 5 C17.8 5 16.2 6.3 15 7.8" fill="rgba(185,120,115,0.18)" stroke="#b08080" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M15 7.8 L13.2 12.5 L16.5 15 L12.5 21.5" stroke="#cc9090" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.65"/>
+</svg>
+
+<div id="stage"></div>
+<div id="dots"></div>
+<div id="tap-hint">tap anywhere to continue</div>
+
+<script>
+const messages = [
+  { text: `"Show her.<br>She blocked you anyway."`,           cls: 't-italic'  },
+  { text: `No.`,                                              cls: 't-response' },
+  { text: `She is my <span>pretty little baby.</span><br>I still love her.`, cls: 't-response' },
+  { text: `I loved her with pure intentions.`,               cls: 't-big'     },
+  { text: `From the very deepest part of my heart.`,         cls: 't-soft'    },
+  { text: `Not for show.<br>Not for anyone to see.`,         cls: 't-soft'    },
+  { text: `She was the light<br>in my darkest room.`,        cls: 't-big'     },
+  { text: `She was water<br>in my desert.`,                  cls: 't-big'     },
+  { text: `She was the warmth<br>I didn't know I needed.`,   cls: 't-big'     },
+  { text: `She was the calm<br>inside my storm.`,            cls: 't-big'     },
+  { text: `She was the only one<br>who made me feel home.`,  cls: 't-big'     },
+  { text: `She was the reason<br>I smiled at nothing.`,      cls: 't-soft'    },
+  { text: `I am sorry.`,                                     cls: 't-apology' },
+  { text: `For every moment<br>I wasn't enough for you.`,   cls: 't-apology' },
+  { text: `For the times my silence<br>hurt louder than my words.`, cls: 't-apology' },
+  { text: `You never deserved any of that.<br>Not even once.`, cls: 't-apology' },
+  { text: `I wish I had said all of this sooner.`,           cls: 't-soft'    },
+  { text: `I never stopped caring.<br>Not for a single day.`, cls: 't-promise' },
+  { text: `I still smile at things<br>that remind me of you.`, cls: 't-promise' },
+  { text: `I still pray<br>that life is being kind to you.`, cls: 't-promise' },
+  { text: `I still miss you<br>in the smallest moments.`,    cls: 't-promise' },
+  { text: `I know you'll come back.`,                        cls: 't-final'   },
+  { text: `Because what we had<br>was real.`,                cls: 't-soft'    },
+  { text: `And real things<br>don't just disappear.`,        cls: 't-soft'    },
+  { text: `I miss you.<br>Every single day.`,                cls: 't-final'   },
+  { text: `And I still care for you.<br>Not to show anyone.<br>Just because I do.<br>19-2-2026(i remember the date)`, cls: 't-final' },
+];
+
+// build dots
+const dotsEl = document.getElementById('dots');
+messages.forEach(() => {
+  const d = document.createElement('div');
+  d.className = 'dot';
+  dotsEl.appendChild(d);
+});
+
+// petals
+const petalSymbols = ['✿','❀','✾','·','˙','❁'];
+for (let i = 0; i < 14; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+  p.style.left = Math.random() * 100 + 'vw';
+  p.style.top = '-20px';
+  p.style.fontSize = (9 + Math.random() * 10) + 'px';
+  p.style.animationDuration = (9 + Math.random() * 14) + 's';
+  p.style.animationDelay = (Math.random() * 18) + 's';
+  document.body.appendChild(p);
+}
+
+// cursor
+const curEl = document.getElementById('cursor-svg');
+document.addEventListener('mousemove', e => {
+  curEl.style.left = e.clientX + 'px';
+  curEl.style.top = e.clientY + 'px';
+});
+
+// stage
+const stage = document.getElementById('stage');
+const hint = document.getElementById('tap-hint');
+let current = 0;
+let timer = null;
+let msgEls = [];
+
+messages.forEach(m => {
+  const el = document.createElement('div');
+  el.className = 'msg';
+  el.innerHTML = `<p class="${m.cls}">${m.text}</p>`;
+  stage.appendChild(el);
+  msgEls.push(el);
+});
+
+function updateDots(idx) {
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
+  });
+}
+
+function show(idx) {
+  msgEls.forEach((el, i) => {
+    if (i < idx) {
+      el.classList.remove('show');
+      el.classList.add('hide');
+    } else if (i === idx) {
+      el.classList.remove('hide');
+      void el.offsetWidth;
+      setTimeout(() => el.classList.add('show'), 40);
+    } else {
+      el.classList.remove('show','hide');
+    }
+  });
+  updateDots(idx);
+  current = idx;
+  clearTimeout(timer);
+  if (idx < messages.length - 1) {
+    timer = setTimeout(() => show(idx + 1), 4000);
+  } else {
+    hint.style.opacity = '0';
+  }
+}
+
+document.addEventListener('click', () => {
+  clearTimeout(timer);
+  if (current < messages.length - 1) show(current + 1);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    clearTimeout(timer);
+    if (current < messages.length - 1) show(current + 1);
+  }
+  if (e.key === 'ArrowLeft') {
+    clearTimeout(timer);
+    if (current > 0) show(current - 1);
+  }
+});
+
+setTimeout(() => hint.style.opacity = '0', 5000);
+show(0);
+</script>
+</body>
+</html>
