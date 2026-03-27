@@ -1,0 +1,21 @@
+{
+  "name": "kataria-bakery",
+  "version": "1.0.0",
+  "description": "Frontend and backend website for Kataria Bakery",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "bakery",
+    "express",
+    "frontend",
+    "backend"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
